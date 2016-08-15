@@ -13,15 +13,15 @@ class Game {
         var start = new Engine.StartLevel(this);
         this.currentLevel = start;
 
-        // var sprite = new Engine.Sprite(150, 150, 80, 78, 'images/meteor.png');
-        // sprite.frames = 4;
-        // sprite.fps = 5;
-        // this.sprites.push(sprite);
+        var sprite = new Engine.Sprite(150, 150, 80, 78, 'images/meteor.png');
+        sprite.frames = 4;
+        sprite.fps = 5;
+        this.sprites.push(sprite);
         
-        // var s = new Engine.Sprite(300, 150, 80, 78, 'images/meteor.png');
-        // s.frames = 4;
-        // s.fps = 20;
-        // this.sprites.push(s);
+        var s = new Engine.Sprite(300, 150, 80, 78, 'images/meteor.png');
+        s.frames = 4;
+        s.fps = 20;
+        this.sprites.push(s);
 
         // var button = new Engine.Button(500, 500, 50, 50, 'Start');
         // this.sprites.push(button);
