@@ -39,5 +39,5 @@ jspm_packages
 # Ignore the distribution directory
 dist
 
-app/js/
-app/css/
+~app/js/
+~app/css/
