@@ -45,7 +45,7 @@ class Game {
         }
     };
 
-    protected renderUI(): void{
+    private renderUI(): void{
         this.context.strokeStyle = '#ffffff';
         this.context.lineWidth = 2;
         this.context.fillRect(0, 0, 300, 50);
