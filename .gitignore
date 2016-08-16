@@ -39,5 +39,5 @@ jspm_packages
 # Ignore the distribution directory
 dist
 
-js
-css
+js/
+css/
