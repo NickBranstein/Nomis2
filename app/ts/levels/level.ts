@@ -21,8 +21,8 @@ module Engine {
             public render(context: CanvasRenderingContext2D, timestamp): void {    
                 var background = new Image();
                 
-                background.src = 'images/meteor.png';
-                context.drawImage(background, 0, 0);
+                // background.src = 'images/meteor.png';
+                // context.drawImage(background, 0, 0);
 
                 this.sprites.forEach((sprite) => {
                     sprite.render(context, timestamp);

@@ -11,6 +11,7 @@ module Engine {
             // render the sprite
             this.height = 30;
             context.font = `${this.height}px Arial`;
+            context.fillStyle = "#ffffff";
             context.fillText(this.text, this.x, this.y);
             this.width = context.measureText(this.text).width;
         }
