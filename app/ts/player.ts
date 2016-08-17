@@ -1,7 +1,7 @@
 module Engine {
     export class Player extends Sprite {
             private keys = {};
-            private keyMap = {65: 'a', 83: 's'};
+            private keyMap = {65: 'a', 68: 'd'};
             private movementSpeed: number;
 
         constructor(public x: number, public y: number, public frameWidth: number, public frameHeight: number, source: string, frames?: number, fps?: number, protected callback?: () => any) {
@@ -35,7 +35,7 @@ module Engine {
             if (this.keys['a']) {
                 speedX = -this.movementSpeed;
             }
-            if (this.keys['s']) {
+            if (this.keys['d']) {
                 speedX = this.movementSpeed;
             }
 
