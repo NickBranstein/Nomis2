@@ -59,18 +59,3 @@ canvas {
   clip:rect(0,900px,0,0); 
   animation:noise-anim-2 3s infinite linear alternate-reverse;
 }
-
-#canvas{
-     background-color: #fff;
-     -webkit-animation: random 1s infinite;
-     animation: random 1s infinite;
-}
-
-@keyframes  random {
-    15% { background-color: white; } 
-    89% { background-color: white; }
-    90% { background-color: red; }
-    91% { background-color: green; }
-    92% { background-color: blue; }  
-    93% { background-color: white; }
-}

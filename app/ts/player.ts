@@ -23,7 +23,8 @@ module Engine {
                 this.lastTimestamp = timestamp;
             }
             
-            let elapsedTime =  (timestamp - this.lastTimestamp) / 1000;
+            let elapsedTime =  (timestamp - this.lastTimestamp) / 10;
+            this.lastTimestamp = timestamp;
             
             if(this.frames != null && elapsedTime > (1000 / this.fps)){
                     this.animate(context);    
