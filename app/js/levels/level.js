@@ -9,6 +9,9 @@ var Engine;
             // this.sprites.push(new Button(350, 500, 'Continue Game', () => {
             //     console.log('continue game callback');
             // }));
+            this.sprites.push(new Engine.Button(350, 500, 'Start', function () {
+                console.log('new game callback');
+            }));
             game.sprites = this.sprites;
         }
         StartLevel.prototype.render = function (context, timestamp) {

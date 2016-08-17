@@ -26,6 +26,9 @@ class Game {
         s.frames = 4;
         s.fps = 20;
         this.sprites.push(s);
+
+        var player = new Engine.Player(250, 250, 0, 0, '');
+        this.sprites.push(player);
     }
     
     public start(){
@@ -48,7 +51,7 @@ class Game {
     };
 
     private renderUI(): void{
-        this.context.strokeStyle = '#ffffff';
+        this.context.fillStyle = '#ffffff';
         this.context.lineWidth = 2;
         this.context.fillStyle = "rgba(250,250,250,0)";
         this.context.fillRect(0, 0, 300, 50);
@@ -64,6 +67,12 @@ class Game {
 
         this.context.strokeRect(350,0,100,50);
         this.context.fillText('10/12 kb', 355,30);
+        // kb counter
+        this.context.strokeRect(350, 0, 100, 50);
+
+        this.context.font = '24px Arial';
+        this.context.fillStyle = "#ffffff";
+        this.context.fillText('12/13kb', 350, 30);
     }
 
     private click(event: MouseEvent) : void {
