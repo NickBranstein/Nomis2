@@ -15,6 +15,8 @@ class Game {
         var start = new Engine.StartLevel(this);
         this.currentLevel = start;
 
+        this.context.canvas.style.backgroundColor = 'rgba(250,250,250, .8)';
+        
         var sprite = new Engine.Sprite(150, 150, 80, 78, 'images/meteor.png');
         sprite.frames = 4;
         sprite.fps = 5;
@@ -48,6 +50,7 @@ class Game {
     private renderUI(): void{
         this.context.strokeStyle = '#ffffff';
         this.context.lineWidth = 2;
+        this.context.fillStyle = "rgba(250,250,250,0)";
         this.context.fillRect(0, 0, 300, 50);
         this.context.fillRect(800, 0, -300, 50);
 
@@ -58,6 +61,9 @@ class Game {
         this.context.font = '24px Arial';
         this.context.fillStyle = "#000000";
         this.context.fillText('this is the command area', 10, 30);
+
+        this.context.strokeRect(350,0,100,50);
+        this.context.fillText('10/12 kb', 355,30);
     }
 
     private click(event: MouseEvent) : void {

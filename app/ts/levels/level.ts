@@ -8,12 +8,12 @@ module Engine {
             
             constructor(game: Game) {
                 this.sprites = [];
-                this.sprites.push(new Button(50, 500, 'New Game', () => {
+                this.sprites.push(new Button(325, 500, 'New Game', () => {
                   console.log('new game callback');
                 }));
-                this.sprites.push(new Button(350, 500, 'Continue Game', () => {
-                    console.log('continue game callback');
-                }));
+                // this.sprites.push(new Button(350, 500, 'Continue Game', () => {
+                //     console.log('continue game callback');
+                // }));
                 
                 game.sprites = this.sprites;
             }
