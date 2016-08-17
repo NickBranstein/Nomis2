@@ -58,6 +58,13 @@ class Game {
         this.context.font = '24px Arial';
         this.context.fillStyle = "#000000";
         this.context.fillText('this is the command area', 10, 30);
+
+        // kb counter
+        this.context.strokeRect(350, 0, 100, 50);
+
+        this.context.font = '24px Arial';
+        this.context.fillStyle = "#ffffff";
+        this.context.fillText('12/13kb', 350, 30);
     }
 
     private click(event: MouseEvent) : void {
