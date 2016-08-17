@@ -8,12 +8,6 @@ canvas {
     border: 1px solid #ffffff;
     color: #ffffff;
 }
-// @import "compass/css3";
-
-// body{
-//   background:black;
-//   font-family: 'Varela', sans-serif;
-// }
 
 .glitch{
   color:white;
@@ -33,7 +27,8 @@ canvas {
 .glitch:after{
   content:attr(data-text);
   position:absolute;
-  left:2px;
+  //left:2px;
+  left:14px;
   text-shadow:-1px 0 red;
   top:0;
   color:white;
@@ -54,7 +49,8 @@ canvas {
 .glitch:before{
   content:attr(data-text);
   position:absolute;
-  left:-2px;
+  //left:-2px;
+  left:18px;
   text-shadow:1px 0 blue; 
   top:0;
   color:white;

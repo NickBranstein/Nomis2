@@ -65,8 +65,6 @@ class Game {
         this.context.fillStyle = "#000000";
         this.context.fillText('this is the command area', 10, 30);
 
-        this.context.strokeRect(350,0,100,50);
-        this.context.fillText('10/12 kb', 355,30);
         // kb counter
         this.context.strokeRect(350, 0, 100, 50);
 
