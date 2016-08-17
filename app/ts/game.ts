@@ -24,6 +24,9 @@ class Game {
         s.frames = 4;
         s.fps = 20;
         this.sprites.push(s);
+
+        var player = new Engine.Player(250, 250, 0, 0, '');
+        this.sprites.push(player);
     }
     
     public start(){
@@ -46,7 +49,7 @@ class Game {
     };
 
     private renderUI(): void{
-        this.context.strokeStyle = '#ffffff';
+        this.context.fillStyle = '#ffffff';
         this.context.lineWidth = 2;
         this.context.fillRect(0, 0, 300, 50);
         this.context.fillRect(800, 0, -300, 50);
