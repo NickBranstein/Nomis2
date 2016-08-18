@@ -59,17 +59,22 @@ class Game {
 
         this.context.font = '24px Arial';
         this.context.fillStyle = "#000000";
-        this.context.fillText('this is the score area', 510, 30);
+        this.context.fillText('Score Meter ----->', 600, 30);
 
         this.context.font = '24px Arial';
         this.context.fillStyle = "#000000";
-        this.context.fillText('this is the command area', 10, 30);
+        this.context.fillText('o o Walking', 10, 20);
+        this.context.fillText('o o Gravity', 10, 42);
+        this.context.fillText('o o Jumping', 10, 64);
+        this.context.fillText('o o Collision', 10, 86);
 
         // kb counter
-        this.context.strokeRect(350, 0, 100, 50);
+        this.context.fillStyle = "rgba(250,250,250,0)";
+        this.context.fillRect(350,0,100,50);
+        //this.context.strokeRect(350, 0, 100, 50);
 
         this.context.font = '24px Arial';
-        this.context.fillStyle = "#ffffff";
+        this.context.fillStyle = "#000000";
         this.context.fillText('12/13kb', 350, 30);
     }
 
