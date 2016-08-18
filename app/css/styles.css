@@ -5,11 +5,11 @@ body {
 canvas {
   margin-top: 20px;
   border: 1px solid #ffffff;
-  color: #ffffff; }
+  color: #ffffff;
+  border-radius: 2px; }
 
-body {
-  background: black;
-  font-family: 'Varela', sans-serif; }
+:canvas {
+  border-radius: 2px; }
 
 .glitch {
   color: white;
@@ -21,91 +21,91 @@ body {
 
 @keyframes noise-zoom {
   0% {
-    transform: scale(0.92); }
+    transform: scale(0.95); }
   10% {
-    transform: scale(0.99); }
+    transform: scale(0.98); }
   20% {
-    transform: scale(0.97) skew(2deg, 0); }
+    transform: scale(0.98) skew(1deg, 0); }
   30% {
     transform: scale(0.99); }
   40% {
-    transform: scale(0.98); }
+    transform: scale(0.99); }
   50% {
     transform: scale(0.99); }
   60% {
-    transform: scale(0.97); }
-  70% {
     transform: scale(0.99); }
+  70% {
+    transform: scale(0.97); }
   80% {
-    transform: scale(0.99);
-    transform: scale(0.99) skew(-random(10)deg, 0); }
+    transform: scale(0.97);
+    transform: scale(0.98) skew(-random(10)deg, 0); }
   90% {
-    transform: scale(0.98); } }
+    transform: scale(0.99); } }
 
 @keyframes noise-anim {
   0% {
-    clip: rect(16px, 9999px, 33px, 0);
-    text-shadow: -5px -6px 2px rgba(255, 255, 255, 0.8); }
+    clip: rect(76px, 9999px, 37px, 0);
+    text-shadow: 3px -9px 15px rgba(255, 255, 255, 0.8); }
   5% {
-    clip: rect(53px, 9999px, 55px, 0);
-    text-shadow: -5px -9px 12px rgba(255, 255, 255, 0.8); }
+    clip: rect(4px, 9999px, 26px, 0);
+    text-shadow: 10px 9px 38px rgba(255, 255, 255, 0.8); }
   10% {
-    clip: rect(22px, 9999px, 33px, 0);
-    text-shadow: -1px -4px 21px rgba(255, 255, 255, 0.8); }
+    clip: rect(66px, 9999px, 26px, 0);
+    text-shadow: 0px 4px 19px rgba(255, 255, 255, 0.8); }
   15% {
-    clip: rect(52px, 9999px, 80px, 0);
-    text-shadow: 9px -5px 16px rgba(255, 255, 255, 0.8); }
+    clip: rect(63px, 9999px, 55px, 0);
+    text-shadow: -3px 4px 16px rgba(255, 255, 255, 0.8); }
   20% {
-    clip: rect(65px, 9999px, 33px, 0);
-    text-shadow: -8px 10px 14px rgba(255, 255, 255, 0.8); }
+    clip: rect(37px, 9999px, 33px, 0);
+    text-shadow: -6px 9px 13px rgba(255, 255, 255, 0.8); }
   25% {
-    clip: rect(9px, 9999px, 53px, 0);
-    text-shadow: 8px 8px 14px rgba(255, 255, 255, 0.8); }
+    clip: rect(59px, 9999px, 48px, 0);
+    text-shadow: 6px -4px 14px rgba(255, 255, 255, 0.8); }
   30% {
-    clip: rect(5px, 9999px, 62px, 0);
-    text-shadow: 4px 1px 4px rgba(255, 255, 255, 0.8); }
+    clip: rect(29px, 9999px, 44px, 0);
+    text-shadow: -1px 9px 10px rgba(255, 255, 255, 0.8); }
   35% {
-    clip: rect(30px, 9999px, 75px, 0);
-    text-shadow: 9px 3px 3px rgba(255, 255, 255, 0.8); }
+    clip: rect(98px, 9999px, 30px, 0);
+    text-shadow: -6px 0px 12px rgba(255, 255, 255, 0.8); }
   40% {
-    clip: rect(74px, 9999px, 47px, 0);
-    text-shadow: -9px 6px 9px rgba(255, 255, 255, 0.8); }
+    clip: rect(64px, 9999px, 29px, 0);
+    text-shadow: 10px 5px 23px rgba(255, 255, 255, 0.8); }
   45% {
-    clip: rect(71px, 9999px, 13px, 0);
-    text-shadow: -7px 4px 18px rgba(255, 255, 255, 0.8); }
+    clip: rect(68px, 9999px, 89px, 0);
+    text-shadow: 4px -5px 21px rgba(255, 255, 255, 0.8); }
   50% {
-    clip: rect(33px, 9999px, 61px, 0);
-    text-shadow: -4px -1px 36px rgba(255, 255, 255, 0.8); }
+    clip: rect(24px, 9999px, 100px, 0);
+    text-shadow: -2px -5px 39px rgba(255, 255, 255, 0.8); }
   55% {
-    clip: rect(37px, 9999px, 44px, 0);
-    text-shadow: -2px 8px 32px rgba(255, 255, 255, 0.8); }
+    clip: rect(52px, 9999px, 63px, 0);
+    text-shadow: 2px 7px 24px rgba(255, 255, 255, 0.8); }
   60% {
-    clip: rect(100px, 9999px, 22px, 0);
-    text-shadow: -4px -2px 8px rgba(255, 255, 255, 0.8); }
+    clip: rect(15px, 9999px, 23px, 0);
+    text-shadow: 9px -9px 9px rgba(255, 255, 255, 0.8); }
   65% {
-    clip: rect(47px, 9999px, 99px, 0);
-    text-shadow: 8px 6px 31px rgba(255, 255, 255, 0.8); }
+    clip: rect(57px, 9999px, 73px, 0);
+    text-shadow: -3px -6px 21px rgba(255, 255, 255, 0.8); }
   70% {
-    clip: rect(44px, 9999px, 13px, 0);
-    text-shadow: 10px 5px 15px rgba(255, 255, 255, 0.8); }
+    clip: rect(65px, 9999px, 80px, 0);
+    text-shadow: 8px 1px 7px rgba(255, 255, 255, 0.8); }
   75% {
-    clip: rect(47px, 9999px, 87px, 0);
-    text-shadow: 2px 8px 4px rgba(255, 255, 255, 0.8); }
+    clip: rect(59px, 9999px, 2px, 0);
+    text-shadow: -9px 6px 36px rgba(255, 255, 255, 0.8); }
   80% {
-    clip: rect(82px, 9999px, 94px, 0);
-    text-shadow: -6px 2px 3px rgba(255, 255, 255, 0.8); }
+    clip: rect(30px, 9999px, 60px, 0);
+    text-shadow: -8px -3px 37px rgba(255, 255, 255, 0.8); }
   85% {
-    clip: rect(5px, 9999px, 92px, 0);
-    text-shadow: -3px 3px 7px rgba(255, 255, 255, 0.8); }
+    clip: rect(73px, 9999px, 46px, 0);
+    text-shadow: 1px 9px 12px rgba(255, 255, 255, 0.8); }
   90% {
-    clip: rect(40px, 9999px, 91px, 0);
-    text-shadow: 5px -8px 16px rgba(255, 255, 255, 0.8); }
+    clip: rect(71px, 9999px, 41px, 0);
+    text-shadow: 4px 2px 18px rgba(255, 255, 255, 0.8); }
   95% {
-    clip: rect(85px, 9999px, 66px, 0);
-    text-shadow: 9px 7px 27px rgba(255, 255, 255, 0.8); }
+    clip: rect(97px, 9999px, 44px, 0);
+    text-shadow: 3px 1px 6px rgba(255, 255, 255, 0.8); }
   100% {
-    clip: rect(35px, 9999px, 19px, 0);
-    text-shadow: 9px -1px 35px rgba(255, 255, 255, 0.8); } }
+    clip: rect(59px, 9999px, 68px, 0);
+    text-shadow: -5px -2px 7px rgba(255, 255, 255, 0.8); } }
 
 .glitch:after {
   content: attr(data-text);
@@ -121,68 +121,68 @@ body {
 
 @keyframes noise-anim-2 {
   0% {
-    clip: rect(42px, 9999px, 55px, 0);
-    text-shadow: -6px 1px 25px rgba(138, 50, 233, 0.6); }
+    clip: rect(10px, 9999px, 40px, 0);
+    text-shadow: -6px 7px 10px rgba(206, 218, 7, 0.6); }
   5% {
-    clip: rect(23px, 9999px, 57px, 0);
-    text-shadow: 1px -4px 36px rgba(164, 4, 89, 0.6); }
+    clip: rect(96px, 9999px, 95px, 0);
+    text-shadow: 3px 0px 8px rgba(174, 119, 37, 0.6); }
   10% {
-    clip: rect(27px, 9999px, 71px, 0);
-    text-shadow: 10px 6px 30px rgba(146, 224, 67, 0.6); }
+    clip: rect(100px, 9999px, 41px, 0);
+    text-shadow: 6px 9px 25px rgba(47, 13, 106, 0.6); }
   15% {
-    clip: rect(35px, 9999px, 2px, 0);
-    text-shadow: 10px -8px 29px rgba(144, 31, 247, 0.6); }
+    clip: rect(62px, 9999px, 12px, 0);
+    text-shadow: 9px -8px 10px rgba(171, 150, 171, 0.6); }
   20% {
-    clip: rect(91px, 9999px, 26px, 0);
-    text-shadow: -3px 9px 15px rgba(104, 233, 251, 0.6); }
+    clip: rect(1px, 9999px, 36px, 0);
+    text-shadow: 5px -5px 35px rgba(247, 54, 129, 0.6); }
   25% {
-    clip: rect(22px, 9999px, 58px, 0);
-    text-shadow: 7px -9px 19px rgba(75, 57, 169, 0.6); }
+    clip: rect(44px, 9999px, 64px, 0);
+    text-shadow: 9px 9px 25px rgba(205, 71, 59, 0.6); }
   30% {
-    clip: rect(70px, 9999px, 95px, 0);
-    text-shadow: 5px -8px 24px rgba(19, 77, 42, 0.6); }
+    clip: rect(27px, 9999px, 80px, 0);
+    text-shadow: -9px 4px 6px rgba(36, 152, 138, 0.6); }
   35% {
-    clip: rect(68px, 9999px, 5px, 0);
-    text-shadow: 10px -1px 3px rgba(220, 158, 149, 0.6); }
+    clip: rect(15px, 9999px, 97px, 0);
+    text-shadow: -9px 9px 6px rgba(226, 23, 40, 0.6); }
   40% {
-    clip: rect(16px, 9999px, 72px, 0);
-    text-shadow: -9px 0px 35px rgba(130, 52, 152, 0.6); }
+    clip: rect(34px, 9999px, 62px, 0);
+    text-shadow: 2px 7px 6px rgba(219, 121, 26, 0.6); }
   45% {
-    clip: rect(99px, 9999px, 31px, 0);
-    text-shadow: -6px 1px 40px rgba(192, 242, 36, 0.6); }
+    clip: rect(89px, 9999px, 70px, 0);
+    text-shadow: 8px 5px 16px rgba(97, 174, 110, 0.6); }
   50% {
-    clip: rect(65px, 9999px, 21px, 0);
-    text-shadow: 9px -1px 13px rgba(137, 76, 245, 0.6); }
+    clip: rect(27px, 9999px, 24px, 0);
+    text-shadow: -9px -1px 22px rgba(228, 232, 171, 0.6); }
   55% {
-    clip: rect(95px, 9999px, 87px, 0);
-    text-shadow: -8px -6px 18px rgba(105, 160, 49, 0.6); }
+    clip: rect(28px, 9999px, 39px, 0);
+    text-shadow: 0px 6px 19px rgba(17, 81, 18, 0.6); }
   60% {
-    clip: rect(91px, 9999px, 82px, 0);
-    text-shadow: 9px 0px 20px rgba(249, 115, 40, 0.6); }
+    clip: rect(71px, 9999px, 33px, 0);
+    text-shadow: -3px 2px 12px rgba(146, 39, 210, 0.6); }
   65% {
-    clip: rect(48px, 9999px, 16px, 0);
-    text-shadow: -5px 8px 25px rgba(173, 28, 132, 0.6); }
+    clip: rect(5px, 9999px, 76px, 0);
+    text-shadow: -3px 9px 16px rgba(171, 7, 51, 0.6); }
   70% {
-    clip: rect(50px, 9999px, 22px, 0);
-    text-shadow: 4px 8px 23px rgba(54, 76, 243, 0.6); }
+    clip: rect(8px, 9999px, 92px, 0);
+    text-shadow: -8px 2px 40px rgba(155, 94, 208, 0.6); }
   75% {
-    clip: rect(32px, 9999px, 15px, 0);
-    text-shadow: -8px 7px 33px rgba(72, 157, 74, 0.6); }
+    clip: rect(90px, 9999px, 45px, 0);
+    text-shadow: -6px 10px 7px rgba(200, 10, 83, 0.6); }
   80% {
-    clip: rect(7px, 9999px, 48px, 0);
-    text-shadow: 9px -1px 13px rgba(49, 111, 193, 0.6); }
+    clip: rect(60px, 9999px, 28px, 0);
+    text-shadow: 2px 5px 34px rgba(254, 206, 27, 0.6); }
   85% {
-    clip: rect(83px, 9999px, 40px, 0);
-    text-shadow: -5px -6px 12px rgba(20, 234, 241, 0.6); }
+    clip: rect(99px, 9999px, 44px, 0);
+    text-shadow: 0px 1px 18px rgba(124, 224, 138, 0.6); }
   90% {
-    clip: rect(8px, 9999px, 99px, 0);
-    text-shadow: -7px 7px 21px rgba(230, 54, 200, 0.6); }
+    clip: rect(10px, 9999px, 68px, 0);
+    text-shadow: 7px 3px 40px rgba(190, 204, 135, 0.6); }
   95% {
-    clip: rect(65px, 9999px, 51px, 0);
-    text-shadow: -4px 2px 32px rgba(60, 175, 163, 0.6); }
+    clip: rect(48px, 9999px, 15px, 0);
+    text-shadow: -4px 4px 19px rgba(210, 178, 107, 0.6); }
   100% {
-    clip: rect(80px, 9999px, 73px, 0);
-    text-shadow: -8px 5px 9px rgba(56, 208, 118, 0.6); } }
+    clip: rect(95px, 9999px, 57px, 0);
+    text-shadow: -9px -6px 25px rgba(234, 75, 18, 0.6); } }
 
 .glitch:before {
   content: attr(data-text);
