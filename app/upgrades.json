@@ -1,0 +1,25 @@
+{
+	"upgrades": [
+		{
+			"name": "Nomis",
+			"text": "Nomis AutoClick Bot",
+			"clicks": "10"
+		},
+		{
+			"name": "NomisLaser",
+			"text": "Nomis Laser Beams",
+			"clicks": "100"
+		}	
+	],
+	"errors": [
+		{
+			"text": "ID 10 T error."
+		},
+		{
+			"text": "Disconnect between the keyboard and the seat."
+		},
+		{
+			"text": "Your TPS Report failed to print."
+		}
+	]
+}
