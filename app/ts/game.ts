@@ -26,9 +26,6 @@ class Game {
         s.frames = 4;
         s.fps = 20;
         this.sprites.push(s);
-
-        var player = new Engine.Player(250, 250, 0, 0, '');
-        this.sprites.push(player);
     }
     
     public start(){
