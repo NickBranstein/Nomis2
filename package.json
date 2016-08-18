@@ -17,6 +17,7 @@
     "gulp-typescript": "^2.10.0",
     "gulp-uglify": "^1.5.2",
     "gulp-useref": "^3.1.0",
+    "gulp-zip": "^3.2.0",
     "main-bower-files": "^2.11.1",
     "run-sequence": "^1.1.5",
     "typescript": "1.8.10"
