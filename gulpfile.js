@@ -13,7 +13,8 @@ var gulp = require('gulp'),
     del = require('del'),
     runSequence = require('run-sequence'),
     mainBowerFiles = require('main-bower-files'),
-    sourcemaps = require('gulp-sourcemaps');
+    sourcemaps = require('gulp-sourcemaps'),
+    fileSize = require('gulp-filesize');
 
 // Files to be added to the zip folder use "<directory goes here>/*" for all files inside the directory
 var zip_files = ['dist/*/*', 'dist/*']; 
@@ -23,6 +24,7 @@ gulp.task('zip', ['build'], function() {
     return gulp.src(zip_files, {
         base: "."
     }).pipe(zip('release.zip'))
+        .pipe(fileSize())
         .pipe(gulp.dest('.'));
 });
 
