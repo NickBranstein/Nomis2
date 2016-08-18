@@ -41,3 +41,6 @@ dist
 
 js/
 css/
+
+# Ignore release zip
+.zip
