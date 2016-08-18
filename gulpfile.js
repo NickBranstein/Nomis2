@@ -1,18 +1,30 @@
-var gulp = require('gulp');
-var sass = require('gulp-sass');
-var ts = require('gulp-typescript');
-var tsProject = ts.createProject('tsconfig.json');
-var browserSync = require('browser-sync').create();
-var useref = require('gulp-useref');
-var uglify = require('gulp-uglify');
-var gulpIf = require('gulp-if');
-var cssnano = require('gulp-cssnano');
-var imagemin = require('gulp-imagemin');
-var cache = require('gulp-cache');
-var del = require('del');
-var runSequence = require('run-sequence');
-var mainBowerFiles = require('main-bower-files');
-var sourcemaps = require('gulp-sourcemaps');
+var gulp = require('gulp'),
+    zip = require('gulp-zip'),
+    sass = require('gulp-sass'),
+    ts = require('gulp-typescript'),
+    tsProject = ts.createProject('tsconfig.json'),
+    browserSync = require('browser-sync').create(),
+    useref = require('gulp-useref'),
+    uglify = require('gulp-uglify'),
+    gulpIf = require('gulp-if'),
+    cssnano = require('gulp-cssnano'),
+    imagemin = require('gulp-imagemin'),
+    cache = require('gulp-cache'),
+    del = require('del'),
+    runSequence = require('run-sequence'),
+    mainBowerFiles = require('main-bower-files'),
+    sourcemaps = require('gulp-sourcemaps');
+
+// Files to be added to the zip folder use "<directory goes here>/*" for all files inside the directory
+var zip_files = ['dist/index.html', 'dist/images/*', 'dist/js/main.min.js']; 
+
+// Zip up the JS/HTML required for the game
+gulp.task('zip', ['build'], function() {
+    return gulp.src(zip_files, {
+        base: "."
+    }).pipe(zip('release.zip'))
+        .pipe(gulp.dest('.'));
+});
 
 gulp.task('sass', function() {
     return gulp.src("app/scss/**/*.scss")
