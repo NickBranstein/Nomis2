@@ -47,9 +47,7 @@ css/
 
 # Ignore app css
 
-app
-
-css/
+/app/css
 
 # Ignore MAC bullshit
 
