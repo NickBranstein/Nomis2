@@ -44,3 +44,13 @@ css/
 
 # Ignore release zip
 .zip
+
+# Ignore app css
+
+app
+
+css/
+
+# Ignore MAC bullshit
+
+.DS_Store

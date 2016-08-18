@@ -16,7 +16,7 @@ var gulp = require('gulp'),
     sourcemaps = require('gulp-sourcemaps');
 
 // Files to be added to the zip folder use "<directory goes here>/*" for all files inside the directory
-var zip_files = ['dist/index.html', 'dist/images/*', 'dist/js/main.min.js']; 
+var zip_files = ['dist/*']; 
 
 // Zip up the JS/HTML required for the game
 gulp.task('zip', ['build'], function() {
@@ -30,6 +30,7 @@ gulp.task('sass', function() {
     return gulp.src("app/scss/**/*.scss")
         .pipe(sass())
         .pipe(gulp.dest("app/css"))
+        .pipe(gulp.dest("dist/css"))
         .pipe(browserSync.reload({ stream: true }))
 })
 
