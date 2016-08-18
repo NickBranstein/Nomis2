@@ -39,8 +39,7 @@ jspm_packages
 # Ignore the distribution directory
 dist
 
-js/
-css/
+app/js
 
 # Ignore release zip
 *.zip
