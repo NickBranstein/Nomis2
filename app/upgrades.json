@@ -46,37 +46,37 @@
 			"name": "Sharks",
 			"text": "Sharks with frickin' laser beams attached to their heads",
 			"clicks": "10000",
-			"improvementFactor" : ".07"
+			"improvementFactor" : ".08"
 		},
 		{
 			"name": "SixSigma",
 			"text": "Six Sigma Black Belt Certified",
 			"clicks": "50000",
-			"improvementFactor" : ".08"
+			"improvementFactor" : ".09"
 		},
 		{
 			"name": "SearchEngineFu",
 			"text": "Search Engine-Fu Sensei",
 			"clicks": "75000",
-			"improvementFactor" : ".09"
+			"improvementFactor" : ".10"
 		},
 		{
 			"name": "MinorTextFixes",
 			"text": "Minor Text Fixes",
 			"clicks": "150000",
-			"improvementFactor" : ".10"
+			"improvementFactor" : ".11"
 		},
 		{
 			"name": "UnicornFart",
 			"text": "Unicorn Fart Beam",
 			"clicks": "250000",
-			"improvementFactor" : ".11"
+			"improvementFactor" : ".12"
 		},
 		{
 			"name": "JS13kGamesJudge",
 			"text": "JS 13k Games Judge",
 			"clicks": "500000",
-			"improvementFactor" : ".12"
+			"improvementFactor" : ".13"
 		}		
 	],
 	"errors": [
