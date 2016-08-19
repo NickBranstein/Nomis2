@@ -8,9 +8,9 @@ module Engine {
                 //     console.log('continue game callback');
                 // }));
                 
-                this.sprites.push(new Button(350, 500, 'Start', () => {
-                  console.log('new game callback');
-                }));
+                //this.sprites.push(new Button(350, 500, '$', () => {
+                //  console.log('new game callback');
+                //}));
 
                 game.sprites = this.sprites;
             }

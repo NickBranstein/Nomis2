@@ -3,7 +3,7 @@ module Engine {
         public sprites: Array<Engine.IGetClicked>;       
             
             constructor(game: Game) {
-                // this.sprites = [];
+                this.sprites = [];
                 // // this.sprites.push(new Button(350, 500, 'Continue Game', () => {
                 // //     console.log('continue game callback');
                 // // }));
@@ -13,6 +13,15 @@ module Engine {
                 // }));
 
                 // game.sprites = this.sprites;
+                var buyButtons = [20,42,64,86,108];
+
+                for (var i in buyButtons) {
+                    this.sprites.push(new Button(10, buyButtons[i], 'BUY |', 16, "#00ff00", () => {
+                        console.log('new game callback');
+                    }));
+                }
+
+                game.sprites = this.sprites;
             }
             
             public render(context: CanvasRenderingContext2D, timestamp): void {    
@@ -21,9 +30,9 @@ module Engine {
                 // // background.src = 'images/meteor.png';
                 // // context.drawImage(background, 0, 0);
 
-                // this.sprites.forEach((sprite) => {
-                //     sprite.render(context, timestamp);
-                // });
+                this.sprites.forEach((sprite) => {
+                    sprite.render(context, timestamp);
+                });
             }
     }
 }

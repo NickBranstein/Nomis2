@@ -1,17 +1,15 @@
 module Engine {
    export class Button implements IRender, IGetClicked {
        lastTimestamp;
-       height: number;
        width: number;
        
-        constructor(public x: number, public y: number, public text: string, private callback?: () => any) {
+        constructor(public x: number, public y: number, public text: string, public height: number, public color: string, private callback?: () => any) {
         }
         
         public render(context: CanvasRenderingContext2D, timestamp): void {    
             // render the sprite
-            this.height = 30;
             context.font = `${this.height}px Arial`;
-            context.fillStyle = "#ffffff";
+            context.fillStyle = this.color;
             context.fillText(this.text, this.x, this.y);
             this.width = context.measureText(this.text).width;
         }
