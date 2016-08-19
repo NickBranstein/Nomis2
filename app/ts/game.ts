@@ -54,9 +54,9 @@ class Game {
         Engine.Drawing.text(this.context, '0 - QA Certification - 1k bugs', 55, 64);
         Engine.Drawing.text(this.context, '0 - Six Sigma Black Belt - 100k bugs', 55, 86);
         Engine.Drawing.text(this.context, 'x - etc - x bugs', 55, 108);
-
         Engine.Drawing.text(this.context, 'ERROR', 500, 300, 20, '#ff0000');
         Engine.Drawing.text(this.context, 'BOX', 500, 400, 20);
+        Engine.Drawing.DrawErrorBox(this.context,40,200,6, "Unknown is not a command");
     }
 
     private click(event: MouseEvent) : void {

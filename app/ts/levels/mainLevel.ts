@@ -20,7 +20,10 @@ module Engine {
                         console.log('new game callback');
                     }));
                 }
-
+                // let errorBox = new ErrorBox(350, 500, 'brokening',50, "grey", () => {
+                //     console.log('continue game callback');
+                // })
+                // this.sprites.push(errorBox);
                 game.sprites = this.sprites;
             }
             
