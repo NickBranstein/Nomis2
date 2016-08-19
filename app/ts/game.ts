@@ -43,29 +43,20 @@ class Game {
     };
 
     private renderUI(): void{
-        this.context.fillStyle = '#ffffff';
-        this.context.lineWidth = 2;
-        this.context.fillStyle = "rgba(250,250,250,0)";
-        this.context.fillRect(0, 0, 300, 50);
-        this.context.fillRect(800, 0, -300, 50);
+        Engine.Drawing.rect(this.context, 0, 0, 300, 50, true);
+        Engine.Drawing.rect(this.context, 800, 0, -300, 50, false, 'rgba(0,250,0,0.7)');
 
-        this.context.font = '20px Arial';
-        this.context.fillStyle = "#000000";
-        this.context.fillText('298,329 Bug Bounty', 550, 30);
-        this.context.fillText('2,016 Fixes/Sec', 550, 52);
+        Engine.Drawing.text(this.context, '298,329 Bug Bounty', 550, 30, 20);
+        Engine.Drawing.text(this.context, '2,016 Fixes/Sec', 550, 52, 20);
 
-        this.context.font = '16px Arial';
-        this.context.fillStyle = "#000000";
-        this.context.fillText('5 - Nomis - 90 bugs', 55, 20);
-        this.context.fillText('1 - Unicorn Fart Beam - 300 bugs', 55, 42);
-        this.context.fillText('0 - QA Certification - 1k bugs', 55, 64);
-        this.context.fillText('0 - Six Sigma Black Belt - 100k bugs', 55, 86);
-        this.context.fillText('x - etc - x bugs', 55, 108);
+        Engine.Drawing.text(this.context, '5 - Nomis - 90 bugs', 55, 20);
+        Engine.Drawing.text(this.context, '1 - Unicorn Fart Beam - 300 bugs', 55, 42);
+        Engine.Drawing.text(this.context, '0 - QA Certification - 1k bugs', 55, 64);
+        Engine.Drawing.text(this.context, '0 - Six Sigma Black Belt - 100k bugs', 55, 86);
+        Engine.Drawing.text(this.context, 'x - etc - x bugs', 55, 108);
 
-        this.context.font = '20px Arial';
-        this.context.fillStyle = "#000000";
-        this.context.fillText('ERROR', 500, 300);
-        this.context.fillText('BOX', 500, 400);
+        Engine.Drawing.text(this.context, 'ERROR', 500, 300, 20, '#ff0000');
+        Engine.Drawing.text(this.context, 'BOX', 500, 400, 20);
     }
 
     private click(event: MouseEvent) : void {
