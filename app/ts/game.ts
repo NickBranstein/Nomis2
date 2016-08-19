@@ -2,6 +2,7 @@ class Game {
     private renderer: Engine.Renderer;
     private currentLevel : Engine.ILevel;
     private showUI: boolean;
+    private sm: Engine.SoundManager;
     public sprites: Array<Engine.IGetClicked>;
 
     constructor(private context: CanvasRenderingContext2D, private width: number, private height: number) {
@@ -21,6 +22,8 @@ class Game {
         sprite.frames = 4;
         sprite.fps = 0;
         this.sprites.push(sprite);
+
+        this.sm = new Engine.SoundManager();
     }
     
     public start(){
