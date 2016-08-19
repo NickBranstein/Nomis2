@@ -54,36 +54,9 @@ class Game {
         Engine.Drawing.text(this.context, '0 - QA Certification - 1k bugs', 55, 64);
         Engine.Drawing.text(this.context, '0 - Six Sigma Black Belt - 100k bugs', 55, 86);
         Engine.Drawing.text(this.context, 'x - etc - x bugs', 55, 108);
-
-<<<<<<< HEAD
-        this.context.font = '20px Arial';
-        this.context.fillStyle = "#000000";
-        this.context.fillText('ERROR', 500, 300);
-        this.context.fillText('BOX', 500, 400);
-
-        function DrawErrorBox(x,y, pad, message){
-            let w = 300, h = 150;
-            let hPad = 24, fPad = 32;
-            let c1 = '#cccccc', c2 = "#333333", c3 = "#dddddd"
-            let f1 = 16, f2 = 12;
-
-            this.context.fillStyle = c1;
-            this.context.strokeStyle = c2;
-            this.context.strokeRect(x,y,w,h+fPad)
-            this.context.fillRect(x,y,w,h)
-            
-            this.context.fillStyle = c2;
-            this.context.fillText(message, x+pad, y+pad+16);
-            
-            this.context.fillStyle = c3
-            this.context.fillRect(x,y+pad+hPad,w,h-(pad*2)-hPad);
-        }
-        DrawErrorBox(40,200,6, "Unknown is not a command")
-
-=======
         Engine.Drawing.text(this.context, 'ERROR', 500, 300, 20, '#ff0000');
         Engine.Drawing.text(this.context, 'BOX', 500, 400, 20);
->>>>>>> 1accddb9a1b1d0f17d8f2480169e74f0f11d098e
+        Engine.Drawing.DrawErrorBox(this.context,40,200,6, "Unknown is not a command");
     }
 
     private click(event: MouseEvent) : void {
