@@ -1,4 +1,4 @@
-{
+var UpgradesJson = {
 	"upgrades": [
 		{
 			"name": "Nomis",
@@ -77,7 +77,7 @@
 			"text": "JS 13k Games Judge",
 			"clicks": "500000",
 			"improvementFactor" : ".13"
-		}		
+		}
 	],
 	"errors": [
 		{
