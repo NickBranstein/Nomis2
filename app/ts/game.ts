@@ -46,20 +46,20 @@ class Game {
     };
 
     private renderUI(): void{
-        Engine.Drawing.rect(this.context, 0, 0, 300, 50, true);
-        Engine.Drawing.rect(this.context, 800, 0, -300, 50, false, 'rgba(0,250,0,0.7)');
+        var upgrades = UpgradesJson.upgrades;
+
+        Engine.Drawing.rect(this.context, 0, 0, 300, upgrades.length*23, false, 'rgba(0,0,0,1)');
+        Engine.Drawing.rect(this.context, 800, 0, -300, 60, false, 'rgba(0,0,0,1)');
 
         Engine.Drawing.text(this.context, '298,329 Bug Bounty', 550, 30, 20);
         Engine.Drawing.text(this.context, '2,016 Fixes/Sec', 550, 52, 20);
 
-        Engine.Drawing.text(this.context, '5 - Nomis - 90 bugs', 55, 20);
-        Engine.Drawing.text(this.context, '1 - Unicorn Fart Beam - 300 bugs', 55, 42);
-        Engine.Drawing.text(this.context, '0 - QA Certification - 1k bugs', 55, 64);
-        Engine.Drawing.text(this.context, '0 - Six Sigma Black Belt - 100k bugs', 55, 86);
-        Engine.Drawing.text(this.context, 'x - etc - x bugs', 55, 108);
-        Engine.Drawing.text(this.context, 'ERROR', 500, 300, 20, '#ff0000');
-        Engine.Drawing.text(this.context, 'BOX', 500, 400, 20);
-        Engine.Drawing.DrawErrorBox(this.context,40,200,6, "Unknown is not a command");
+        var yPos = 20;
+        for (var i=0;i<upgrades.length;i++){
+            Engine.Drawing.text(this.context, 'X - ' + upgrades[i].name + ' - ' + upgrades[i].clicks, 55, yPos);
+            yPos += 22;
+        }
+        Engine.Drawing.DrawErrorBox(this.context,400,200,6, "ERROR MESSAGE HERE");
     }
 
     private click(event: MouseEvent) : void {
