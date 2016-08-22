@@ -36,10 +36,10 @@
         var canvas = document.getElementById('canvas');
         var context = canvas.getContext('2d');
 
-        var startButtonCanvas = document.getElementById('startButton');
+        var startButtonCanvas = document.getElementById('startButton').getContext('2d');
         startButtonCanvas.fillStyle = "#ffffff";
         startButtonCanvas.font = "30px Arial";
-        startButtonCanvas.fillText("START", 150,50);
+        startButtonCanvas.fillText("START", 55, 35);
 
 
      function startGame(){
