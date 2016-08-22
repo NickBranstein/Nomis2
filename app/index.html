@@ -23,11 +23,11 @@
     
     <div style="text-align:center;" class="glitch" data-text="Nomis 2">
         Nomis 2
-        <button id="StartButton" onclick="startGame()">START</button>
+        <canvas id="startButton" onclick="startGame()" width="200" height="50"></canvas>
     </div>
 
     <div style="text-align: center;">
-        <canvas id="canvas" width="800" height="600"></canvas>
+        <canvas id="canvas" width="800" height="600" style="border:none;"></canvas>
     <div>
 </body>
 </html>
@@ -35,6 +35,12 @@
 <script>
         var canvas = document.getElementById('canvas');
         var context = canvas.getContext('2d');
+
+        var startButtonCanvas = document.getElementById('startButton');
+        startButtonCanvas.fillStyle = "#ffffff";
+        startButtonCanvas.font = "30px Arial";
+        startButtonCanvas.fillText("START", 150,50);
+
 
      function startGame(){
         var game = new Game(context, canvas.width, canvas.height);
