@@ -14,7 +14,8 @@ var gulp = require('gulp'),
     runSequence = require('run-sequence'),
     mainBowerFiles = require('main-bower-files'),
     sourcemaps = require('gulp-sourcemaps'),
-    fileSize = require('gulp-filesize');
+    fileSize = require('gulp-size'),
+    cleanCSS = require('gulp-clean-css');
 
 // Files to be added to the zip folder use "<directory goes here>/*" for all files inside the directory
 var zip_files = ['dist/*/*', 'dist/*']; 
@@ -23,8 +24,9 @@ var zip_files = ['dist/*/*', 'dist/*'];
 gulp.task('zip', ['build'], function() {
     return gulp.src(zip_files, {
         base: "."
-    }).pipe(zip('release.zip'))
-        .pipe(fileSize())
+    }).pipe(fileSize({showFiles: true}))
+        .pipe(zip('release.zip'))        
+        .pipe(fileSize({showFiles: true}))
         .pipe(gulp.dest('.'));
 });
 
@@ -32,9 +34,14 @@ gulp.task('sass', function() {
     return gulp.src("app/scss/**/*.scss")
         .pipe(sass())
         .pipe(gulp.dest("app/css"))
-        .pipe(gulp.dest("dist/css"))
         .pipe(browserSync.reload({ stream: true }))
 })
+
+gulp.task('minify-css', function() {
+  return gulp.src('app/css/*.css')
+    .pipe(cleanCSS({compatibility: 'ie8'}))
+    .pipe(gulp.dest('dist/css'));
+});
 
 gulp.task('browserSync', function() {
     browserSync.init({
@@ -103,7 +110,7 @@ gulp.task('build', function(callback) {
         'clean:dist', 
         'typescript',
         'sass',
-        ['useref', 'images', 'fonts'],
+        ['useref', 'images', 'fonts', 'minify-css'],
         callback)
 })
 
