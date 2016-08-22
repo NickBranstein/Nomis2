@@ -13,12 +13,13 @@ module Engine {
                 // }));
 
                 // game.sprites = this.sprites;
-                var buyButtons = [20,42,64,86,108];
-
-                for (var i in buyButtons) {
-                    this.sprites.push(new Button(10, buyButtons[i], 'BUY |', 16, "#00ff00", () => {
+                var upgradeCount = UpgradesJson.upgrades.length;
+                var yPos = 20;
+                for (var i=0;i<upgradeCount;i++) {
+                    this.sprites.push(new Button(10, yPos, 'BUY |', 16, "#00ff00", () => {
                         console.log('new game callback');
                     }));
+                    yPos+=22;
                 }
                 // let errorBox = new ErrorBox(350, 500, 'brokening',50, "grey", () => {
                 //     console.log('continue game callback');
