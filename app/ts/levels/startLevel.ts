@@ -4,7 +4,7 @@ module Engine {
             
             constructor(game: Game) {
                 this.sprites = [];
-                this.sprites.push(new Button(350, 500, 'Start', 24, '#0000ff', () => {
+                this.sprites.push(new Button(375, 55, 'START', 30, '#ffffff', () => {
                     game.currentLevel = game.levels[1];
                 }));
 
