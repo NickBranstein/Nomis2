@@ -7,6 +7,7 @@ module Engine {
         private lastTimestamp: any;
         private nomis: Sprite;
         private movingRight; boolean;
+        private error: ErrorBox;
 
         constructor(game: Game) {
             this.sprites = [];
@@ -32,6 +33,10 @@ module Engine {
             this.bugsSquashed = 10;
             this.lastTimestamp = 0;
             this.movingRight = true;
+
+            let error = new ErrorBox(400, 400, 'Error!', 50, '#3fc56e', () => { this.errorClicked(); });
+            this.error = error;
+            this.sprites.push(this.error);
         }
 
         end(game: Game): void {
@@ -70,15 +75,20 @@ module Engine {
             });
         }
 
-        private moveNomis(context: CanvasRenderingContext2D){
-            if(this.movingRight === true && this.nomis.x <= (800 - this.nomis.frameWidth)){
+        private errorClicked(): void {
+            this.sm.playSound(Engine.Sounds.Ping);
+            console.log('error clicked');
+        }
+
+        private moveNomis(context: CanvasRenderingContext2D) {
+            if (this.movingRight === true && this.nomis.x <= (800 - this.nomis.frameWidth)) {
                 this.nomis.x += 10;
-            }else{
+            } else {
                 this.nomis.x -= 10;
                 this.nomis.flip = true;
                 this.movingRight = false;
 
-                if(this.nomis.x <= (0)){
+                if (this.nomis.x <= (0)) {
                     this.movingRight = true;
                     this.nomis.flip = false;
                 }
