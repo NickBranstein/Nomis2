@@ -5,11 +5,16 @@ module Engine {
         private sm: Engine.SoundManager;
         private bugsSquashed: number;
         private lastTimestamp: any;
+        private nomis: Sprite;
+        private movingRight; boolean;
 
         constructor(game: Game) {
             this.sprites = [];
             this.upgrades = UpgradesJson.upgrades;
             this.sm = new Engine.SoundManager();
+            this.nomis = new Sprite(400, 500, 95, 95, '../images/NomisSpriteSheet.png', 3, 10);
+
+            this.sprites.push(this.nomis);
 
             game.sprites = this.sprites;
         }
@@ -18,6 +23,7 @@ module Engine {
             this.sm.playBg();
             this.bugsSquashed = 10;
             this.lastTimestamp = 0;
+            this.movingRight = true;
         }
 
         end(game: Game): void {
@@ -52,9 +58,27 @@ module Engine {
                 yPos += 22;
             }
 
+            this.moveNomis(context);
+
             this.sprites.forEach((sprite) => {
                 sprite.render(context, timestamp);
             });
+        }
+
+        private moveNomis(context: CanvasRenderingContext2D){
+            if(this.movingRight === true && this.nomis.x <= (800 - this.nomis.frameWidth)){
+                this.nomis.x += 10;
+            }else{
+                this.nomis.x -= 10;
+                this.nomis.flip = true;
+                this.movingRight = false;
+
+                if(this.nomis.x <= (0)){
+                    this.movingRight = true;
+                    this.nomis.flip = false;
+                }
+            }
+            // how do we flip the sprite?
         }
     }
 }
