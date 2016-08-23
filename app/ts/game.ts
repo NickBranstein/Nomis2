@@ -2,7 +2,6 @@ class Game {
     private renderer: Engine.Renderer;
     public currentLevel : Engine.ILevel;
     public levels : Array<Engine.ILevel>;
-    private sm: Engine.SoundManager;
     public sprites: Array<Engine.IGetClicked>;
 
     constructor(private context: CanvasRenderingContext2D, private width: number, private height: number) {
@@ -15,10 +14,9 @@ class Game {
 
         // Start Level
         this.currentLevel = this.levels[0];
+        this.currentLevel.start();
 
         this.context.canvas.style.backgroundColor = 'rgba(250,250,250, .8)';   
-        this.sm = new Engine.SoundManager();
-        this.sm.playBg();
     }
     
     public start(){

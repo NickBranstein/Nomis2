@@ -2,12 +2,22 @@ module Engine {
     export class MainLevel implements ILevel {
         public sprites: Array<Engine.IGetClicked>;       
         private upgrades;
+        private sm: Engine.SoundManager;
             
             constructor(game: Game) {
                 this.sprites = [];
                 this.upgrades = UpgradesJson.upgrades;
+                this.sm = new Engine.SoundManager();
 
                 game.sprites = this.sprites;
+            }
+
+            start(game: Game): void {
+                this.sm.playBg();
+            }
+
+            end(game: Game): void {
+                this.sm.stopBg();
             }
             
             public render(context: CanvasRenderingContext2D, timestamp): void {    
