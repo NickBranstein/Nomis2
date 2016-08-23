@@ -3,6 +3,8 @@ module Engine {
         public sprites: Array<Engine.IGetClicked>;
         private upgrades;
         private sm: Engine.SoundManager;
+        private bugsSquashed: number;
+        private lastTimestamp: any;
 
         constructor(game: Game) {
             this.sprites = [];
@@ -14,6 +16,8 @@ module Engine {
 
         start(game: Game): void {
             this.sm.playBg();
+            this.bugsSquashed = 10;
+            this.lastTimestamp = 0;
         }
 
         end(game: Game): void {
@@ -21,6 +25,14 @@ module Engine {
         }
 
         public render(context: CanvasRenderingContext2D, timestamp): void {
+            let fixesPerSecond = 0;
+
+            if (this.lastTimestamp !== 0) {
+                // do some calculations in here
+                fixesPerSecond = Math.random() * 1000;
+            }
+
+            this.lastTimestamp = timestamp;
             // var background = new Image();
 
             // // background.src = 'images/meteor.png';
@@ -28,8 +40,8 @@ module Engine {
             Engine.Drawing.rect(context, 0, 0, 300, this.upgrades.length * 23, false, 'rgba(0,0,0,1)');
             Engine.Drawing.rect(context, 800, 0, -300, 60, false, 'rgba(0,0,0,1)');
 
-            Engine.Drawing.text(context, '298,329 Bug Bounty', 550, 30, 20);
-            Engine.Drawing.text(context, '2,016 Fixes/Sec', 550, 52, 20);
+            Engine.Drawing.text(context, `${this.bugsSquashed} Bug Bounty`, 550, 30, 20);
+            Engine.Drawing.text(context, `${fixesPerSecond} Fixes/Sec`, 550, 52, 20);
 
             let yPos = 20;
             for (let i = 0; i < this.upgrades.length; i++) {
