@@ -16,6 +16,14 @@ module Engine {
 
             this.sprites.push(this.nomis);
 
+            let yPos = 20;
+            for (let i = 0; i < this.upgrades.length; i++) {
+                this.sprites.push(new Button(10, yPos, 'BUY |', 16, "#00ff00", () => {
+                    console.log('new game callback');
+                }));
+                yPos += 22;
+            }
+
             game.sprites = this.sprites;
         }
 
@@ -51,9 +59,6 @@ module Engine {
 
             let yPos = 20;
             for (let i = 0; i < this.upgrades.length; i++) {
-                this.sprites.push(new Button(10, yPos, 'BUY |', 16, "#00ff00", () => {
-                    console.log('new game callback');
-                }));
                 Engine.Drawing.text(context, 'X - ' + this.upgrades[i].name + ' - ' + this.upgrades[i].clicks, 55, yPos);
                 yPos += 22;
             }
