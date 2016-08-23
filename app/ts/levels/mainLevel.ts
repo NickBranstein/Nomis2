@@ -1,41 +1,84 @@
 module Engine {
     export class MainLevel implements ILevel {
-        public sprites: Array<Engine.IGetClicked>;       
-            
-            constructor(game: Game) {
-                this.sprites = [];
-                // // this.sprites.push(new Button(350, 500, 'Continue Game', () => {
-                // //     console.log('continue game callback');
-                // // }));
-                
-                // this.sprites.push(new Button(350, 500, 'Start', () => {
-                //   console.log('new game callback');
-                // }));
+        public sprites: Array<Engine.IGetClicked>;
+        private upgrades;
+        private sm: Engine.SoundManager;
+        private bugsSquashed: number;
+        private lastTimestamp: any;
+        private nomis: Sprite;
+        private movingRight; boolean;
 
-                // game.sprites = this.sprites;
-                var buyButtons = [20,42,64,86,108];
+        constructor(game: Game) {
+            this.sprites = [];
+            this.upgrades = UpgradesJson.upgrades;
+            this.sm = new Engine.SoundManager();
+            this.nomis = new Sprite(400, 500, 95, 95, '../images/NomisSpriteSheet.png', 3, 10);
 
-                for (var i in buyButtons) {
-                    this.sprites.push(new Button(10, buyButtons[i], 'BUY |', 16, "#00ff00", () => {
-                        console.log('new game callback');
-                    }));
+            this.sprites.push(this.nomis);
+
+            game.sprites = this.sprites;
+        }
+
+        start(game: Game): void {
+            this.sm.playBg();
+            this.bugsSquashed = 10;
+            this.lastTimestamp = 0;
+            this.movingRight = true;
+        }
+
+        end(game: Game): void {
+            this.sm.stopBg();
+        }
+
+        public render(context: CanvasRenderingContext2D, timestamp): void {
+            let fixesPerSecond = 0;
+
+            if (this.lastTimestamp !== 0) {
+                // do some calculations in here
+                fixesPerSecond = Math.random() * 1000;
+            }
+
+            this.lastTimestamp = timestamp;
+            // var background = new Image();
+
+            // // background.src = 'images/meteor.png';
+            // // context.drawImage(background, 0, 0);
+            Engine.Drawing.rect(context, 0, 0, 300, this.upgrades.length * 23, false, 'rgba(0,0,0,1)');
+            Engine.Drawing.rect(context, 800, 0, -300, 60, false, 'rgba(0,0,0,1)');
+
+            Engine.Drawing.text(context, `${this.bugsSquashed} Bug Bounty`, 550, 30, 20);
+            Engine.Drawing.text(context, `${fixesPerSecond} Fixes/Sec`, 550, 52, 20);
+
+            let yPos = 20;
+            for (let i = 0; i < this.upgrades.length; i++) {
+                this.sprites.push(new Button(10, yPos, 'BUY |', 16, "#00ff00", () => {
+                    console.log('new game callback');
+                }));
+                Engine.Drawing.text(context, 'X - ' + this.upgrades[i].name + ' - ' + this.upgrades[i].clicks, 55, yPos);
+                yPos += 22;
+            }
+
+            this.moveNomis(context);
+
+            this.sprites.forEach((sprite) => {
+                sprite.render(context, timestamp);
+            });
+        }
+
+        private moveNomis(context: CanvasRenderingContext2D){
+            if(this.movingRight === true && this.nomis.x <= (800 - this.nomis.frameWidth)){
+                this.nomis.x += 10;
+            }else{
+                this.nomis.x -= 10;
+                this.nomis.flip = true;
+                this.movingRight = false;
+
+                if(this.nomis.x <= (0)){
+                    this.movingRight = true;
+                    this.nomis.flip = false;
                 }
-                // let errorBox = new ErrorBox(350, 500, 'brokening',50, "grey", () => {
-                //     console.log('continue game callback');
-                // })
-                // this.sprites.push(errorBox);
-                game.sprites = this.sprites;
             }
-            
-            public render(context: CanvasRenderingContext2D, timestamp): void {    
-                // var background = new Image();
-                
-                // // background.src = 'images/meteor.png';
-                // // context.drawImage(background, 0, 0);
-
-                this.sprites.forEach((sprite) => {
-                    sprite.render(context, timestamp);
-                });
-            }
+            // how do we flip the sprite?
+        }
     }
 }

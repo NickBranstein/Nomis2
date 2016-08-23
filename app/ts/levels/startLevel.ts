@@ -4,23 +4,23 @@ module Engine {
             
             constructor(game: Game) {
                 this.sprites = [];
-                // this.sprites.push(new Button(350, 500, 'Continue Game', () => {
-                //     console.log('continue game callback');
-                // }));
-                
-                //this.sprites.push(new Button(350, 500, '$', () => {
-                //  console.log('new game callback');
-                //}));
+                this.sprites.push(new Button(375, 55, 'START', 30, '#ffffff', () => {
+                    this.end(game);
+                }));
 
                 game.sprites = this.sprites;
             }
+
+            start(game: Game): void {
+                // do anything you need on start
+            }
+
+            end(game: Game): void {
+                game.currentLevel = game.levels[1];
+                game.currentLevel.start(game);
+            }
             
             public render(context: CanvasRenderingContext2D, timestamp): void {    
-                var background = new Image();
-                
-                // background.src = 'images/meteor.png';
-                // context.drawImage(background, 0, 0);
-
                 this.sprites.forEach((sprite) => {
                     sprite.render(context, timestamp);
                 });
