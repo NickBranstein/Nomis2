@@ -56,7 +56,7 @@ class Game {
         Engine.Drawing.text(this.context, 'x - etc - x bugs', 55, 108);
         Engine.Drawing.text(this.context, 'ERROR', 500, 300, 20, '#ff0000');
         Engine.Drawing.text(this.context, 'BOX', 500, 400, 20);
-        Engine.Drawing.DrawErrorBox(this.context,40,200,6, "Unknown is not a command");
+        Engine.Drawing.DrawErrorBox(this.context,140,200,6, "Refence Error", "Nomis is not defined");
     }
 
     private click(event: MouseEvent) : void {
