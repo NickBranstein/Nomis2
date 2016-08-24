@@ -96,8 +96,8 @@ namespace Engine {
         private createLaser(context: CanvasRenderingContext2D): void {
             let radius = Math.random() * 20;
             let x = Math.round(this.nomis.x + 50), y = 500;
-            let targetX = 200, targetY = 200;   //Should be coordinates of error box
-            let numberOfPoints = Math.sqrt(Math.abs((targetX-x)*(targetX-x)) + Math.abs((targetY-y)*(targetY-y)))/10;
+            let targetX = this.error.x, targetY = this.error.y;   //Should be coordinates of error box
+            let numberOfPoints = Math.sqrt(Math.abs((targetX - x) * (targetX - x)) + Math.abs((targetY - y) * (targetY - y))) / 10;
 
             //Time for some colors
             for (let i = 0; i < numberOfPoints; i++) {
@@ -110,8 +110,8 @@ namespace Engine {
                 context.fillStyle = gradient;
                 context.arc(x, y, radius + i, Math.PI * 2, 360, false);
                 context.fill();
-                x += (targetX-x)/(numberOfPoints-i);
-                y += (targetY-y)/(numberOfPoints-1);
+                x += (targetX - x) / (numberOfPoints - i);
+                y += (targetY - y) / (numberOfPoints - 1);
             }
         }
 
@@ -137,84 +137,96 @@ namespace Engine {
                     text: "Nomis AutoClick Bot",
                     clicks: 10,
                     improvementFactor: .01
-                }}, 
+                }
+            },
                 {
-                key: 100, value: <IUpgrade>{
-                    name: "NomisLaser",
-                    text: "Nomis Laser Beams",
-                    clicks: 100,
-                    improvementFactor: .02
-                }},
+                    key: 100, value: <IUpgrade>{
+                        name: "NomisLaser",
+                        text: "Nomis Laser Beams",
+                        clicks: 100,
+                        improvementFactor: .02
+                    }
+                },
                 {
-                key: 250, value: <IUpgrade>{
-                    name: "Refactored",
-                    text: "Refactored Circuitry",
-                    clicks: 250,
-                    improvementFactor: .03
-                }},
+                    key: 250, value: <IUpgrade>{
+                        name: "Refactored",
+                        text: "Refactored Circuitry",
+                        clicks: 250,
+                        improvementFactor: .03
+                    }
+                },
                 {
-                key: 500, value: <IUpgrade>{
-                    name: "CertifiedQA",
-                    text: "Certified Software Quality Analyst (CSQA)",
-                    clicks: 500,
-                    improvementFactor: .04
-                }},
+                    key: 500, value: <IUpgrade>{
+                        name: "CertifiedQA",
+                        text: "Certified Software Quality Analyst (CSQA)",
+                        clicks: 500,
+                        improvementFactor: .04
+                    }
+                },
                 {
-                key: 750, value: <IUpgrade>{
-                    name: "Download",
-                    text: "Download the whole internet",
-                    clicks: 750,
-                    improvementFactor: .05
-                }},
+                    key: 750, value: <IUpgrade>{
+                        name: "Download",
+                        text: "Download the whole internet",
+                        clicks: 750,
+                        improvementFactor: .05
+                    }
+                },
                 {
-                key: 1000, value: <IUpgrade>{
-                    name: "Manager",
-                    text: "Department Manager",
-                    clicks: 1000,
-                    improvementFactor: .06
-                }},
+                    key: 1000, value: <IUpgrade>{
+                        name: "Manager",
+                        text: "Department Manager",
+                        clicks: 1000,
+                        improvementFactor: .06
+                    }
+                },
                 {
-                key: 1250, value: <IUpgrade>{
-                    name: "PullRequest",
-                    text: "Pull Request",
-                    clicks: 1250,
-                    improvementFactor: .07
-                }},
+                    key: 1250, value: <IUpgrade>{
+                        name: "PullRequest",
+                        text: "Pull Request",
+                        clicks: 1250,
+                        improvementFactor: .07
+                    }
+                },
                 {
-                key: 50000, value: <IUpgrade>{
-                    name: "SixSigma",
-                    text: "Six Sigma Black Belt Certified",
-                    clicks: 50000,
-                    improvementFactor: .09
-                }},
+                    key: 50000, value: <IUpgrade>{
+                        name: "SixSigma",
+                        text: "Six Sigma Black Belt Certified",
+                        clicks: 50000,
+                        improvementFactor: .09
+                    }
+                },
                 {
-                key: 75000, value: <IUpgrade>{
-                    name: "SearchEngineFu",
-                    text: "Search Engine-Fu Sensei",
-                    clicks: 75000,
-                    improvementFactor: .1
-                }},
+                    key: 75000, value: <IUpgrade>{
+                        name: "SearchEngineFu",
+                        text: "Search Engine-Fu Sensei",
+                        clicks: 75000,
+                        improvementFactor: .1
+                    }
+                },
                 {
-                key: 150000, value: <IUpgrade>{
-                    name: "MinorTextFixes",
-                    text: "Minor Text Fixes",
-                    clicks: 150000,
-                    improvementFactor: .11
-                }},
+                    key: 150000, value: <IUpgrade>{
+                        name: "MinorTextFixes",
+                        text: "Minor Text Fixes",
+                        clicks: 150000,
+                        improvementFactor: .11
+                    }
+                },
                 {
-                key: 250000, value: <IUpgrade>{
-                    name: "UnicornFart",
-                    text: "Unicorn Fart Beam",
-                    clicks: 250000,
-                    improvementFactor: .12
-                }},
+                    key: 250000, value: <IUpgrade>{
+                        name: "UnicornFart",
+                        text: "Unicorn Fart Beam",
+                        clicks: 250000,
+                        improvementFactor: .12
+                    }
+                },
                 {
-                key: 500000, value: <IUpgrade>{
-                    name: "JS13kGamesJudge",
-                    text: "JS 13k Games Judge",
-                    clicks: 500000,
-                    improvementFactor: .13
-                }},
+                    key: 500000, value: <IUpgrade>{
+                        name: "JS13kGamesJudge",
+                        text: "JS 13k Games Judge",
+                        clicks: 500000,
+                        improvementFactor: .13
+                    }
+                },
             ]);
         }
     }
