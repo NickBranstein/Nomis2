@@ -67,7 +67,9 @@ namespace Engine {
             this.moveNomis(context);
             this.createError();
 
-            this.createLaser(context);
+            if(this.error != null){
+                this.createLaser(context);
+            }
 
             this.sprites.forEach((sprite) => {
                 sprite.render(context, timestamp);
@@ -96,6 +98,7 @@ namespace Engine {
         private createLaser(context: CanvasRenderingContext2D): void {
             let radius = Math.random() * 20;
             let x = Math.round(this.nomis.x + 50), y = 500;
+
             let targetX = this.error.x, targetY = this.error.y;   //Should be coordinates of error box
             let numberOfPoints = Math.sqrt(Math.abs((targetX - x) * (targetX - x)) + Math.abs((targetY - y) * (targetY - y))) / 10;
 
