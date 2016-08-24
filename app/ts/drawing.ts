@@ -1,4 +1,4 @@
-module Engine {
+namespace Engine {
     export class Drawing {
         private static get rectStyle(): string {return '#ffffff'};
         private static get textStyle(): string {return '#000000'};

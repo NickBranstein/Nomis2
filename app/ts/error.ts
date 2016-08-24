@@ -1,5 +1,5 @@
-module Engine {
-   export class ErrorBox implements IRender, IGetClicked {
+namespace Engine {
+   export class ErrorBox implements Engine.IRender, IGetClicked {
        lastTimestamp;
        width: number;
        
@@ -21,8 +21,6 @@ module Engine {
         }
 
         public click(event: MouseEvent) : void {
-            console.log('Button Got Clicked');
-
             if (this.callback != null) {
                 this.callback();    
             }

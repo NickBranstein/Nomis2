@@ -8,7 +8,8 @@
     <!-- build:js js/main.min.js -->
     <script src="js/cplayer.js"></script>
     <script src="js/soundManager.js"></script>
-    <script src="upgrades.json.js"></script>
+    <script src="js/upgrade.js"></script>
+    <script src="js/utils.js"></script>
     <script src="js/drawing.js"></script>
     <script src="js/game.js"></script>
     <script src="js/render.js"></script>
@@ -21,7 +22,6 @@
     <!-- endbuild -->    
     <div style="text-align:center;" class="glitch" data-text="Nomis 2">
         Nomis 2
-        <canvas id="startButton" onclick="startGame()" width="200" height="50"></canvas>
     </div>
     <div style="text-align: center;">
         <canvas id="canvas" width="800" height="600" style="border:none;"></canvas>
@@ -31,12 +31,6 @@
 <script>
     var canvas = document.getElementById('canvas');
     var context = canvas.getContext('2d');
-    var startButtonCanvas = document.getElementById('startButton').getContext('2d');
-    startButtonCanvas.fillStyle = "#ffffff";
-    startButtonCanvas.font = "30px Arial";
-    startButtonCanvas.fillText("START", 55, 35);
-    function startGame(){
     var game = new Game(context, canvas.width, canvas.height);
     game.start();
-    }
 </script>
