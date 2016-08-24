@@ -1,5 +1,5 @@
-module Engine {
-   export class ErrorBox implements IRender, IGetClicked {
+namespace Engine {
+   export class ErrorBox implements Engine.IRender, IGetClicked {
        lastTimestamp;
        width: number;
        

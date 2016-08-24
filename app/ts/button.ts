@@ -1,4 +1,4 @@
-module Engine {
+namespace Engine {
    export class Button implements IRender, IGetClicked {
        lastTimestamp;
        width: number;

@@ -1,4 +1,4 @@
-module Engine {
+namespace Engine {
     export class StartLevel implements ILevel {
             public sprites: Array<Engine.IGetClicked>;      
             private game: Game; 

@@ -1,4 +1,4 @@
-module Engine {
+namespace Engine {
    export class Sprite implements IAnimate, IRender, IGetClicked {
        public frames: number;
        public fps: number;

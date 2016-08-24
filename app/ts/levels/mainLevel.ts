@@ -1,7 +1,7 @@
-module Engine {
+namespace Engine {
     export class MainLevel implements ILevel {
         public sprites: Array<Engine.IGetClicked>;
-        private upgrades;
+        private upgrades: Utils.Dictionary<IUpgrade>;
         private sm: Engine.SoundManager;
         private bugsSquashed: number;
         private previousSquashed: number;
@@ -14,14 +14,14 @@ module Engine {
 
         constructor(game: Game) {
             this.sprites = [];
-            this.upgrades = UpgradesJson.upgrades;
+            this.upgrades = this.getUpgrades();
             this.sm = new Engine.SoundManager();
             this.nomis = new Sprite(400, 500, 95, 95, '../images/NomisSpriteSheet.png', 3, 10);
 
             this.sprites.push(this.nomis);
 
             let yPos = 20;
-            for (let i = 0; i < this.upgrades.length; i++) {
+            for (let i = 0; i < this.upgrades.values().length; i++) {
                 this.sprites.push(new Button(10, yPos, 'BUY |', 16, "#00ff00", () => {
                     console.log('new game callback');
                 }));
@@ -52,17 +52,17 @@ module Engine {
 
             this.lastTimestamp = timestamp;
 
-            Engine.Drawing.rect(context, 0, 0, 300, this.upgrades.length * 23, false, 'rgba(0,0,0,1)');
+            Engine.Drawing.rect(context, 0, 0, 300, this.upgrades.values().length * 23, false, 'rgba(0,0,0,1)');
             Engine.Drawing.rect(context, 800, 0, -300, 60, false, 'rgba(0,0,0,1)');
 
             Engine.Drawing.text(context, `${this.bugsSquashed} Bug Bounty`, 550, 30, 20);
             Engine.Drawing.text(context, `${fixesPerSecond.toFixed(2)} Fixes/Sec`, 550, 52, 20);
 
             let yPos = 20;
-            for (let i = 0; i < this.upgrades.length; i++) {
-                Engine.Drawing.text(context, 'X - ' + this.upgrades[i].name + ' - ' + this.upgrades[i].clicks, 55, yPos);
+            this.upgrades.keys().forEach(key => {
+                Engine.Drawing.text(context, 'X - ' + this.upgrades[key].name + ' - ' + this.upgrades[key].clicks, 55, yPos);
                 yPos += 22;
-            }
+            });
 
             this.moveNomis(context);
             this.createError();
@@ -93,12 +93,12 @@ module Engine {
             }
         }
 
-        private createLaser(context: CanvasRenderingContext2D): void {               
-            let radius = Math.random() *20 + 5;
+        private createLaser(context: CanvasRenderingContext2D): void {
+            let radius = Math.random() * 20 + 5;
             let x = 500, y = 500;
 
             //Time for some colors
-            for(let i = 0; i < 20; i++){
+            for (let i = 0; i < 20; i++) {
                 context.beginPath();
                 let gradient = context.createRadialGradient(x, y, 0, x, y, radius);
                 gradient.addColorStop(0, 'white');
@@ -107,12 +107,12 @@ module Engine {
                 gradient.addColorStop(1, 'black');
 
                 context.fillStyle = gradient;
-                context.arc(x, y, radius, Math.PI*2, 360, false);
+                context.arc(x, y, radius, Math.PI * 2, 360, false);
                 context.fill();
                 x += 10;
                 y -= 10;
             }
-            
+
         }
 
         private moveNomis(context: CanvasRenderingContext2D) {
@@ -128,6 +128,17 @@ module Engine {
                     this.nomis.flip = false;
                 }
             }
+        }
+
+        private getUpgrades(): Utils.Dictionary<IUpgrade> { 
+            return new Utils.Dictionary<IUpgrade>([{ // clicks is the key?
+                key: 10, value: <IUpgrade>{
+                    name: "Nomis",
+                    text: "Nomis AutoClick Bot",
+                    clicks: 10,
+                    improvementFactor: .01
+                }
+            }]); 
         }
     }
 }
