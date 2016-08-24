@@ -21,8 +21,6 @@ module Engine {
         }
 
         public click(event: MouseEvent) : void {
-            console.log('Button Got Clicked');
-
             if (this.callback != null) {
                 this.callback();    
             }

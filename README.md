@@ -8,5 +8,4 @@ gulp
 ```
 
 ## Credits
-* Background music comes from SoundBox by Marcus Geelnard (http://sb.bitsnbites.eu/)
-* Sound Effects are created by jsfxr (http://github.grumdrig.com/jsfxr/)
+* Background music and sound effects made by https://twitter.com/outerfield using from SoundBox by Marcus Geelnard (http://sb.bitsnbites.eu/)
