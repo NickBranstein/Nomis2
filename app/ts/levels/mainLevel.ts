@@ -3,13 +3,24 @@ namespace Engine {
         public sprites: Array<Engine.IGetClicked>;
         private upgrades: Utils.Dictionary<IUpgrade>;
         private sm: Engine.SoundManager;
+        private game: Game;
+        private lastTimestamp: any;
+
+        // calculations
         private bugsSquashed: number;
         private previousSquashed: number;
-        private lastTimestamp: any;
+
+        // sprite
         private nomis: Sprite;
         private movingRight; boolean;
+        private targetLocation: any = null;
+        private lastTimeStoppedMoving: number = 0;
+        private delayToMove: number = 10000;
+        private dx: number;
+        private dy: number;
+
+        // error message
         private error: ErrorBox;
-        private game: Game;
         private lastErrorTime: number;
 
         constructor(game: Game) {
@@ -38,6 +49,7 @@ namespace Engine {
             this.lastTimestamp = 0;
             this.movingRight = true;
             this.lastErrorTime = 0;
+            this.generateRandomLocationToMove();
 
             this.createError();
         }
@@ -67,7 +79,7 @@ namespace Engine {
             this.moveNomis(context);
             this.createError();
 
-            if(this.error != null){
+            if (this.error != null) {
                 this.createLaser(context);
             }
 
@@ -119,18 +131,44 @@ namespace Engine {
         }
 
         private moveNomis(context: CanvasRenderingContext2D) {
-            if (this.movingRight === true && this.nomis.x <= (800 - this.nomis.frameWidth)) {
-                this.nomis.x += 10;
-            } else {
-                this.nomis.x -= 10;
-                this.nomis.flip = true;
-                this.movingRight = false;
+            if (this.targetLocation == null && (this.lastTimestamp - this.lastTimeStoppedMoving) < Math.random() * this.delayToMove)
+                return; // not time to move yet
 
-                if (this.nomis.x <= (0)) {
-                    this.movingRight = true;
-                    this.nomis.flip = false;
-                }
+            if (this.targetLocation == null) {
+                this.generateRandomLocationToMove();
             }
+             // update the current position and keep moving
+             // dx and dy should really be on the sprite
+            console.log('x: ' + this.targetLocation.x + ', y:' + this.targetLocation.y);
+            console.log('x: ' + this.nomis.x + ', y:' + this.nomis.y);
+            console.log('dx: ' + this.dx + ', dy:' + this.dy);
+            console.log('moving right: ' + this.movingRight);
+
+            if(this.dx >= 0)
+            {
+                this.movingRight = true;
+                this.nomis.flip = false;
+            }
+            else{
+                this.movingRight = false;
+                this.nomis.flip = true;
+            }
+
+            this.nomis.x += this.dx;
+            this.nomis.y += this.dy;
+
+           if((this.movingRight && this.nomis.x >= this.targetLocation.x) || (!this.movingRight && this.nomis.x <= this.targetLocation.x)){
+               this.lastTimeStoppedMoving = this.lastTimestamp;
+               this.targetLocation = null;
+           }
+        }
+
+        private generateRandomLocationToMove(): void{
+            let randX = Math.random(), randY = Math.random();
+
+            this.targetLocation = { x: Math.round(randX * (800 - this.nomis.frameWidth)), y: Math.round(randY * (600 - this.nomis.frameHeight)) };
+            this.dx = Math.ceil((this.targetLocation.x - this.nomis.x) / 100); 
+            this.dy = Math.ceil((this.targetLocation.y - this.nomis.y) / 100);
         }
 
         private getUpgrades(): Utils.Dictionary<IUpgrade> {
