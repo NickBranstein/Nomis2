@@ -94,25 +94,25 @@ namespace Engine {
         }
 
         private createLaser(context: CanvasRenderingContext2D): void {
-            let radius = Math.random() * 20 + 5;
-            let x = 500, y = 500;
+            let radius = Math.random() * 20;
+            let x = Math.round(this.nomis.x + 50), y = 500;
+            let targetX = 200, targetY = 200;   //Should be coordinates of error box
+            let numberOfPoints = Math.sqrt(Math.abs((targetX-x)*(targetX-x)) + Math.abs((targetY-y)*(targetY-y)))/10;
 
             //Time for some colors
-            for (let i = 0; i < 20; i++) {
+            for (let i = 0; i < numberOfPoints; i++) {
                 context.beginPath();
-                let gradient = context.createRadialGradient(x, y, 0, x, y, radius);
+                context.globalCompositeOperation = 'overlay';
+                let gradient = context.createRadialGradient(x, y, 0, x, y, radius + i);
                 gradient.addColorStop(0, 'white');
-                gradient.addColorStop(0.4, 'white');
-                gradient.addColorStop(0.4, '#2efc45'); //random color?
-                gradient.addColorStop(1, 'black');
+                gradient.addColorStop(1, '#2efc45');
 
                 context.fillStyle = gradient;
-                context.arc(x, y, radius, Math.PI * 2, 360, false);
+                context.arc(x, y, radius + i, Math.PI * 2, 360, false);
                 context.fill();
-                x += 10;
-                y -= 10;
+                x += (targetX-x)/(numberOfPoints-i);
+                y += (targetY-y)/(numberOfPoints-1);
             }
-
         }
 
         private moveNomis(context: CanvasRenderingContext2D) {
