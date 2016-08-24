@@ -67,6 +67,8 @@ module Engine {
             this.moveNomis(context);
             this.createError();
 
+            this.createLaser(context);
+
             this.sprites.forEach((sprite) => {
                 sprite.render(context, timestamp);
             });
@@ -89,6 +91,28 @@ module Engine {
                 this.sprites.push(this.error);
                 this.sm.playSound(Sounds.Blip);
             }
+        }
+
+        private createLaser(context: CanvasRenderingContext2D): void {               
+            let radius = Math.random() *20 + 5;
+            let x = 500, y = 500;
+
+            //Time for some colors
+            for(let i = 0; i < 20; i++){
+                context.beginPath();
+                let gradient = context.createRadialGradient(x, y, 0, x, y, radius);
+                gradient.addColorStop(0, 'white');
+                gradient.addColorStop(0.4, 'white');
+                gradient.addColorStop(0.4, '#2efc45'); //random color?
+                gradient.addColorStop(1, 'black');
+
+                context.fillStyle = gradient;
+                context.arc(x, y, radius, Math.PI*2, 360, false);
+                context.fill();
+                x += 10;
+                y -= 10;
+            }
+            
         }
 
         private moveNomis(context: CanvasRenderingContext2D) {
