@@ -16,7 +16,7 @@ namespace Engine {
             this.sprites = [];
             this.upgrades = this.getUpgrades();
             this.sm = new Engine.SoundManager();
-            this.nomis = new Sprite(400, 500, 95, 95, '../images/NomisSpriteSheet.png', 3, 10);
+            this.nomis = new Sprite(400, 500, 69, 69, '../images/NomisSpriteSheet.png', 3, 10);
 
             this.sprites.push(this.nomis);
 
