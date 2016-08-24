@@ -4,10 +4,13 @@ module Engine {
         private upgrades;
         private sm: Engine.SoundManager;
         private bugsSquashed: number;
+        private previousSquashed: number;
         private lastTimestamp: any;
         private nomis: Sprite;
         private movingRight; boolean;
         private error: ErrorBox;
+        private game: Game;
+        private lastErrorTime: number;
 
         constructor(game: Game) {
             this.sprites = [];
@@ -25,42 +28,35 @@ module Engine {
                 yPos += 22;
             }
 
-            game.sprites = this.sprites;
+            this.game = game;
+            this.game.sprites = this.sprites;
         }
 
-        start(game: Game): void {
+        start(): void {
             this.sm.playBg();
-            this.bugsSquashed = 10;
+            this.bugsSquashed = this.previousSquashed = 10;
             this.lastTimestamp = 0;
             this.movingRight = true;
+            this.lastErrorTime = 0;
 
-            let error = new ErrorBox(400, 400, 'Error!', 50, '#3fc56e', () => { this.errorClicked(); });
-            this.error = error;
-            this.sprites.push(this.error);
+            this.createError();
         }
 
-        end(game: Game): void {
+        end(): void {
             this.sm.stopBg();
         }
 
         public render(context: CanvasRenderingContext2D, timestamp): void {
-            let fixesPerSecond = 0;
-
-            if (this.lastTimestamp !== 0) {
-                // do some calculations in here
-                fixesPerSecond = Math.random() * 1000;
-            }
+            let elapsed = timestamp - this.lastErrorTime;
+            let fixesPerSecond = (this.bugsSquashed - this.previousSquashed) / (elapsed / 1000);
 
             this.lastTimestamp = timestamp;
-            // var background = new Image();
 
-            // // background.src = 'images/meteor.png';
-            // // context.drawImage(background, 0, 0);
             Engine.Drawing.rect(context, 0, 0, 300, this.upgrades.length * 23, false, 'rgba(0,0,0,1)');
             Engine.Drawing.rect(context, 800, 0, -300, 60, false, 'rgba(0,0,0,1)');
 
             Engine.Drawing.text(context, `${this.bugsSquashed} Bug Bounty`, 550, 30, 20);
-            Engine.Drawing.text(context, `${fixesPerSecond} Fixes/Sec`, 550, 52, 20);
+            Engine.Drawing.text(context, `${fixesPerSecond.toFixed(2)} Fixes/Sec`, 550, 52, 20);
 
             let yPos = 20;
             for (let i = 0; i < this.upgrades.length; i++) {
@@ -69,6 +65,7 @@ module Engine {
             }
 
             this.moveNomis(context);
+            this.createError();
 
             this.sprites.forEach((sprite) => {
                 sprite.render(context, timestamp);
@@ -77,7 +74,21 @@ module Engine {
 
         private errorClicked(): void {
             this.sm.playSound(Engine.Sounds.Ping);
-            console.log('error clicked');
+            this.previousSquashed = this.bugsSquashed;
+            this.bugsSquashed += 1;
+            this.lastErrorTime = this.lastTimestamp;
+
+            this.sprites.splice(this.sprites.indexOf(this.error));
+            this.error = null;
+        }
+
+        private createError(): void {
+            if ((((this.lastTimestamp - this.lastErrorTime) > (Math.random() * 10000)) && this.error == null)
+                || (this.lastTimestamp == 0 && this.error == null)) {
+                this.error = new ErrorBox(400, 400, 'Error!', 50, '#3fc56e', () => { this.errorClicked(); });
+                this.sprites.push(this.error);
+                this.sm.playSound(Sounds.Blip);
+            }
         }
 
         private moveNomis(context: CanvasRenderingContext2D) {
@@ -93,7 +104,6 @@ module Engine {
                     this.nomis.flip = false;
                 }
             }
-            // how do we flip the sprite?
         }
     }
 }

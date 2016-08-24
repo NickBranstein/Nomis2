@@ -1,23 +1,25 @@
 module Engine {
     export class StartLevel implements ILevel {
-            public sprites: Array<Engine.IGetClicked>;       
+            public sprites: Array<Engine.IGetClicked>;      
+            private game: Game; 
             
             constructor(game: Game) {
                 this.sprites = [];
                 this.sprites.push(new Button(375, 55, 'START', 30, '#ffffff', () => {
-                    this.end(game);
+                    this.end();
                 }));
 
-                game.sprites = this.sprites;
+                this.game = game;
+                this.game.sprites = this.sprites;
             }
 
-            start(game: Game): void {
+            start(): void {
                 // do anything you need on start
             }
 
-            end(game: Game): void {
-                game.currentLevel = game.levels[1];
-                game.currentLevel.start(game);
+            end(): void {
+                this.game.currentLevel = this.game.levels[1];
+                this.game.currentLevel.start();
             }
             
             public render(context: CanvasRenderingContext2D, timestamp): void {    
