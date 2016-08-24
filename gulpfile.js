@@ -16,7 +16,8 @@ var gulp = require('gulp'),
     sourcemaps = require('gulp-sourcemaps'),
     fileSize = require('gulp-size'),
     cleanCSS = require('gulp-clean-css'),
-    htmlmin = require('gulp-htmlmin');
+    htmlmin = require('gulp-htmlmin'),
+    pngquant = require('imagemin-pngquant');
 
 // Files to be added to the zip folder use "<directory goes here>/*" for all files inside the directory
 var zip_files = ['dist/*/*', 'dist/*']; 
@@ -69,7 +70,12 @@ gulp.task('useref', function() {
 
 gulp.task('images', function() {
     return gulp.src('app/images/**/*.+(png|jpg|gif|svg)')
-        .pipe(cache(imagemin()))
+        .pipe(imagemin({
+            progressive: true,
+            use: [pngquant()],
+            optimizationLevel: 7,
+            verbose: true
+        }))
         .pipe(gulp.dest('dist/images'))
 })
 
