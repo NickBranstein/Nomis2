@@ -16,7 +16,7 @@ namespace Engine {
             }
         }
         public static text(context: CanvasRenderingContext2D, text: string, x: number, y: number, size?: number, style?: string){
-            context.font = `${size != null ? size : 16}px Arial`;
+            context.font = `${size != null ? size : 16}px Wawati SC`;
             context.fillStyle = style != null ? style : this.textStyle;
             context.fillText(text, x, y);
         }
