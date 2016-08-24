@@ -111,8 +111,8 @@ namespace Engine {
                 context.fillStyle = gradient;
                 context.arc(x, y, radius, Math.PI * 2, 360, false);
                 context.fill();
-                x += (targetX-x)/10;
-                y += (targetY-y)/10;
+                x += (targetX-x)/(numberOfPoints-i);
+                y += (targetY-y)/(numberOfPoints-1);
             }
         }
 
