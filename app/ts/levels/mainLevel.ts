@@ -140,7 +140,7 @@ namespace Engine {
                 context.arc(x, y, radius + i, Math.PI * 2, 360, false);
                 context.fill();
                 x += (targetX - x) / (numberOfPoints - i);
-                y += (targetY - y) / (numberOfPoints - 1);
+                y += (targetY - y) / (numberOfPoints - i);
             }
 
             context.globalCompositeOperation = 'source-over'; //reset to default
