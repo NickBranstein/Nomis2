@@ -45,7 +45,7 @@ namespace Engine {
         }
 
         start(): void {
-            //this.sm.playBg();
+            this.sm.playBg();
             this.bugsSquashed = this.previousSquashed = 10;
             this.lastTimestamp = 0;
             this.movingRight = true;
