@@ -18,6 +18,7 @@ namespace Engine {
         private delayToMove: number = 200000;
         private dx: number;
         private dy: number;
+        private firingLaser: boolean = false;
 
         // error message
         private error: ErrorBox;
@@ -79,13 +80,14 @@ namespace Engine {
             this.moveNomis(context);
             this.createError();
 
-            if (this.error != null) {
-                this.createLaser(context);
-            }
-
             this.sprites.forEach((sprite) => {
                 sprite.render(context, timestamp);
             });
+
+            // this will make the laser render on top of everything else
+            if (this.error != null) {
+                this.createLaser(context);
+            }
         }
 
         private errorClicked(): void {
@@ -108,6 +110,9 @@ namespace Engine {
         }
 
         private createLaser(context: CanvasRenderingContext2D): void {
+            if(!this.firingLaser)
+                return;
+
             let radius = Math.random() * 20;
             let x = this.nomis.x + this.nomis.frameWidth / 2, y = this.nomis.y + this.nomis.frameHeight / 2;
             let targetX = this.error.x, targetY = this.error.y;   //Should be coordinates of error box
@@ -127,11 +132,15 @@ namespace Engine {
                 x += (targetX - x) / (numberOfPoints - i);
                 y += (targetY - y) / (numberOfPoints - 1);
             }
+
+            context.globalCompositeOperation = 'source-over'; //reset to default
         }
 
         private moveNomis(context: CanvasRenderingContext2D) {
-            if (this.targetLocation == null && (this.lastTimestamp - this.lastTimeStoppedMoving) < (Math.random() * this.delayToMove))
+            if (this.targetLocation == null && (this.lastTimestamp - this.lastTimeStoppedMoving) < (Math.random() * this.delayToMove)){
+                this.firingLaser = true;
                 return; // not time to move yet
+            }
 
             if (this.targetLocation == null) {
                 this.generateRandomLocationToMove();
@@ -163,6 +172,7 @@ namespace Engine {
             this.targetLocation = { x: Math.round(randX < 0 ? 0 : randX), y: Math.round(randY < 0 ? 0 : randY) };
             this.dx = (this.targetLocation.x - this.nomis.x) / 100; 
             this.dy = (this.targetLocation.y - this.nomis.y) / 100;
+            this.firingLaser = false;
         }
 
         private getUpgrades(): Utils.Dictionary<IUpgrade> {
