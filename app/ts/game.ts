@@ -15,8 +15,6 @@ class Game {
         // Start Level
         this.currentLevel = this.levels[0];
         this.currentLevel.start();
-
-        this.context.canvas.style.backgroundColor = 'rgba(250,250,250, .8)';   
     }
     
     public start(){
