@@ -126,8 +126,6 @@ namespace Engine {
 
             let numberOfPoints = Math.sqrt(Math.abs((targetX - x) * (targetX - x)) + Math.abs((targetY - y) * (targetY - y))) / 10;
 
-            
-
             //Time for some colors
             for (let i = 0; i < numberOfPoints; i++) {
                 context.beginPath();
