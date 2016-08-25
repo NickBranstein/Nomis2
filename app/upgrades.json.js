@@ -7,10 +7,10 @@ var UpgradesJson = {
 			"improvementFactor" : ".01"
 		},
 		{
-			"name": "NomisLaser",
-			"text": "Nomis Laser Beams",
-			"clicks": "100",
-			"improvementFactor" : ".02"
+		"name": "NomisLaser",
+		"text": "Nomis Laser Beams",
+		"clicks": "100",
+		"improvementFactor" : ".02"
 		},
 		{
 			"name": "Refactored",

@@ -1,4 +1,4 @@
-module Engine {
+namespace Engine {
    export class Button implements IRender, IGetClicked {
        lastTimestamp;
        width: number;
@@ -8,7 +8,7 @@ module Engine {
         
         public render(context: CanvasRenderingContext2D, timestamp): void {    
             // render the sprite
-            context.font = `${this.height}px Arial`;
+            context.font = `${this.height}px Wawati SC`;
             context.fillStyle = this.color;
             context.fillText(this.text, this.x, this.y);
             this.width = context.measureText(this.text).width;

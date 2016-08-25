@@ -1,5 +1,5 @@
-module Engine {
-   export class ErrorBox implements IRender, IGetClicked {
+namespace Engine {
+   export class ErrorBox implements Engine.IRender, IGetClicked {
        lastTimestamp;
        width: number;
        outPad: number
@@ -12,24 +12,28 @@ module Engine {
         
         public render(context: CanvasRenderingContext2D, timestamp): void {    
             // render the sprite
-            let color1 ='#bbb', color2 ='#aaa', color3 = '#ccc', color4 = '#000000';
-            let btnPadH = 10, btnPadW = 30;
-            let boxPadH = 50, boxPadW = 150;
-            let btnHeight =18;
+            let color1 ='#AAA', color2 ='#888', color3 = '#ccc', color4 = '#000000';
+            let btnHeight = 18;
             context.fillStyle= color3;
             context.strokeStyle = color2;
-            let btnYOffset = ((btnPadH/2)+btnHeight);
-            let boxX = this.x-(boxPadW-btnPadW);
-            let boxY = this.y-(this.height+btnHeight+(boxPadH/2));
+            let btnYOffset = (btnHeight);
             let errorHeight = 12;
-
+            let btnWidth = 50;
+            let boxWidth = this.width + btnWidth + 50;
+            let boxY = this.y-this.height;
+            let btnX = this.x;
+            let boxX = this.x + btnWidth - (boxWidth);
             //outer bounding box
-            context.fillRect(boxX,boxY,this.width+boxPadW,this.height+boxPadH);
-            context.strokeRect(
-                this.x-(this.width-btnPadW),
+            context.fillRect(
+                boxX,
                 boxY,
-                this.width+boxPadW, 
-                this.height+boxPadH
+                boxWidth,
+                this.height);
+            context.strokeRect(
+                boxX,
+                boxY,
+                boxWidth, 
+                this.height
             );
             //error message
             context.strokeStyle = color4;
@@ -37,20 +41,20 @@ module Engine {
             context.fillText(this.text, boxX, boxY+errorHeight, this.width);    
 
             //error button
-            context.font = `${btnHeight}px Arial`;
+            context.font = `${btnHeight}px Wawati SC`;
             context.strokeStyle = color2;
             context.fillStyle = color1;
             context.fillRect(
-                this.x-(btnPadW/2), 
+                btnX, 
                 this.y-btnYOffset, 
-                this.width+btnPadW, 
-                btnHeight+btnPadH
+                btnWidth,
+                btnHeight
             );
             context.strokeRect(
-                this.x-(btnPadW/2), 
+                btnX, 
                 this.y-btnYOffset, 
-                this.width+btnPadW, 
-                btnHeight+btnPadH
+                btnWidth,
+                btnHeight
             )
             context.fillStyle = color4;
             context.fillText('ok', this.x, this.y);

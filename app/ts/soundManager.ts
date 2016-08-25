@@ -1,4 +1,4 @@
-module Engine {
+namespace Engine {
     export enum Sounds {
         Click = 0,
         Ping = 1,

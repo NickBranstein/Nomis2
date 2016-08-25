@@ -1,4 +1,4 @@
-module Engine {
+namespace Engine {
     export interface IAnimate{
         frames: number;
         fps: number;

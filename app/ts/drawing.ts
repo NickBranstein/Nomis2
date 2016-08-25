@@ -1,4 +1,4 @@
-module Engine {
+namespace Engine {
     export class Drawing {
         private static get rectStyle(): string {return '#ffffff'};
         private static get textStyle(): string {return '#000000'};
@@ -16,7 +16,7 @@ module Engine {
             }
         }
         public static text(context: CanvasRenderingContext2D, text: string, x: number, y: number, size?: number, style?: string){
-            context.font = `${size != null ? size : 16}px Arial`;
+            context.font = `${size != null ? size : 16}px Wawati SC`;
             context.fillStyle = style != null ? style : this.textStyle;
             context.fillText(text, x, y);
         }

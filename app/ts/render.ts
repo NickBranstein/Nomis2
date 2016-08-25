@@ -1,4 +1,4 @@
-module Engine {
+namespace Engine {
     export interface IRender {        
         render(context: CanvasRenderingContext2D, elapsedTime): void;
     }

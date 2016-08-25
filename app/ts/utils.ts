@@ -1,4 +1,4 @@
-export module Utils {
+namespace Utils {
     export class Dictionary<T> {
         private _keys: number[] = new Array<number>();
         private _values: T[] = new Array<T>();
