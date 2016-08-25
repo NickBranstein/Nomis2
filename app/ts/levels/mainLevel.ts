@@ -114,9 +114,19 @@ namespace Engine {
                 return;
 
             let radius = Math.random() * 20;
-            let x = this.nomis.x + this.nomis.frameWidth / 2, y = this.nomis.y + this.nomis.frameHeight / 2;
+            let x = this.nomis.x, y = this.nomis.y + this.nomis.frameHeight / 2;
             let targetX = this.error.x, targetY = this.error.y;   //Should be coordinates of error box
+
+            if(targetX < x && this.movingRight){
+                this.nomis.flip = true;
+            } else{
+                this.nomis.flip = false;
+                x += this.nomis.frameWidth;
+            }
+
             let numberOfPoints = Math.sqrt(Math.abs((targetX - x) * (targetX - x)) + Math.abs((targetY - y) * (targetY - y))) / 10;
+
+            
 
             //Time for some colors
             for (let i = 0; i < numberOfPoints; i++) {
