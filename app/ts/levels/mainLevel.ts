@@ -103,7 +103,7 @@ namespace Engine {
         private createError(): void {
             if ((((this.lastTimestamp - this.lastErrorTime) > (Math.random() * 10000)) && this.error == null)
                 || (this.lastTimestamp == 0 && this.error == null)) {
-                this.error = new ErrorBox(400, 400, 'Error!', 50, '#3fc56e', () => { this.errorClicked(); });
+                this.error = new ErrorBox(400, 400, 'Error!', 100, '#3fc56e', () => { this.errorClicked(); });
                 this.sprites.push(this.error);
                 this.sm.playSound(Sounds.Blip);
             }
@@ -125,8 +125,6 @@ namespace Engine {
             }
 
             let numberOfPoints = Math.sqrt(Math.abs((targetX - x) * (targetX - x)) + Math.abs((targetY - y) * (targetY - y))) / 10;
-
-            
 
             //Time for some colors
             for (let i = 0; i < numberOfPoints; i++) {
