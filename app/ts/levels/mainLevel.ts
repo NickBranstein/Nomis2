@@ -109,8 +109,7 @@ namespace Engine {
 
         private createLaser(context: CanvasRenderingContext2D): void {
             let radius = Math.random() * 20;
-            let x = Math.round(this.nomis.x + 50), y = 500;
-
+            let x = this.nomis.x + this.nomis.frameWidth / 2, y = this.nomis.y + this.nomis.frameHeight / 2;
             let targetX = this.error.x, targetY = this.error.y;   //Should be coordinates of error box
             let numberOfPoints = Math.sqrt(Math.abs((targetX - x) * (targetX - x)) + Math.abs((targetY - y) * (targetY - y))) / 10;
 
