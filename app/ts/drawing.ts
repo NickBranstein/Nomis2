@@ -21,22 +21,28 @@ namespace Engine {
             context.fillText(text, x, y);
         }
 
-        public static DrawErrorBox(context: CanvasRenderingContext2D, x,y, pad, message){
+        public static DrawErrorBox(context: CanvasRenderingContext2D, x,y, pad, heading, message){
             let w = 300, h = 150;
             let hPad = 24, fPad = 32;
-            let c1 = '#cccccc', c2 = "#333333", c3 = "#dddddd"
-            let f1 = 16, f2 = 12;
+            let c1 = '#cccccc', c2 = "#aaaaaa", c3 = "#dddddd", tc = "#222222"
+            let f1 = 16, f2 = 32;
+            let headSize = '16px', msgSize = '12px'
+            let ff = 'Arial'
 
             context.fillStyle = c1;
             context.strokeStyle = c2;
-            context.strokeRect(x,y,w,h+fPad)
-            context.fillRect(x,y,w,h)
-        
-            context.fillStyle = c2;
-            context.fillText(message, x+pad, y+pad+16);
-        
-            context.fillStyle = c3
+            context.strokeRect(x,y,w,h+fPad);
+            context.fillRect(x,y,w,h+fPad);
+
+            context.fillStyle = c3;
             context.fillRect(x,y+pad+hPad,w,h-(pad*2)-hPad);
+            
+            context.font = `${headSize} ${ff}`;
+            context.fillStyle = tc;
+            context.fillText(heading, x+pad, y+pad+16);
+            context.font = `${msgSize} ${ff}`;
+            context.fillText(message, x+pad, y+hPad+pad+16);
+
         }
     }
 }
