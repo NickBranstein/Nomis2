@@ -45,7 +45,7 @@ namespace Engine {
         }
 
         start(): void {
-            this.sm.playBg();
+            //this.sm.playBg();
             this.bugsSquashed = this.previousSquashed = 10;
             this.lastTimestamp = 0;
             this.movingRight = true;
@@ -91,7 +91,7 @@ namespace Engine {
         }
 
         private errorClicked(): void {
-            this.sm.playSound(Engine.Sounds.Ping);
+            //this.sm.playSound(Engine.Sounds.Ping);
             this.previousSquashed = this.bugsSquashed;
             this.bugsSquashed += 1;
             this.lastErrorTime = this.lastTimestamp;
@@ -103,9 +103,10 @@ namespace Engine {
         private createError(): void {
             if ((((this.lastTimestamp - this.lastErrorTime) > (Math.random() * 10000)) && this.error == null)
                 || (this.lastTimestamp == 0 && this.error == null)) {
-                this.error = new ErrorBox(400, 400, 'Error!', 100, '#3fc56e', () => { this.errorClicked(); });
-                this.sprites.push(this.error);
-                this.sm.playSound(Sounds.Blip);
+                    var errorMsg = UpgradesJson.errors[Math.floor(Math.random()*UpgradesJson.errors.length)].text;
+                    this.error = new ErrorBox(400, 400, errorMsg, 100, '#3fc56e', () => { this.errorClicked(); });
+                    this.sprites.push(this.error);
+                    this.sm.playSound(Sounds.Blip);
             }
         }
 
