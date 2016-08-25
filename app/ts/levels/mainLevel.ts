@@ -15,7 +15,7 @@ namespace Engine {
         private movingRight; boolean;
         private targetLocation: any = null;
         private lastTimeStoppedMoving: number = 0;
-        private delayToMove: number = 10000;
+        private delayToMove: number = 200000;
         private dx: number;
         private dy: number;
 
@@ -131,7 +131,7 @@ namespace Engine {
         }
 
         private moveNomis(context: CanvasRenderingContext2D) {
-            if (this.targetLocation == null && (this.lastTimestamp - this.lastTimeStoppedMoving) < Math.random() * this.delayToMove)
+            if (this.targetLocation == null && (this.lastTimestamp - this.lastTimeStoppedMoving) < (Math.random() * this.delayToMove))
                 return; // not time to move yet
 
             if (this.targetLocation == null) {
@@ -139,17 +139,12 @@ namespace Engine {
             }
              // update the current position and keep moving
              // dx and dy should really be on the sprite
-            console.log('x: ' + this.targetLocation.x + ', y:' + this.targetLocation.y);
-            console.log('x: ' + this.nomis.x + ', y:' + this.nomis.y);
-            console.log('dx: ' + this.dx + ', dy:' + this.dy);
-            console.log('moving right: ' + this.movingRight);
-
-            if(this.dx >= 0)
-            {
+            
+            if(this.dx >= 0) {
                 this.movingRight = true;
                 this.nomis.flip = false;
             }
-            else{
+            else {
                 this.movingRight = false;
                 this.nomis.flip = true;
             }
@@ -164,15 +159,15 @@ namespace Engine {
         }
 
         private generateRandomLocationToMove(): void{
-            let randX = Math.random(), randY = Math.random();
-
-            this.targetLocation = { x: Math.round(randX * (800 - this.nomis.frameWidth)), y: Math.round(randY * (600 - this.nomis.frameHeight)) };
-            this.dx = Math.ceil((this.targetLocation.x - this.nomis.x) / 100); 
-            this.dy = Math.ceil((this.targetLocation.y - this.nomis.y) / 100);
+            let randX = Math.random() * (800 - this.nomis.frameWidth), randY = Math.random() * (600 - this.nomis.frameHeight);
+            
+            this.targetLocation = { x: Math.round(randX < 0 ? 0 : randX), y: Math.round(randY < 0 ? 0 : randY) };
+            this.dx = (this.targetLocation.x - this.nomis.x) / 100; 
+            this.dy = (this.targetLocation.y - this.nomis.y) / 100;
         }
 
         private getUpgrades(): Utils.Dictionary<IUpgrade> {
-            return new Utils.Dictionary<IUpgrade>([{ // clicks is the key?
+            return new Utils.Dictionary<IUpgrade>([{
                 key: 10, value: <IUpgrade>{
                     name: "Nomis",
                     text: "Nomis AutoClick Bot",
