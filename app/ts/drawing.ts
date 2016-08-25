@@ -43,7 +43,6 @@ namespace Engine {
             context.font = `${msgSize} ${ff}`;
             context.fillText(message, x+pad, y+hPad+pad+16);
 
-
         }
     }
 }

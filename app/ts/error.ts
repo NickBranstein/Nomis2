@@ -12,52 +12,33 @@ namespace Engine {
         
         public render(context: CanvasRenderingContext2D, timestamp): void {    
             // render the sprite
-            let color1 ='#AAA', color2 ='#888', color3 = '#ccc', color4 = '#000000';
-            let btnHeight = 18;
-            context.fillStyle= color3;
-            context.strokeStyle = color2;
-            let btnYOffset = (btnHeight);
+            let color1 ='#aaa', color2 ='#999';
             let errorHeight = 12;
             let btnWidth = 50;
-            let boxWidth = this.width + btnWidth + 50;
-            let boxY = this.y-this.height;
-            let btnX = this.x;
-            let boxX = this.x + btnWidth - (boxWidth);
+            let btnHeight = 18;
+            let boxPad = 10;
+            let boxWidth = (this.width + btnWidth) + (boxPad*2) + 100;
+            let boxY = (this.y-this.height)-boxPad;
+            let boxX = (this.x + btnWidth - (boxWidth))-boxPad;
             //outer bounding box
-            context.fillRect(
-                boxX,
-                boxY,
-                boxWidth,
-                this.height);
-            context.strokeRect(
-                boxX,
-                boxY,
-                boxWidth, 
-                this.height
-            );
+            Engine.Drawing.rect(context, boxX, boxY, boxWidth, this.height+btnHeight, true, color1);
+            Engine.Drawing.rect(context, boxX, boxY, boxWidth, this.height+btnHeight, false, color2 );
+            
             //error message
-            context.strokeStyle = color4;
-            context.fillStyle=color4;
+            context.fillStyle='#000';
             context.fillText(this.text, boxX, boxY+errorHeight, this.width);    
 
+            
+            let btnX = this.x-20;
+            let btnY = this.y-(btnHeight);
             //error button
             context.font = `${btnHeight}px Wawati SC`;
-            context.strokeStyle = color2;
-            context.fillStyle = color1;
-            context.fillRect(
-                btnX, 
-                this.y-btnYOffset, 
-                btnWidth,
-                btnHeight
-            );
-            context.strokeRect(
-                btnX, 
-                this.y-btnYOffset, 
-                btnWidth,
-                btnHeight
-            )
-            context.fillStyle = color4;
-            context.fillText('ok', this.x, this.y);
+            
+            Engine.Drawing.rect(context, btnX, btnY , btnWidth, btnHeight,true, color1);
+            Engine.Drawing.rect(context, btnX, btnY, btnWidth, btnHeight,false, color2);
+            
+            context.fillStyle = '#000';
+            context.fillText('OK', btnX, this.y);
             this.width = context.measureText(this.text).width;
         }
 
