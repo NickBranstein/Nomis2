@@ -38,8 +38,9 @@ namespace Engine {
             Engine.Drawing.rect(context, boxX, boxY - headingHeight, boxWidth, (this.height + btnHeight) + headingHeight, false, color2);
 
             //error message
+            context.font = '24px Wawati SC';
             context.fillStyle = txtColor;
-            context.fillText(this.message, boxX + boxPad, (boxY + errorHeight) + boxPad, this.width);
+            context.fillText(this.message, boxX + boxPad, (boxY + errorHeight) + boxPad, boxWidth - 20);
 
             let btnX = this.x - 20;
             let btnY = this.y - (btnHeight);
