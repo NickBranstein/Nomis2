@@ -5,6 +5,7 @@ namespace Engine {
         private sm: Engine.SoundManager;
         private game: Game;
         private lastTimestamp: any;
+        private muteButton: Button;
 
         // calculations
         private bugsSquashed: number;
@@ -28,8 +29,18 @@ namespace Engine {
             this.sprites = [];
             this.upgrades = this.getUpgrades();
             this.sm = new Engine.SoundManager();
-            this.nomis = new Sprite(400, 500, 69, 69, '../images/NomisSpriteSheet.png', 3, 10);
+            this.muteButton = new Button(375, 30, 'Mute', 24, '#f00', () => { 
+                if(this.sm.muted){
+                    this.sm.unMuteAll();
+                    this.muteButton.text = 'Mute';
+                }else{
+                    this.sm.muteAll();
+                    this.muteButton.text = 'Unmute';
+                }
+            });
+            this.sprites.push(this.muteButton);
 
+            this.nomis = new Sprite(400, 500, 69, 69, '../images/NomisSpriteSheet.png', 3, 10);
             this.sprites.push(this.nomis);
 
             let yPos = 20;
@@ -45,7 +56,7 @@ namespace Engine {
         }
 
         start(): void {
-            //this.sm.playBg();
+            this.sm.playBg();
             this.bugsSquashed = this.previousSquashed = 10;
             this.lastTimestamp = 0;
             this.movingRight = true;
@@ -65,6 +76,13 @@ namespace Engine {
 
             this.lastTimestamp = timestamp;
 
+            this.moveNomis(context);
+            this.createError();
+
+            this.sprites.forEach((sprite) => {
+                sprite.render(context, timestamp);
+            });
+
             Engine.Drawing.rect(context, 0, 0, 300, this.upgrades.values().length * 23, false, 'rgba(0,0,0,1)');
             Engine.Drawing.rect(context, 800, 0, -300, 60, false, 'rgba(0,0,0,1)');
 
@@ -77,13 +95,6 @@ namespace Engine {
                 yPos += 22;
             });
 
-            this.moveNomis(context);
-            this.createError();
-
-            this.sprites.forEach((sprite) => {
-                sprite.render(context, timestamp);
-            });
-
             // this will make the laser render on top of everything else
             if (this.error != null) {
                 this.createLaser(context);
@@ -91,7 +102,7 @@ namespace Engine {
         }
 
         private errorClicked(): void {
-            //this.sm.playSound(Engine.Sounds.Ping);
+            this.sm.playSound(Engine.Sounds.Ping);
             this.previousSquashed = this.bugsSquashed;
             this.bugsSquashed += 1;
             this.lastErrorTime = this.lastTimestamp;
@@ -103,8 +114,7 @@ namespace Engine {
         private createError(): void {
             if ((((this.lastTimestamp - this.lastErrorTime) > (Math.random() * 10000)) && this.error == null)
                 || (this.lastTimestamp == 0 && this.error == null)) {
-                    var errorMsg = UpgradesJson.errors[Math.floor(Math.random()*UpgradesJson.errors.length)].text;
-                    this.error = new ErrorBox(400, 400, errorMsg, 100, '#3fc56e', () => { this.errorClicked(); });
+                    this.error = new ErrorBox(600, 400, 100, '#3fc56e', () => { this.errorClicked(); });
                     this.sprites.push(this.error);
                     this.sm.playSound(Sounds.Blip);
             }

@@ -11,6 +11,7 @@ namespace Engine {
         private bgMusic: HTMLAudioElement;
         private song: any;
         private sounds: Array<string> = [];
+        public muted: boolean;
 
         constructor() {
             this.p = new Audio();
@@ -24,6 +25,8 @@ namespace Engine {
             this.sounds[Sounds.Click] = this.setupSound(this.clickSound());
             this.sounds[Sounds.Ping] = this.setupSound(this.pingSound());
             this.sounds[Sounds.Blip] = this.setupSound(this.blipSound());
+
+            this.muted = false;
         }
         public playSound(sound: Sounds): void {
             this.p.src = this.sounds[sound];
@@ -36,6 +39,18 @@ namespace Engine {
         
         public stopBg(): void{
             this.bgMusic.pause();
+        }
+
+        public muteAll(): void {
+            this.bgMusic.muted = true;
+            this.p.muted = true;
+            this.muted = true;
+        }
+
+        public unMuteAll(): void {
+            this.bgMusic.muted = false;
+            this.p.muted = false;
+            this.muted = false;
         }
 
         private setupSound(sound: any): string {
