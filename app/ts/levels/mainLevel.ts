@@ -103,8 +103,7 @@ namespace Engine {
         private createError(): void {
             if ((((this.lastTimestamp - this.lastErrorTime) > (Math.random() * 10000)) && this.error == null)
                 || (this.lastTimestamp == 0 && this.error == null)) {
-                    var errorMsg = UpgradesJson.errors[Math.floor(Math.random()*UpgradesJson.errors.length)].text;
-                    this.error = new ErrorBox(400, 400, errorMsg, 100, '#3fc56e', () => { this.errorClicked(); });
+                    this.error = new ErrorBox(600, 400, 100, '#3fc56e', () => { this.errorClicked(); });
                     this.sprites.push(this.error);
                     this.sm.playSound(Sounds.Blip);
             }
