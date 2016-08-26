@@ -5,6 +5,7 @@ namespace Engine {
         private sm: Engine.SoundManager;
         private game: Game;
         private lastTimestamp: any;
+        private muteButton: Button;
 
         // calculations
         private bugsSquashed: number;
@@ -28,8 +29,18 @@ namespace Engine {
             this.sprites = [];
             this.upgrades = this.getUpgrades();
             this.sm = new Engine.SoundManager();
-            this.nomis = new Sprite(400, 500, 69, 69, '../images/NomisSpriteSheet.png', 3, 10);
+            this.muteButton = new Button(375, 30, 'Mute', 24, '#f00', () => { 
+                if(this.sm.muted){
+                    this.sm.unMuteAll();
+                    this.muteButton.text = 'Mute';
+                }else{
+                    this.sm.muteAll();
+                    this.muteButton.text = 'Unmute';
+                }
+            });
+            this.sprites.push(this.muteButton);
 
+            this.nomis = new Sprite(400, 500, 69, 69, '../images/NomisSpriteSheet.png', 3, 10);
             this.sprites.push(this.nomis);
 
             let yPos = 20;
@@ -91,7 +102,7 @@ namespace Engine {
         }
 
         private errorClicked(): void {
-            //this.sm.playSound(Engine.Sounds.Ping);
+            this.sm.playSound(Engine.Sounds.Ping);
             this.previousSquashed = this.bugsSquashed;
             this.bugsSquashed += 1;
             this.lastErrorTime = this.lastTimestamp;
