@@ -76,6 +76,13 @@ namespace Engine {
 
             this.lastTimestamp = timestamp;
 
+            this.moveNomis(context);
+            this.createError();
+
+            this.sprites.forEach((sprite) => {
+                sprite.render(context, timestamp);
+            });
+
             Engine.Drawing.rect(context, 0, 0, 300, this.upgrades.values().length * 23, false, 'rgba(0,0,0,1)');
             Engine.Drawing.rect(context, 800, 0, -300, 60, false, 'rgba(0,0,0,1)');
 
@@ -86,13 +93,6 @@ namespace Engine {
             this.upgrades.keys().forEach(key => {
                 Engine.Drawing.text(context, 'X - ' + this.upgrades[key].name + ' - ' + this.upgrades[key].clicks, 55, yPos);
                 yPos += 22;
-            });
-
-            this.moveNomis(context);
-            this.createError();
-
-            this.sprites.forEach((sprite) => {
-                sprite.render(context, timestamp);
             });
 
             // this will make the laser render on top of everything else
