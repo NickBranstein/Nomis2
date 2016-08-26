@@ -5,9 +5,14 @@ namespace Engine {
        outPad: number
        hPad:number;
        fPad:number;
+       buttons: Array<Button>;
         constructor(public x: number, public y: number, public text: string, public height: number, public color: string, private callback?: () => any) {
             this.outPad = 5;
             this.hPad = 15;
+            this.buttons = [
+                new Button(50,50, 'OK', 30, "#060"),
+                new Button(75, 75, 'X', 10, "#006")
+            ]
         }
         
         public render(context: CanvasRenderingContext2D, timestamp): void {    
@@ -42,15 +47,26 @@ namespace Engine {
             Engine.Drawing.rect(context, btnX-btnPad, btnY-btnPad, btnWidth+(btnPad*2), btnHeight+(btnPad*2),true, btnColor);
             Engine.Drawing.rect(context, btnX-btnPad, btnY-btnPad, btnWidth+(btnPad*2), btnHeight+(btnPad*2),false, color2);
             
+            this.buttons.forEach((b)=>{
+                b.render(context, timestamp);
+             })
+
             context.fillStyle = txtColor;
             context.fillText('OK', btnX+2, this.y);
             this.width = context.measureText(this.text).width;
         }
-
+    
         public checkCollision(x: number, y: number) : boolean {
-            if (y >= this.y - this.height && y <= this.y && x >= this.x && x <= this.x + this.width)
-                return true;
-            return false;
+            let collision = false;
+            this.buttons.forEach((b)=>{
+                if(b.checkCollision(x,y)){
+                    collision = true;
+                }
+            });
+            return collision;
+            // if (y >= this.y - this.height && y <= this.y && x >= this.x && x <= this.x + this.width)
+            //     return true;
+            // return false;
         }
 
         public click(event: MouseEvent) : void {
