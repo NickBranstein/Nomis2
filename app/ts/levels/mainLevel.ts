@@ -102,7 +102,7 @@ namespace Engine {
         }
 
         private errorClicked(): void {
-            this.sm.playSound(Engine.Sounds.Ping);
+            this.sm.playSound(Engine.Sounds.PowerUp);
             this.previousSquashed = this.bugsSquashed;
             this.bugsSquashed += 1;
             this.lastErrorTime = this.lastTimestamp;
@@ -116,7 +116,7 @@ namespace Engine {
                 || (this.lastTimestamp == 0 && this.error == null)) {
                     this.error = new ErrorBox(600, 400, 100, '#3fc56e', () => { this.errorClicked(); });
                     this.sprites.push(this.error);
-                    this.sm.playSound(Sounds.Blip);
+                    //this.sm.playSound(Engine.Sounds.PowerUp);
             }
         }
 
