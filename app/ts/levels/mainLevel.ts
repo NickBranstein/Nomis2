@@ -9,7 +9,7 @@ namespace Engine {
 
         // calculations
         private bugsSquashed: number;
-        private previousSquashed: number;
+        private fixesPerSecond: number;
 
         // sprite
         private nomis: Sprite;
@@ -44,12 +44,18 @@ namespace Engine {
             this.sprites.push(this.nomis);
 
             let yPos = 20;
-            for (let i = 0; i < this.upgrades.values().length; i++) {
+            this.upgrades.keys().forEach(key => {
                 this.sprites.push(new Button(10, yPos, 'BUY |', 16, "#00ff00", () => {
-                    console.log('new game callback');
+                    var upgrade = this.upgrades[key];
+                    if (this.bugsSquashed >= upgrade.clicks){
+                        this.bugsSquashed -= upgrade.clicks;
+                        this.fixesPerSecond += upgrade.improvementFactor;
+                        upgrade.clicks += upgrade.clicks * .1;
+                        upgrade.owned += 1;
+                    } 
                 }));
                 yPos += 22;
-            }
+            });
 
             this.game = game;
             this.game.sprites = this.sprites;
@@ -57,7 +63,8 @@ namespace Engine {
 
         start(): void {
             this.sm.playBg();
-            this.bugsSquashed = this.previousSquashed = 10;
+            this.bugsSquashed = 0;
+            this.fixesPerSecond = 0;
             this.lastTimestamp = 0;
             this.movingRight = true;
             this.lastErrorTime = 0;
@@ -72,7 +79,6 @@ namespace Engine {
 
         public render(context: CanvasRenderingContext2D, timestamp): void {
             let elapsed = timestamp - this.lastErrorTime;
-            let fixesPerSecond = (this.bugsSquashed - this.previousSquashed) / (elapsed / 1000);
 
             this.lastTimestamp = timestamp;
 
@@ -87,11 +93,11 @@ namespace Engine {
             Engine.Drawing.rect(context, 800, 0, -300, 60, false, 'rgba(0,0,0,1)');
 
             Engine.Drawing.text(context, `${this.bugsSquashed} Bug Bounty`, 550, 30, 20);
-            Engine.Drawing.text(context, `${fixesPerSecond.toFixed(2)} Fixes/Sec`, 550, 52, 20);
+            Engine.Drawing.text(context, `${this.fixesPerSecond.toFixed(2)} Fixes/Sec`, 550, 52, 20);
 
             let yPos = 20;
             this.upgrades.keys().forEach(key => {
-                Engine.Drawing.text(context, 'X - ' + this.upgrades[key].name + ' - ' + this.upgrades[key].clicks, 55, yPos);
+                Engine.Drawing.text(context, this.upgrades[key].owned + ' - ' + this.upgrades[key].name + ' - ' + this.upgrades[key].clicks, 55, yPos);
                 yPos += 22;
             });
 
@@ -103,7 +109,6 @@ namespace Engine {
 
         private errorClicked(): void {
             this.sm.playSound(Engine.Sounds.Ping);
-            this.previousSquashed = this.bugsSquashed;
             this.bugsSquashed += 1;
             this.lastErrorTime = this.lastTimestamp;
 
@@ -200,7 +205,8 @@ namespace Engine {
                     name: "Nomis",
                     text: "Nomis AutoClick Bot",
                     clicks: 10,
-                    improvementFactor: .01
+                    improvementFactor: .01,
+                    owned: 0
                 }
             },
                 {
@@ -208,7 +214,8 @@ namespace Engine {
                         name: "NomisLaser",
                         text: "Nomis Laser Beams",
                         clicks: 100,
-                        improvementFactor: .02
+                        improvementFactor: .02,
+                        owned: 0
                     }
                 },
                 {
@@ -216,7 +223,8 @@ namespace Engine {
                         name: "Refactored",
                         text: "Refactored Circuitry",
                         clicks: 250,
-                        improvementFactor: .03
+                        improvementFactor: .03,
+                        owned: 0
                     }
                 },
                 {
@@ -224,7 +232,8 @@ namespace Engine {
                         name: "CertifiedQA",
                         text: "Certified Software Quality Analyst (CSQA)",
                         clicks: 500,
-                        improvementFactor: .04
+                        improvementFactor: .04,
+                        owned: 0
                     }
                 },
                 {
@@ -232,7 +241,8 @@ namespace Engine {
                         name: "Download",
                         text: "Download the whole internet",
                         clicks: 750,
-                        improvementFactor: .05
+                        improvementFactor: .05,
+                        owned: 0
                     }
                 },
                 {
@@ -240,7 +250,8 @@ namespace Engine {
                         name: "Manager",
                         text: "Department Manager",
                         clicks: 1000,
-                        improvementFactor: .06
+                        improvementFactor: .06,
+                        owned: 0
                     }
                 },
                 {
@@ -248,7 +259,8 @@ namespace Engine {
                         name: "PullRequest",
                         text: "Pull Request",
                         clicks: 1250,
-                        improvementFactor: .07
+                        improvementFactor: .07,
+                        owned: 0
                     }
                 },
                 {
@@ -256,7 +268,8 @@ namespace Engine {
                         name: "SixSigma",
                         text: "Six Sigma Black Belt Certified",
                         clicks: 50000,
-                        improvementFactor: .09
+                        improvementFactor: .09,
+                        owned: 0
                     }
                 },
                 {
@@ -264,7 +277,8 @@ namespace Engine {
                         name: "SearchEngineFu",
                         text: "Search Engine-Fu Sensei",
                         clicks: 75000,
-                        improvementFactor: .1
+                        improvementFactor: .1,
+                        owned: 0
                     }
                 },
                 {
@@ -272,7 +286,8 @@ namespace Engine {
                         name: "MinorTextFixes",
                         text: "Minor Text Fixes",
                         clicks: 150000,
-                        improvementFactor: .11
+                        improvementFactor: .11,
+                        owned: 0
                     }
                 },
                 {
@@ -280,7 +295,8 @@ namespace Engine {
                         name: "UnicornFart",
                         text: "Unicorn Fart Beam",
                         clicks: 250000,
-                        improvementFactor: .12
+                        improvementFactor: .12,
+                        owned: 0
                     }
                 },
                 {
@@ -288,7 +304,8 @@ namespace Engine {
                         name: "JS13kGamesJudge",
                         text: "JS 13k Games Judge",
                         clicks: 500000,
-                        improvementFactor: .13
+                        improvementFactor: .13,
+                        owned: 0
                     }
                 },
             ]);
