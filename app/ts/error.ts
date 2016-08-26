@@ -3,46 +3,50 @@ namespace Engine {
     export class ErrorBox implements Engine.IRender, IGetClicked {
         lastTimestamp;
         width: number;
-        outPad: number
-        hPad: number;
-        fPad: number;
+        buttons: Array<Button>;
+        headingHeight: number;
+
         private errors: Array<string>;
         private message: string;
+        
 
         constructor(public x: number, public y: number, public height: number, public color: string, private callback?: () => any) {
-            this.outPad = 5;
-            this.hPad = 15;
             this.errors = this.getErrors();
             this.message = this.errors[Math.floor(Math.random() * this.errors.length)];
             this.width = 200;
->>>>>>> a555d2e723043d887d5bf4272a5695b169d9de7a
+            this.headingHeight = 32;
+
+            this.buttons = [
+                new Button(x-12, y, " OK ", 20, '#000'),
+                new Button(x+14, y-(height+ (this.headingHeight / 2)), "X", 20, '#000')
+            ]
+
         }
 
+        
         public render(context: CanvasRenderingContext2D, timestamp): void {
             // render the sprite
-            let color1 = '#ccc', color2 = '#bbb', color3 = '#aac';
+            let color1 = '#ccc', color2 = '#bbb', color3 = '#aac', txtColor = '#000';
             let btnColor = '#a8a8a8'
-            let txtColor = '#000'
             let errorHeight = 12;
             let btnWidth = 50, btnHeight = 18, btnPad = 5;
-            let boxPad = 10, boxHeading = 12;
+            let boxPad = 10;
             let boxWidth = (this.width + btnWidth) + (boxPad * 2) + 200;
 
             let boxY = (this.y - this.height) - boxPad;
             let boxX = (this.x + btnWidth - (boxWidth)) - boxPad;
 
-            let headingHeight = 32;
-            
-            Engine.Drawing.rect(context, boxX, boxY - headingHeight, boxWidth, headingHeight, true, color3)
 
+            Engine.Drawing.rect(context, boxX, boxY - this.headingHeight, boxWidth, this.headingHeight, true, color3)
+            Engine.Drawing.text(context, "Unexpected error has occurred", boxX+5, boxY-5, 20);
             //outer bounding box
             Engine.Drawing.rect(context, boxX, boxY, boxWidth, this.height + btnHeight, true, color1);
-            Engine.Drawing.rect(context, boxX, boxY - headingHeight, boxWidth, (this.height + btnHeight) + headingHeight, false, color2);
+            Engine.Drawing.rect(context, boxX, boxY - this.headingHeight, boxWidth, (this.height + btnHeight) + this.headingHeight, false, color2);
 
             //error message
             context.font = '24px Wawati SC';
             context.fillStyle = txtColor;
-            context.fillText(this.message, boxX + boxPad, (boxY + errorHeight) + boxPad, boxWidth - 20);
+            Engine.Drawing.wrapText(context, this.message, boxX + boxPad, (boxY + errorHeight)+ boxPad, boxWidth -20, 24);
 
             let btnX = this.x - 20;
             let btnY = this.y - (btnHeight);
@@ -51,18 +55,21 @@ namespace Engine {
 
             Engine.Drawing.rect(context, btnX - btnPad, btnY - btnPad, btnWidth + (btnPad * 2), btnHeight + (btnPad * 2), true, btnColor);
             Engine.Drawing.rect(context, btnX - btnPad, btnY - btnPad, btnWidth + (btnPad * 2), btnHeight + (btnPad * 2), false, color2);
-
-
-            context.fillStyle = txtColor;
-            context.fillText('OK', btnX + 2, this.y);
+        
+            this.buttons.forEach(function(b){
+                b.render(context, timestamp);
+            })
         }
 
 
         public checkCollision(x: number, y: number): boolean {
-            if (y >= this.y - this.height && y <= this.y && x >= this.x && x <= this.x + this.width)
-                return true;
-            return false;
-
+            var hasCollision = false;
+            this.buttons.forEach(b => {
+                if(b.checkCollision(x,y))
+                    hasCollision = true;
+            });
+            return hasCollision;
+        
         }
 
         public click(event: MouseEvent): void {
