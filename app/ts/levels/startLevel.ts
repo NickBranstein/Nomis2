@@ -5,11 +5,17 @@ namespace Engine {
             
             constructor(game: Game) {
                 this.sprites = [];
-                this.sprites.push(new Button(375, 55, 'START', 30, '#ffffff', () => {
+                this.game = game;
+
+                let startButtonHeight = 30;
+                let calculatedX = (this.game.canvasWidth / 2) - 50;
+                let calculatedY = (this.game.canvasHeight / 2) - (startButtonHeight / 2) + 60;
+                console.log(calculatedX);
+
+                this.sprites.push(new Button(calculatedX, calculatedY, 'START', startButtonHeight, '#ffffff', () => {
                     this.end();
                 }));
 
-                this.game = game;
                 this.game.sprites = this.sprites;
             }
 
@@ -22,8 +28,14 @@ namespace Engine {
                 this.game.currentLevel.start();
             }
             
-            public render(context: CanvasRenderingContext2D, timestamp): void {    
-                let x = 375, y = 300, h = 80, text = 'Nomis2';
+            public render(context: CanvasRenderingContext2D, timestamp): void {
+                let h = 80, text = 'Nomis2';
+                let textMetrics = context.measureText(text);
+                let calculatedX = (context.canvas.clientWidth / 2) - (textMetrics.width) - 30;
+                let calculatedY = (context.canvas.clientHeight / 2);
+
+                let x = calculatedX, y = calculatedY;
+
                 let dx = Math.random() * 5 + 5 * (timestamp % 2 === 0 ? 0 : -1), dy = Math.random() * 5;                                   
 
                 // random color too?
