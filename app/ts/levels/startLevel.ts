@@ -23,6 +23,13 @@ namespace Engine {
             }
             
             public render(context: CanvasRenderingContext2D, timestamp): void {    
+                let x = 375, y = 300, h = 80, text = 'Nomis2';
+                let dx = Math.random() * 5 + 5 * (timestamp % 2 === 0 ? 0 : -1), dy = Math.random() * 5;                                   
+
+                // random color too?
+                Engine.Drawing.text(context, 'Nomis2', x, y, h, '#fff');
+                Engine.Drawing.text(context, 'Nomis2', x + dx, y + dy, h);
+
                 this.sprites.forEach((sprite) => {
                     sprite.render(context, timestamp);
                 });
