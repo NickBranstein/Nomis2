@@ -5,6 +5,7 @@ namespace Engine {
         private sm: Engine.SoundManager;
         private game: Game;
         private lastTimestamp: any;
+        private secondTimestamp: any;
         private muteButton: Button;
 
         // calculations
@@ -66,6 +67,7 @@ namespace Engine {
             this.bugsSquashed = 0;
             this.fixesPerSecond = 0;
             this.lastTimestamp = 0;
+            this.secondTimestamp = 0;
             this.movingRight = true;
             this.lastErrorTime = 0;
             this.generateRandomLocationToMove();
@@ -81,6 +83,10 @@ namespace Engine {
             let elapsed = timestamp - this.lastErrorTime;
 
             this.lastTimestamp = timestamp;
+            if ((timestamp - this.secondTimestamp) / 1000 > 1){
+                this.bugsSquashed += this.fixesPerSecond;
+                this.secondTimestamp = timestamp;
+            }
 
             this.moveNomis(context);
             this.createError();
@@ -92,7 +98,7 @@ namespace Engine {
             Engine.Drawing.rect(context, 0, 0, 300, this.upgrades.values().length * 23, false, 'rgba(0,0,0,1)');
             Engine.Drawing.rect(context, 800, 0, -300, 60, false, 'rgba(0,0,0,1)');
 
-            Engine.Drawing.text(context, `${this.bugsSquashed} Bug Bounty`, 550, 30, 20);
+            Engine.Drawing.text(context, `${this.bugsSquashed.toString()} Bug Bounty`, 550, 30, 20);
             Engine.Drawing.text(context, `${this.fixesPerSecond.toFixed(2)} Fixes/Sec`, 550, 52, 20);
 
             let yPos = 20;
