@@ -71,8 +71,8 @@ namespace Engine {
 
         start(): void {
             this.sm.playBg();
-            this.bugsSquashed = 10;
-            this.totalBugsSquashed = 10;
+            this.bugsSquashed = 1100;
+            this.totalBugsSquashed = 1100;
             this.fixesPerSecond = 0;
             this.lastTimestamp = 0;
             this.secondTimestamp = 0;
@@ -144,9 +144,15 @@ namespace Engine {
             }
         }
 
-        private createLaser(context: CanvasRenderingContext2D): void {
+        private createLaser(context: CanvasRenderingContext2D): void {            
             if(!this.firingLaser)
                 return;
+
+            if(Math.random() < .025){
+                this.errorClicked();
+                this.firingLaser = false;
+                return;
+            } 
 
             let radius = Math.random() * 20;
             let x = this.nomis.x, y = this.nomis.y + this.nomis.frameHeight / 2;
