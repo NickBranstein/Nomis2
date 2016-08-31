@@ -31,7 +31,7 @@ namespace Engine {
             this.sprites = [];
             this.upgrades = this.getUpgrades();
             this.sm = new Engine.SoundManager();
-            this.muteButton = new Button(375, 30, 'Mute', 24, '#f00', () => { 
+            this.muteButton = new Button(375, 30, 'Mute', 24, '#FF9842', () => { 
                 if(this.sm.muted){
                     this.sm.unMuteAll();
                     this.muteButton.text = 'Mute';
@@ -44,7 +44,7 @@ namespace Engine {
 
             let yPos = 20;
             this.upgrades.keys().forEach(key => {
-                this.sprites.push(new Button(10, yPos, 'BUY |', 16, "#00ff00", () => {
+                this.sprites.push(new Button(10, yPos, 'BUY', 16, '#5BD95B', () => {
                     var upgrade = this.upgrades[key];
                     if (this.bugsSquashed >= upgrade.clicks){
                         this.bugsSquashed -= upgrade.clicks;
@@ -67,8 +67,8 @@ namespace Engine {
 
         start(): void {
             this.sm.playBg();
-            this.bugsSquashed = 3;
-            this.totalBugsSquashed = 3;
+            this.bugsSquashed = 10;
+            this.totalBugsSquashed = 10;
             this.fixesPerSecond = 0;
             this.lastTimestamp = 0;
             this.secondTimestamp = 0;
@@ -99,8 +99,8 @@ namespace Engine {
                 sprite.render(context, timestamp);
             });
 
-            Engine.Drawing.rect(context, 0, 0, 300, this.upgrades.values().length * 23, false, 'rgba(0,0,0,1)');
-            Engine.Drawing.rect(context, 800, 0, -300, 60, false, 'rgba(0,0,0,1)');
+            Engine.Drawing.rect(context, 0, 0, 300, this.upgrades.values().length * 23, false, 'rgba(0,0,0,0)');
+            Engine.Drawing.rect(context, 800, 0, -300, 60, false, 'rgba(0,0,0,0)');
 
             Engine.Drawing.text(context, `${this.bugsSquashed.toFixed(0)} Bug Bounty`, 550, 30, 20);
             Engine.Drawing.text(context, `${this.fixesPerSecond.toFixed(2)} Fixes/Sec`, 550, 52, 20);
@@ -108,10 +108,10 @@ namespace Engine {
             let yPos = 20;
             this.upgrades.keys().forEach(key => {
                 if ((key / 2) >= this.totalBugsSquashed){
-                    Engine.Drawing.text(context, '??' + ' - ' + '??????????????' + ' - ' + '?????', 55, yPos);
+                    Engine.Drawing.text(context, '| ??' + ' - ' + '??????????????' + ' - ' + '?????', 55, yPos);
                 }
                 else{
-                    Engine.Drawing.text(context, this.upgrades[key].owned + ' - ' + this.upgrades[key].name + ' - ' + this.upgrades[key].clicks, 55, yPos);
+                    Engine.Drawing.text(context, '| ' + this.upgrades[key].owned + ' - ' + this.upgrades[key].name + ' - ' + this.upgrades[key].clicks, 55, yPos);
                 }
                 
                 yPos += 22;
