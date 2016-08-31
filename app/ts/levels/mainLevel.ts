@@ -10,6 +10,7 @@ namespace Engine {
 
         // calculations
         private bugsSquashed: number;
+        private totalBugsSquashed: number;
         private fixesPerSecond: number;
 
         // sprite
@@ -41,9 +42,6 @@ namespace Engine {
             });
             this.sprites.push(this.muteButton);
 
-            this.nomis = new Sprite(400, 500, 69, 69, '../images/NomisSpriteSheet.png', 3, 10);
-            this.sprites.push(this.nomis);
-
             let yPos = 20;
             this.upgrades.keys().forEach(key => {
                 this.sprites.push(new Button(10, yPos, 'BUY |', 16, "#00ff00", () => {
@@ -51,9 +49,14 @@ namespace Engine {
                     if (this.bugsSquashed >= upgrade.clicks){
                         this.bugsSquashed -= upgrade.clicks;
                         this.fixesPerSecond += upgrade.improvementFactor;
-                        upgrade.clicks += upgrade.clicks * .1;
                         upgrade.owned += 1;
-                    } 
+                        this.sm.playSound(Engine.Sounds.PowerUp);
+
+                        if(key == 10 && this.nomis == null){ // special logic for the nomis upgrade
+                        this.nomis = new Sprite(400, 500, 69, 69, '../images/NomisSpriteSheet.png', 3, 10);
+                        this.sprites.push(this.nomis);
+                        this.generateRandomLocationToMove();
+                    }} 
                 }));
                 yPos += 22;
             });
@@ -64,13 +67,13 @@ namespace Engine {
 
         start(): void {
             this.sm.playBg();
-            this.bugsSquashed = 0;
+            this.bugsSquashed = 3;
+            this.totalBugsSquashed = 3;
             this.fixesPerSecond = 0;
             this.lastTimestamp = 0;
             this.secondTimestamp = 0;
             this.movingRight = true;
             this.lastErrorTime = 0;
-            this.generateRandomLocationToMove();
 
             this.createError();
         }
@@ -85,6 +88,7 @@ namespace Engine {
             this.lastTimestamp = timestamp;
             if ((timestamp - this.secondTimestamp) / 1000 > 1){
                 this.bugsSquashed += this.fixesPerSecond;
+                this.totalBugsSquashed += this.fixesPerSecond;
                 this.secondTimestamp = timestamp;
             }
 
@@ -98,34 +102,39 @@ namespace Engine {
             Engine.Drawing.rect(context, 0, 0, 300, this.upgrades.values().length * 23, false, 'rgba(0,0,0,1)');
             Engine.Drawing.rect(context, 800, 0, -300, 60, false, 'rgba(0,0,0,1)');
 
-            Engine.Drawing.text(context, `${this.bugsSquashed.toString()} Bug Bounty`, 550, 30, 20);
+            Engine.Drawing.text(context, `${this.bugsSquashed.toFixed(0)} Bug Bounty`, 550, 30, 20);
             Engine.Drawing.text(context, `${this.fixesPerSecond.toFixed(2)} Fixes/Sec`, 550, 52, 20);
 
             let yPos = 20;
             this.upgrades.keys().forEach(key => {
-                Engine.Drawing.text(context, this.upgrades[key].owned + ' - ' + this.upgrades[key].name + ' - ' + this.upgrades[key].clicks, 55, yPos);
+                if ((key / 2) >= this.totalBugsSquashed){
+                    Engine.Drawing.text(context, '??' + ' - ' + '??????????????' + ' - ' + '?????', 55, yPos);
+                }
+                else{
+                    Engine.Drawing.text(context, this.upgrades[key].owned + ' - ' + this.upgrades[key].name + ' - ' + this.upgrades[key].clicks, 55, yPos);
+                }
+                
                 yPos += 22;
             });
 
             // this will make the laser render on top of everything else
-            if (this.error != null) {
+            if (this.error != null && this.nomis != null && this.upgrades[100].owned > 0) {
                 this.createLaser(context);
             }
         }
 
         private errorClicked(): void {
-            this.sm.playSound(Engine.Sounds.PowerUp);
             this.bugsSquashed += 1;
-            this.lastErrorTime = this.lastTimestamp;
-
-            this.sprites.splice(this.sprites.indexOf(this.error));
+            this.totalBugsSquashed += 1;
+            this.lastErrorTime = this.lastTimestamp; 
+            this.sprites.splice(this.sprites.indexOf(this.error), 1);
             this.error = null;
         }
 
         private createError(): void {
             if ((((this.lastTimestamp - this.lastErrorTime) > (Math.random() * 10000)) && this.error == null)
                 || (this.lastTimestamp == 0 && this.error == null)) {
-                    this.error = new ErrorBox(600, 400, 100, '#3fc56e', () => { this.errorClicked(); });
+                    this.error = new ErrorBox(600, 450, 100, '#3fc56e', () => { this.errorClicked(); });
                     this.sprites.push(this.error);
                     //this.sm.playSound(Engine.Sounds.PowerUp);
             }
@@ -167,7 +176,7 @@ namespace Engine {
         }
 
         private moveNomis(context: CanvasRenderingContext2D) {
-            if (this.targetLocation == null && (this.lastTimestamp - this.lastTimeStoppedMoving) < (Math.random() * this.delayToMove)){
+            if (this.nomis == null || (this.targetLocation == null && (this.lastTimestamp - this.lastTimeStoppedMoving) < (Math.random() * this.delayToMove))){
                 this.firingLaser = true;
                 return; // not time to move yet
             }
@@ -211,7 +220,7 @@ namespace Engine {
                     name: "Nomis",
                     text: "Nomis AutoClick Bot",
                     clicks: 10,
-                    improvementFactor: .01,
+                    improvementFactor: 1,
                     owned: 0
                 }
             },
