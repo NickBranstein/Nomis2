@@ -53,6 +53,7 @@ namespace Engine {
                         this.fixesPerSecond += upgrade.improvementFactor;
                         this.sm.playSound(Engine.Sounds.PowerUp);
                         
+                        upgrade.clicks += Math.round(upgrade.clicks * .10); // make upgrade 10% more expensive
                         upgrade.owned += 1;
 
                         if(upgrade.owned == 1){
@@ -111,10 +112,10 @@ namespace Engine {
             let yPos = 20;
             this.upgrades.keys().forEach(key => {
                 if ((key / 2) >= this.totalBugsSquashed){
-                    Engine.Drawing.text(context, '| ??' + ' - ' + '??????????????' + ' - ' + '?????', 55, yPos);
+                    Engine.Drawing.text(context, '??' + ' - ' + '??????????????' + ' - ' + '?????', 55, yPos);
                 }
                 else{
-                    Engine.Drawing.text(context, '| ' + this.upgrades[key].owned + ' - ' + this.upgrades[key].name + ' - ' + this.upgrades[key].clicks, 55, yPos);
+                    Engine.Drawing.text(context, this.upgrades[key].owned + ' - ' + this.upgrades[key].name + ' - ' + this.upgrades[key].clicks, 55, yPos);
                 }
                 
                 yPos += 22;
@@ -237,97 +238,97 @@ namespace Engine {
                         name: "NomisLaser",
                         text: "Nomis Laser Beams",
                         clicks: 100,
-                        improvementFactor: .02,
-                        owned: 0
-                    }
-                },
-                {
-                    key: 250, value: <IUpgrade>{
-                        name: "Refactored",
-                        text: "Refactored Circuitry",
-                        clicks: 250,
-                        improvementFactor: .03,
-                        owned: 0
-                    }
-                },
-                {
-                    key: 500, value: <IUpgrade>{
-                        name: "CertifiedQA",
-                        text: "Certified Software Quality Analyst (CSQA)",
-                        clicks: 500,
-                        improvementFactor: .04,
-                        owned: 0
-                    }
-                },
-                {
-                    key: 750, value: <IUpgrade>{
-                        name: "Download",
-                        text: "Download the whole internet",
-                        clicks: 750,
-                        improvementFactor: .05,
+                        improvementFactor: 10,
                         owned: 0
                     }
                 },
                 {
                     key: 1000, value: <IUpgrade>{
-                        name: "Manager",
-                        text: "Department Manager",
+                        name: "Refactored",
+                        text: "Refactored Circuitry",
                         clicks: 1000,
-                        improvementFactor: .06,
-                        owned: 0
-                    }
-                },
-                {
-                    key: 1250, value: <IUpgrade>{
-                        name: "PullRequest",
-                        text: "Pull Request",
-                        clicks: 1250,
-                        improvementFactor: .07,
+                        improvementFactor: 100,
                         owned: 0
                     }
                 },
                 {
                     key: 50000, value: <IUpgrade>{
-                        name: "SixSigma",
-                        text: "Six Sigma Black Belt Certified",
+                        name: "CertifiedQA",
+                        text: "Certified Software Quality Analyst (CSQA)",
                         clicks: 50000,
-                        improvementFactor: .09,
+                        improvementFactor: 1000,
                         owned: 0
                     }
                 },
                 {
-                    key: 75000, value: <IUpgrade>{
-                        name: "SearchEngineFu",
-                        text: "Search Engine-Fu Sensei",
-                        clicks: 75000,
-                        improvementFactor: .1,
-                        owned: 0
-                    }
-                },
-                {
-                    key: 150000, value: <IUpgrade>{
-                        name: "MinorTextFixes",
-                        text: "Minor Text Fixes",
-                        clicks: 150000,
-                        improvementFactor: .11,
-                        owned: 0
-                    }
-                },
-                {
-                    key: 250000, value: <IUpgrade>{
-                        name: "UnicornFart",
-                        text: "Unicorn Fart Beam",
-                        clicks: 250000,
-                        improvementFactor: .12,
+                    key: 100000, value: <IUpgrade>{
+                        name: "Download",
+                        text: "Download the whole internet",
+                        clicks: 100000,
+                        improvementFactor: 5000,
                         owned: 0
                     }
                 },
                 {
                     key: 500000, value: <IUpgrade>{
+                        name: "Manager",
+                        text: "Department Manager",
+                        clicks: 500000,
+                        improvementFactor: 10000,
+                        owned: 0
+                    }
+                },
+                {
+                    key: 1000000, value: <IUpgrade>{
+                        name: "PullRequest",
+                        text: "Pull Request",
+                        clicks: 1000000,
+                        improvementFactor: 50000,
+                        owned: 0
+                    }
+                },
+                {
+                    key: 5000000, value: <IUpgrade>{
+                        name: "SixSigma",
+                        text: "Six Sigma Black Belt Certified",
+                        clicks: 5000000,
+                        improvementFactor: 100000,
+                        owned: 0
+                    }
+                },
+                {
+                    key: 50000000, value: <IUpgrade>{
+                        name: "SearchEngineFu",
+                        text: "Search Engine-Fu Sensei",
+                        clicks: 50000000,
+                        improvementFactor: 250000,
+                        owned: 0
+                    }
+                },
+                {
+                    key: 100000000, value: <IUpgrade>{
+                        name: "MinorTextFixes",
+                        text: "Minor Text Fixes",
+                        clicks: 100000000,
+                        improvementFactor: 1000000,
+                        owned: 0
+                    }
+                },
+                {
+                    key: 500000000, value: <IUpgrade>{
+                        name: "UnicornFart",
+                        text: "Unicorn Fart Beam",
+                        clicks: 500000000,
+                        improvementFactor: 50000000,
+                        owned: 0
+                    }
+                },
+                {
+                    key: 100000000000, value: <IUpgrade>{
                         name: "JS13kGamesJudge",
                         text: "JS 13k Games Judge",
-                        clicks: 500000,
-                        improvementFactor: .13,
+                        clicks: 100000000000,
+                        improvementFactor: 999999999,
                         owned: 0
                     }
                 },
