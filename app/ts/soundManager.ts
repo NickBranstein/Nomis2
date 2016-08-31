@@ -20,7 +20,7 @@ namespace Engine {
             this.setupBg();
 
             // to setup another sound
-            this.p.volume = 1.0;
+            this.p.volume = .2;
             this.sounds[Sounds.PowerUp] = this.setupSound(this.powerUpSound());
             this.sounds[Sounds.Error] = this.setupSound(this.ErrorSound());
 
