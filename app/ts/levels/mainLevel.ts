@@ -43,21 +43,24 @@ namespace Engine {
             this.sprites.push(this.muteButton);
 
             let yPos = 20;
+
             this.upgrades.keys().forEach(key => {
                 this.sprites.push(new Button(10, yPos, 'BUY', 16, '#5BD95B', () => {
-                    var upgrade = this.upgrades[key];
+                    let upgrade = <IUpgrade>this.upgrades[key];
+
                     if (this.bugsSquashed >= upgrade.clicks){
                         this.bugsSquashed -= upgrade.clicks;
                         this.fixesPerSecond += upgrade.improvementFactor;
-                        upgrade.owned += 1;
                         this.sm.playSound(Engine.Sounds.PowerUp);
+                        
+                        upgrade.owned += 1;
 
-                        if(key == 10 && this.nomis == null){ // special logic for the nomis upgrade
-                        this.nomis = new Sprite(400, 500, 69, 69, '../images/NomisSpriteSheet.png', 3, 10);
-                        this.sprites.push(this.nomis);
-                        this.generateRandomLocationToMove();
-                    }} 
+                        if(upgrade.owned == 1){
+                            upgrade.onFirstUpgrade();
+                        }
+                    } 
                 }));
+
                 yPos += 22;
             });
 
@@ -221,7 +224,12 @@ namespace Engine {
                     text: "Nomis AutoClick Bot",
                     clicks: 10,
                     improvementFactor: 1,
-                    owned: 0
+                    owned: 0,
+                    onFirstUpgrade: () =>{
+                        this.nomis = new Sprite(400, 500, 69, 69, '../images/NomisSpriteSheet.png', 3, 10);
+                        this.sprites.push(this.nomis);
+                        this.generateRandomLocationToMove();
+                    }
                 }
             },
                 {
