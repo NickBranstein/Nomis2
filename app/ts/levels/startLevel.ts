@@ -8,11 +8,10 @@ namespace Engine {
                 this.game = game;
 
                 let startButtonHeight = 30;
-                let calculatedX = (this.game.canvasWidth / 2) - 50;
-                let calculatedY = (this.game.canvasHeight / 2) - (startButtonHeight / 2) + 60;
-                console.log(calculatedX);
+                let x = (this.game.canvasWidth / 2) - 50;
+                let y = (this.game.canvasHeight / 2) - (startButtonHeight / 2) + 60;
 
-                this.sprites.push(new Button(calculatedX, calculatedY, 'START', startButtonHeight, '#ffffff', () => {
+                this.sprites.push(new Button(x, y, 'START', startButtonHeight, '#ffffff', () => {
                     this.end();
                 }));
 
