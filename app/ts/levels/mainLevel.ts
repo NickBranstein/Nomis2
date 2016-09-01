@@ -27,6 +27,7 @@ namespace Engine {
         // error message
         private error: ErrorBox;
         private lastErrorTime: number;
+        private nextErrorDelay: number;
 
         constructor(game: Game) {
             this.sprites = [];
@@ -72,8 +73,8 @@ namespace Engine {
 
         start(): void {
             this.sm.playBg();
-            this.bugsSquashed = 0;
-            this.totalBugsSquashed = 0;
+            this.bugsSquashed = 1110;
+            this.totalBugsSquashed = 1110;
             this.fixesPerSecond = 0;
             this.lastTimestamp = 0;
             this.secondTimestamp = 0;
@@ -134,10 +135,11 @@ namespace Engine {
             this.lastErrorTime = this.lastTimestamp; 
             this.sprites.splice(this.sprites.indexOf(this.error), 1);
             this.error = null;
+            this.nextErrorDelay = Math.random() * 10000;
         }
 
         private createError(): void {
-            if ((((this.lastTimestamp - this.lastErrorTime) > (Math.random() * 10000)) && this.error == null)
+            if ((((this.lastTimestamp - this.lastErrorTime) > (this.nextErrorDelay)) && this.error == null)
                 || (this.lastTimestamp == 0 && this.error == null)) {
                     this.error = new ErrorBox(600, 450, 100, '#3fc56e', () => { this.errorClicked(); });
                     this.sprites.push(this.error);
