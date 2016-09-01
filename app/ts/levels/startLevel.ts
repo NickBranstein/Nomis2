@@ -31,16 +31,13 @@ namespace Engine {
             public render(context: CanvasRenderingContext2D, timestamp): void {
                 let h = 80, text = 'Nomis2';
                 let textMetrics = context.measureText(text);
-                let calculatedX = (context.canvas.clientWidth / 2) - (textMetrics.width) - 30;
-                let calculatedY = (context.canvas.clientHeight / 2);
-
-                let x = calculatedX, y = calculatedY;
-
+                let x = (context.canvas.clientWidth / 2) - (textMetrics.width) - 30;
+                let y = (context.canvas.clientHeight / 2);
                 let dx = Math.random() * 5 + 5 * (timestamp % 2 === 0 ? 0 : -1), dy = Math.random() * 5;                                   
 
                 // random color too?
-                Engine.Drawing.text(context, 'Nomis2', x, y, h, '#fff');
-                Engine.Drawing.text(context, 'Nomis2', x + dx, y + dy, h);
+                Engine.Drawing.text(context, text, x, y, h, '#fff');
+                Engine.Drawing.text(context, text, x + dx, y + dy, h);
 
                 this.sprites.forEach((sprite) => {
                     sprite.render(context, timestamp);
