@@ -58,7 +58,7 @@ namespace Engine {
                         upgrade.clicks += Math.round(upgrade.clicks * .10); // make upgrade 10% more expensive
                         upgrade.owned += 1;
 
-                        if(upgrade.owned == 1){
+                        if(upgrade.onFirstUpgrade != null && upgrade.owned == 1){
                             upgrade.onFirstUpgrade();
                         }
                     } 
@@ -176,7 +176,7 @@ namespace Engine {
             for (let i = 0; i < numberOfPoints; i++) {
                 let j = i+1;
                 let gradient = context.createRadialGradient(x, y, 0, x, y, radius + i);
-                
+
                 context.beginPath();
                 gradient.addColorStop(0, 'white');
                 gradient.addColorStop(1, `rgb(${Math.floor(110 + (r * j))}, 
