@@ -151,7 +151,7 @@ namespace Engine {
             if(!this.firingLaser)
                 return;
 
-            if(Math.random() < .019){
+            if(Math.random() < .01){
                 this.errorClicked();
                 this.firingLaser = false;
                 return;
@@ -169,14 +169,18 @@ namespace Engine {
             }
 
             let numberOfPoints = Math.sqrt(Math.abs((targetX - x) * (targetX - x)) + Math.abs((targetY - y) * (targetY - y))) / 10;
+            let r = (46 - 110) / numberOfPoints, g = (252 - 0) / numberOfPoints, b = (69 - 191) / numberOfPoints;
+            context.globalCompositeOperation = 'overlay';
 
             //Time for some colors
             for (let i = 0; i < numberOfPoints; i++) {
-                context.beginPath();
-                context.globalCompositeOperation = 'overlay';
+                let j = i+1;
                 let gradient = context.createRadialGradient(x, y, 0, x, y, radius + i);
+                
+                context.beginPath();
                 gradient.addColorStop(0, 'white');
-                gradient.addColorStop(1, '#2efc45');
+                gradient.addColorStop(1, `rgb(${Math.floor(110 + (r * j))}, 
+                    ${Math.floor(0 + (g * j))}, ${Math.floor(191 + (b * j))})`);
 
                 context.fillStyle = gradient;
                 context.arc(x, y, radius + i, Math.PI * 2, 360, false);
