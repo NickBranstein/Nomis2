@@ -12,6 +12,7 @@ namespace Engine {
         private bugsSquashed: number;
         private totalBugsSquashed: number;
         private fixesPerSecond: number;
+        private units: Array<string> = ['k', 'M', 'G', 'T', 'P', 'E', 'Z', 'Y'];
 
         // sprite
         private nomis: Sprite;
@@ -71,8 +72,8 @@ namespace Engine {
 
         start(): void {
             this.sm.playBg();
-            this.bugsSquashed = 1100;
-            this.totalBugsSquashed = 1100;
+            this.bugsSquashed = 0;
+            this.totalBugsSquashed = 0;
             this.fixesPerSecond = 0;
             this.lastTimestamp = 0;
             this.secondTimestamp = 0;
@@ -106,8 +107,8 @@ namespace Engine {
             Engine.Drawing.rect(context, 0, 0, 300, this.upgrades.values().length * 23, false, 'rgba(0,0,0,0)');
             Engine.Drawing.rect(context, 800, 0, -300, 60, false, 'rgba(0,0,0,0)');
 
-            Engine.Drawing.text(context, `${this.bugsSquashed.toFixed(0)} Bug Bounty`, 550, 30, 20);
-            Engine.Drawing.text(context, `${this.fixesPerSecond.toFixed(2)} Fixes/Sec`, 550, 52, 20);
+            Engine.Drawing.text(context, `${this.formatNum(this.bugsSquashed)} Bug Bounty`, 550, 30, 20);
+            Engine.Drawing.text(context, `${this.formatNum(this.fixesPerSecond)} Fixes/Sec`, 550, 52, 20);
 
             let yPos = 20;
             this.upgrades.keys().forEach(key => {
@@ -115,7 +116,7 @@ namespace Engine {
                     Engine.Drawing.text(context, '??' + ' - ' + '??????????????' + ' - ' + '?????', 55, yPos);
                 }
                 else{
-                    Engine.Drawing.text(context, this.upgrades[key].owned + ' - ' + this.upgrades[key].name + ' - ' + this.upgrades[key].clicks, 55, yPos);
+                    Engine.Drawing.text(context, this.formatNum(this.upgrades[key].owned) + ' - ' + this.upgrades[key].name + ' - ' + this.formatNum(this.upgrades[key].clicks), 55, yPos);
                 }
                 
                 yPos += 22;
@@ -148,7 +149,7 @@ namespace Engine {
             if(!this.firingLaser)
                 return;
 
-            if(Math.random() < .025){
+            if(Math.random() < .019){
                 this.errorClicked();
                 this.firingLaser = false;
                 return;
@@ -222,6 +223,20 @@ namespace Engine {
             this.dx = (this.targetLocation.x - this.nomis.x) / 100; 
             this.dy = (this.targetLocation.y - this.nomis.y) / 100;
             this.firingLaser = false;
+        }
+
+        private formatNum(num): string {
+            let decimal;
+
+            for (var i = this.units.length - 1; i >= 0; i--) {
+                decimal = Math.pow(1000, i + 1);
+
+                if (num <= -decimal || num >= decimal) {
+                    return +(num / decimal).toFixed(3) + this.units[i];
+                }
+            }
+
+            return num;
         }
 
         private getUpgrades(): Utils.Dictionary<IUpgrade> {
