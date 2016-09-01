@@ -79,8 +79,8 @@ namespace Engine {
 
         start(): void {
             this.sm.playBg();
-            this.bugsSquashed = 1110000000;
-            this.totalBugsSquashed = 1110000000;
+            this.bugsSquashed = 10;
+            this.totalBugsSquashed = 10;
             this.fixesPerSecond = 0;
             this.lastTimestamp = 0;
             this.secondTimestamp = 0;
