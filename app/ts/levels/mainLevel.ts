@@ -29,6 +29,12 @@ namespace Engine {
         private lastErrorTime: number;
         private nextErrorDelay: number;
 
+        // shake
+        private lastShakeStart: number = 0;
+        private lastShakeEnd: number = 0;
+        private shaking: boolean = false;
+        private shake: boolean = false;
+
         constructor(game: Game) {
             this.sprites = [];
             this.upgrades = this.getUpgrades();
@@ -73,8 +79,8 @@ namespace Engine {
 
         start(): void {
             this.sm.playBg();
-            this.bugsSquashed = 1110;
-            this.totalBugsSquashed = 1110;
+            this.bugsSquashed = 1110000000;
+            this.totalBugsSquashed = 1110000000;
             this.fixesPerSecond = 0;
             this.lastTimestamp = 0;
             this.secondTimestamp = 0;
@@ -90,6 +96,8 @@ namespace Engine {
 
         public render(context: CanvasRenderingContext2D, timestamp): void {
             let elapsed = timestamp - this.lastErrorTime;
+
+            this.startShake(context, timestamp);
 
             this.lastTimestamp = timestamp;
             if ((timestamp - this.secondTimestamp) / 1000 > 1){
@@ -126,6 +134,10 @@ namespace Engine {
             // this will make the laser render on top of everything else
             if (this.error != null && this.nomis != null && this.upgrades[100].owned > 0) {
                 this.createLaser(context);
+            }
+
+            if(this.shake && this.shaking){
+                context.restore();
             }
         }
 
@@ -245,6 +257,27 @@ namespace Engine {
             return num;
         }
 
+        private startShake(context: CanvasRenderingContext2D, timestamp): void{
+            if(!this.shake){
+                return;
+            }
+            
+            if((timestamp - this.lastShakeEnd > 15000) && !this.shaking){
+                this.lastShakeStart = timestamp;
+                this.shaking = true;
+            }else if(this.shaking && (timestamp - this.lastShakeStart > 800)){
+                this.lastShakeEnd = timestamp;
+                this.shaking = false;
+                context.restore();
+            } else if(this.shaking){
+                let dt = timestamp - this.lastShakeStart;
+                let dx = (Math.cos(dt * 0.102) + Math.cos(dt * 0.289)) * 15;
+                let dy = (Math.cos(dt * 0.04) + Math.cos(dt * 0.06192)) * 15;
+                context.save();  
+                context.translate(dx, dy); 
+            }
+        }
+
         private getUpgrades(): Utils.Dictionary<IUpgrade> {
             return new Utils.Dictionary<IUpgrade>([{
                 key: 10, value: <IUpgrade>{
@@ -275,7 +308,10 @@ namespace Engine {
                         text: "Refactored Circuitry",
                         clicks: 1000,
                         improvementFactor: 100,
-                        owned: 0
+                        owned: 0,
+                        onFirstUpgrade: () => {
+                            this.shake = true;
+                        }
                     }
                 },
                 {
