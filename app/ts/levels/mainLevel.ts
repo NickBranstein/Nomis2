@@ -12,7 +12,7 @@ namespace Engine {
         private bugsSquashed: number;
         private totalBugsSquashed: number;
         private fixesPerSecond: number;
-        private units: Array<string> = ['k', 'M', 'G', 'T', 'P', 'E', 'Z', 'Y'];
+        private units: Array<string> = ['k', 'M', 'B', 'T', 'q', 'Q', 's', 'S'];
 
         // sprite
         private nomis: Sprite;
@@ -60,7 +60,7 @@ namespace Engine {
                         this.bugsSquashed -= upgrade.clicks;
                         this.fixesPerSecond += upgrade.improvementFactor;
                         this.sm.playSound(Engine.Sounds.PowerUp);
-                        
+
                         upgrade.clicks += Math.round(upgrade.clicks * .10); // make upgrade 10% more expensive
                         upgrade.owned += 1;
 
@@ -79,8 +79,8 @@ namespace Engine {
 
         start(): void {
             this.sm.playBg();
-            this.bugsSquashed = 10;
-            this.totalBugsSquashed = 10;
+            this.bugsSquashed = 0;
+            this.totalBugsSquashed = 0;
             this.fixesPerSecond = 0;
             this.lastTimestamp = 0;
             this.secondTimestamp = 0;
@@ -156,6 +156,8 @@ namespace Engine {
                     this.error = new ErrorBox(600, 450, 100, '#3fc56e', () => { this.errorClicked(); });
                     this.sprites.push(this.error);
                     //this.sm.playSound(Engine.Sounds.PowerUp);
+
+                    
             }
         }
 
