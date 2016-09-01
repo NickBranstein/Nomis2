@@ -11,10 +11,10 @@ class Game {
         this.sprites = [];
         this.renderer = new Engine.Renderer(context, width, height, (timestamp) => {this.renderWorld(timestamp);}); // wrap in a method ot preserve the reference to the class
         this.canvasHeight = 600;
-        this.canvasWidth = 800;
+        this.canvasWidth
 
         // setup all the levels
-        this.levels = [new Engine.StartLevel(this), new Engine.MainLevel(this)];
+        this.levels = [new Engine.StartLevel(this), new Engine.FirstLevel(this), new Engine.MainLevel(this)];
 
         // Start Level
         this.currentLevel = this.levels[0];
