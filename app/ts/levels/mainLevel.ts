@@ -35,6 +35,12 @@ namespace Engine {
         private shaking: boolean = false;
         private shake: boolean = false;
 
+        // fartBeam
+        private fartBeam: boolean = false;
+        private farting: boolean = false;
+        private fartStartTime: number = 0;
+        private fartColors: Array<string> = ['#FF0000', '#FF7F00', '#FFFF00', '#00FF00', '#0000FF', '#4B0082', '#9400D3'];
+
         constructor(game: Game) {
             this.sprites = [];
             this.upgrades = this.getUpgrades();
@@ -79,8 +85,8 @@ namespace Engine {
 
         start(): void {
             this.sm.playBg();
-            this.bugsSquashed = 0;
-            this.totalBugsSquashed = 0;
+            this.bugsSquashed = 100000000000;
+            this.totalBugsSquashed = 100000000000;
             this.fixesPerSecond = 0;
             this.lastTimestamp = 0;
             this.secondTimestamp = 0;
@@ -108,6 +114,16 @@ namespace Engine {
 
             this.moveNomis(context);
             this.createError();
+            if(this.fartBeam && this.nomis != null 
+                && (this.farting || this.targetLocation == null)){ // nomis is stopped
+                if(!this.farting){
+                    this.fartStartTime = timestamp;
+                }
+
+                this.farting = true;
+                this.drawFartBeam(context, timestamp);
+            }
+            
 
             this.sprites.forEach((sprite) => {
                 sprite.render(context, timestamp);
@@ -156,8 +172,6 @@ namespace Engine {
                     this.error = new ErrorBox(600, 450, 100, '#3fc56e', () => { this.errorClicked(); });
                     this.sprites.push(this.error);
                     //this.sm.playSound(Engine.Sounds.PowerUp);
-
-                    
             }
         }
 
@@ -206,8 +220,34 @@ namespace Engine {
             context.globalCompositeOperation = 'source-over'; //reset to default
         }
 
+        private drawFartBeam(context: CanvasRenderingContext2D, timestamp: number): void{
+            if(!this.farting){
+                return;
+            }
+
+            let e = timestamp - this.fartStartTime;
+
+            if(e > 500){
+                this.farting = false;
+                this.fartStartTime = timestamp;
+            }
+
+            let dr = -3;
+            let y = this.nomis.y + this.nomis.frameHeight / 2;
+
+            for (let i = 0; i < this.fartColors.length - 1; i++) {
+                context.beginPath();
+                context.strokeStyle = this.fartColors[i];
+                !this.nomis.flip 
+                    ? context.arc(this.nomis.x - this.nomis.frameWidth, y, 60 + (dr * i), (1 + (500 - e) / 500) * Math.PI, 2 * Math.PI, false) 
+                    : context.arc(this.nomis.x + 60 + this.nomis.frameWidth, y, 60 + (dr * i), Math.PI, (1 + e/500) * Math.PI, false);
+                context.stroke();
+            }
+        }
+
         private moveNomis(context: CanvasRenderingContext2D) {
-            if (this.nomis == null || (this.targetLocation == null && (this.lastTimestamp - this.lastTimeStoppedMoving) < (Math.random() * this.delayToMove))){
+            if (this.nomis == null || (this.targetLocation == null 
+                && (this.lastTimestamp - this.lastTimeStoppedMoving) < (Math.random() * this.delayToMove))){
                 this.firingLaser = true;
                 return; // not time to move yet
             }
@@ -385,7 +425,10 @@ namespace Engine {
                         text: "Unicorn Fart Beam",
                         clicks: 500000000,
                         improvementFactor: 50000000,
-                        owned: 0
+                        owned: 0,
+                        onFirstUpgrade: () => {
+                            this.fartBeam = true;
+                        }
                     }
                 },
                 {
