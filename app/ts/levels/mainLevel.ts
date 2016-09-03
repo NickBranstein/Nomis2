@@ -87,7 +87,7 @@ namespace Engine {
         }
 
         start(): void {
-            //this.sm.playBg();
+            this.sm.playBg();
             this.bugsSquashed = 100000000000;
             this.totalBugsSquashed = 100000000000;
             this.fixesPerSecond = 0;
@@ -408,6 +408,24 @@ namespace Engine {
                         owned: 0,
                         onFirstUpgrade: () => {
                             this.blackBelt = true;
+
+                            let canvas = document.createElement('canvas');
+                            let context = canvas.getContext('2d');
+
+                            context.drawImage(this.nomis.image, 0, 0);
+
+                            let data = context.getImageData(0, 0, this.nomis.image.width, this.nomis.image.height);
+
+                            // convert to greyscale because why not?
+                            for (var i = 0; i < data.data.length; i += 4) {
+                                let avg = (data.data[i] + data.data[i + 1] + data.data[i + 2]) / 3;
+                                data.data[i] = avg; // red
+                                data.data[i + 1] = avg; // green
+                                data.data[i + 2] = avg; // blue
+                            }
+
+                            context.putImageData(data, 0, 0);
+                            this.nomis.image.src = canvas.toDataURL();
                         }
                     }
                 },
