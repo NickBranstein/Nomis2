@@ -35,6 +35,9 @@ namespace Engine {
         private shaking: boolean = false;
         private shake: boolean = false;
 
+        // black belt
+        private blackBelt: boolean = false;
+
         // fartBeam
         private fartBeam: boolean = false;
         private farting: boolean = false;
@@ -207,9 +210,13 @@ namespace Engine {
 
                 context.beginPath();
                 gradient.addColorStop(0, 'white');
-                gradient.addColorStop(1, `rgb(${Math.floor(110 + (r * j))}, 
+                gradient.addColorStop(this.blackBelt ? .75 : 1.0, `rgb(${Math.floor(110 + (r * j))}, 
                     ${Math.floor(0 + (g * j))}, ${Math.floor(191 + (b * j))})`);
-
+                
+                if(this.blackBelt){
+                    gradient.addColorStop(1, 'black');
+                }
+                
                 context.fillStyle = gradient;
                 context.arc(x, y, radius + i, Math.PI * 2, 360, false);
                 context.fill();
@@ -398,7 +405,10 @@ namespace Engine {
                         text: "Six Sigma Black Belt Certified",
                         clicks: 5000000,
                         improvementFactor: 100000,
-                        owned: 0
+                        owned: 0,
+                        onFirstUpgrade: () => {
+                            this.blackBelt = true;
+                        }
                     }
                 },
                 {
