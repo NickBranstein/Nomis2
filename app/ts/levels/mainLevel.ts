@@ -38,6 +38,12 @@ namespace Engine {
         // black belt
         private blackBelt: boolean = false;
 
+        // search
+        private search: boolean = false;
+        private searchRadius: number = 0;
+        private searchX: number = 0;
+        private searchY: number = 0; 
+
         // fartBeam
         private fartBeam: boolean = false;
         private farting: boolean = false;
@@ -117,6 +123,8 @@ namespace Engine {
 
             this.moveNomis(context);
             this.createError();
+            this.drawRadar(context);
+
             if(this.fartBeam && this.nomis != null 
                 && (this.farting || this.targetLocation == null)){ // nomis is stopped
                 if(!this.farting){
@@ -327,6 +335,25 @@ namespace Engine {
             }
         }
 
+        private drawRadar(context: CanvasRenderingContext2D): void{
+            if(!this.search || this.nomis == null){
+                return;
+            }
+
+            if(this.searchRadius >= 250 && this.firingLaser){
+                this.searchRadius = 0;
+                this.searchX = this.nomis.x + this.nomis.frameWidth / 2;
+                this.searchY = this.nomis.y + this.nomis.frameHeight / 2;
+            }
+
+            this.searchRadius += 2;
+
+            context.beginPath();
+            context.arc(this.searchX, this.searchY, this.searchRadius, 0, 2 * Math.PI);
+            context.strokeStyle = '#5BD95B';
+            context.stroke();
+        }
+
         private getUpgrades(): Utils.Dictionary<IUpgrade> {
             return new Utils.Dictionary<IUpgrade>([{
                 key: 10, value: <IUpgrade>{
@@ -435,7 +462,12 @@ namespace Engine {
                         text: "Search Engine-Fu Sensei",
                         clicks: 50000000,
                         improvementFactor: 250000,
-                        owned: 0
+                        owned: 0, 
+                        onFirstUpgrade: () => {
+                            this.search = true;
+                            this.searchX = this.nomis.x;
+                            this.searchY = this.nomis.y;
+                        }
                     }
                 },
                 {
