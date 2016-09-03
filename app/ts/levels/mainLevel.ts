@@ -84,7 +84,7 @@ namespace Engine {
         }
 
         start(): void {
-            this.sm.playBg();
+            //this.sm.playBg();
             this.bugsSquashed = 100000000000;
             this.totalBugsSquashed = 100000000000;
             this.fixesPerSecond = 0;
@@ -171,7 +171,7 @@ namespace Engine {
                 || (this.lastTimestamp == 0 && this.error == null)) {
                     this.error = new ErrorBox(600, 450, 100, '#3fc56e', () => { this.errorClicked(); });
                     this.sprites.push(this.error);
-                    //this.sm.playSound(Engine.Sounds.PowerUp);
+                    this.sm.playSound(Engine.Sounds.Error);
             }
         }
 

@@ -20,8 +20,8 @@ namespace Engine {
             this.setupBg();
 
             // to setup another sound
-            this.p.volume = .2;
-            this.sounds[Sounds.PowerUp] = this.setupSound(this.powerUpSound());
+            this.p.volume = 1.0;
+            this.sounds[Sounds.PowerUp] = this.setupSound(this.PowerUpSound());
             this.sounds[Sounds.Error] = this.setupSound(this.ErrorSound());
 
             this.muted = false;
@@ -437,38 +437,38 @@ namespace Engine {
             this.bgMusic.loop = true;
         }
 
-        private powerUpSound(): any {
+        private PowerUpSound(): any {
             return {
                 songData: [
                     { // Instrument 0
                         i: [
-                            1, // OSC1_WAVEFORM
-                            255, // OSC1_VOL
+                            2, // OSC1_WAVEFORM
+                            100, // OSC1_VOL
                             128, // OSC1_SEMI
                             0, // OSC1_XENV
-                            1, // OSC2_WAVEFORM
-                            154, // OSC2_VOL
+                            3, // OSC2_WAVEFORM
+                            201, // OSC2_VOL
                             128, // OSC2_SEMI
-                            9, // OSC2_DETUNE
+                            0, // OSC2_DETUNE
                             0, // OSC2_XENV
                             0, // NOISE_VOL
-                            7, // ENV_ATTACK
-                            5, // ENV_SUSTAIN
-                            52, // ENV_RELEASE
+                            0, // ENV_ATTACK
+                            6, // ENV_SUSTAIN
+                            29, // ENV_RELEASE
                             0, // ARP_CHORD
                             0, // ARP_SPEED
                             0, // LFO_WAVEFORM
-                            0, // LFO_AMT
-                            0, // LFO_FREQ
-                            0, // LFO_FX_FREQ
-                            2, // FX_FILTER
-                            255, // FX_FREQ
-                            0, // FX_RESONANCE
-                            0, // FX_DIST
-                            32, // FX_DRIVE
-                            47, // FX_PAN_AMT
-                            3, // FX_PAN_FREQ
-                            27, // FX_DELAY_AMT
+                            91, // LFO_AMT
+                            4, // LFO_FREQ
+                            1, // LFO_FX_FREQ
+                            3, // FX_FILTER
+                            50, // FX_FREQ
+                            184, // FX_RESONANCE
+                            119, // FX_DIST
+                            69, // FX_DRIVE
+                            147, // FX_PAN_AMT
+                            6, // FX_PAN_FREQ
+                            84, // FX_DELAY_AMT
                             2 // FX_DELAY_TIME
                         ],
                         // Patterns
@@ -476,7 +476,7 @@ namespace Engine {
                         // Columns
                         c: [
                             {
-                                n: [144, , 144, 144, 156, , , , , , , , , , , , , , , , , , , , , , , , , , , , 147, , 147, 147, 152],
+                                n: [152, 156, 159, 164],
                                 f: []
                             }
                         ]
@@ -741,7 +741,7 @@ namespace Engine {
                         ]
                     }
                 ],
-                rowLen: 5513,   // In sample lengths
+                rowLen: 1470,   // In sample lengths
                 patternLen: 32,  // Rows per pattern
                 endPattern: 2  // End pattern
             };
@@ -758,16 +758,16 @@ namespace Engine {
                             0, // OSC1_XENV
                             0, // OSC2_WAVEFORM
                             255, // OSC2_VOL
-                            152, // OSC2_SEMI
-                            12, // OSC2_DETUNE
+                            156, // OSC2_SEMI
+                            255, // OSC2_DETUNE
                             0, // OSC2_XENV
                             0, // NOISE_VOL
-                            2, // ENV_ATTACK
+                            0, // ENV_ATTACK
                             0, // ENV_SUSTAIN
                             63, // ENV_RELEASE
                             0, // ARP_CHORD
                             0, // ARP_SPEED
-                            0, // LFO_WAVEFORM
+                            2, // LFO_WAVEFORM
                             0, // LFO_AMT
                             0, // LFO_FREQ
                             0, // LFO_FX_FREQ
@@ -778,7 +778,7 @@ namespace Engine {
                             32, // FX_DRIVE
                             47, // FX_PAN_AMT
                             3, // FX_PAN_FREQ
-                            29, // FX_DELAY_AMT
+                            25, // FX_DELAY_AMT
                             2 // FX_DELAY_TIME
                         ],
                         // Patterns
@@ -786,7 +786,7 @@ namespace Engine {
                         // Columns
                         c: [
                             {
-                                n: [202],
+                                n: [108],
                                 f: []
                             }
                         ]
