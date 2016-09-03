@@ -239,8 +239,8 @@ namespace Engine {
                 context.beginPath();
                 context.strokeStyle = this.fartColors[i];
                 !this.nomis.flip 
-                    ? context.arc(this.nomis.x - this.nomis.frameWidth, y, 60 + (dr * i), (1 + (500 - e) / 500) * Math.PI, 2 * Math.PI, false) 
-                    : context.arc(this.nomis.x + 60 + this.nomis.frameWidth, y, 60 + (dr * i), Math.PI, (1 + e/500) * Math.PI, false);
+                    ? context.arc(this.nomis.x + 20, y + this.nomis.frameHeight, 60 + (dr * i), (1 + (500 - e) / 1000) * Math.PI, 1.5 * Math.PI) 
+                    : context.arc(this.nomis.x + this.nomis.frameWidth - 20, y + this.nomis.frameHeight, 60 + (dr * i), 1.5 * Math.PI, (1.5 + e / 1000) * Math.PI);
                 context.stroke();
             }
         }
