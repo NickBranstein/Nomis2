@@ -149,6 +149,7 @@ namespace Engine {
 
             if (this.judge && this.judgeBlink){
                 Engine.Drawing.text(context, "YOU'RE WINNER", 250, 100, 40, "#d3c906");
+                Engine.Drawing.text(context, "1th Place", 300, 150, 40, "#d3c906");
             }
 
             this.sprites.forEach((sprite) => {
