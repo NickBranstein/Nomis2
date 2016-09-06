@@ -50,6 +50,11 @@ namespace Engine {
         private fartStartTime: number = 0;
         private fartColors: Array<string> = ['#FF0000', '#FF7F00', '#FFFF00', '#00FF00', '#0000FF', '#4B0082', '#9400D3'];
 
+        //jk13kgames judge
+        private judge: boolean = false;
+        private judgeBlink: boolean = false;
+        private judgeTimestamp: any;
+
         constructor(game: Game) {
             this.sprites = [];
             this.upgrades = this.getUpgrades();
@@ -99,6 +104,7 @@ namespace Engine {
             this.fixesPerSecond = 0;
             this.lastTimestamp = 0;
             this.secondTimestamp = 0;
+            this.judgeTimestamp = 0;
             this.movingRight = true;
             this.lastErrorTime = 0;
 
@@ -115,7 +121,13 @@ namespace Engine {
             this.startShake(context, timestamp);
 
             this.lastTimestamp = timestamp;
-            if ((timestamp - this.secondTimestamp) / 1000 > 1){
+
+            if (timestamp - this.judgeTimestamp > 200){
+                this.judgeBlink = !this.judgeBlink;
+                this.judgeTimestamp = timestamp;
+            }
+
+            if (timestamp - this.secondTimestamp > 1000){
                 this.bugsSquashed += this.fixesPerSecond;
                 this.totalBugsSquashed += this.fixesPerSecond;
                 this.secondTimestamp = timestamp;
@@ -134,7 +146,10 @@ namespace Engine {
                 this.farting = true;
                 this.drawFartBeam(context, timestamp);
             }
-            
+
+            if (this.judge && this.judgeBlink){
+                Engine.Drawing.text(context, "YOU'RE WINNER", 250, 100, 40, "#d3c906");
+            }
 
             this.sprites.forEach((sprite) => {
                 sprite.render(context, timestamp);
@@ -497,7 +512,10 @@ namespace Engine {
                         text: "JS 13k Games Judge",
                         clicks: 100000000000,
                         improvementFactor: 999999999,
-                        owned: 0
+                        owned: 0,
+                        onFirstUpgrade: () => {
+                            this.judge =true;
+                        }
                     }
                 },
             ]);
