@@ -35,6 +35,26 @@ namespace Engine {
         private shaking: boolean = false;
         private shake: boolean = false;
 
+        // black belt
+        private blackBelt: boolean = false;
+
+        // search
+        private search: boolean = false;
+        private searchRadius: number = 0;
+        private searchX: number = 0;
+        private searchY: number = 0; 
+
+        // fartBeam
+        private fartBeam: boolean = false;
+        private farting: boolean = false;
+        private fartStartTime: number = 0;
+        private fartColors: Array<string> = ['#FF0000', '#FF7F00', '#FFFF00', '#00FF00', '#0000FF', '#4B0082', '#9400D3'];
+
+        //jk13kgames judge
+        private judge: boolean = false;
+        private judgeBlink: boolean = false;
+        private judgeTimestamp: any;
+
         constructor(game: Game) {
             this.sprites = [];
             this.upgrades = this.getUpgrades();
@@ -79,11 +99,12 @@ namespace Engine {
 
         start(): void {
             this.sm.playBg();
-            this.bugsSquashed = 0;
-            this.totalBugsSquashed = 0;
+            this.bugsSquashed = 100000000000;
+            this.totalBugsSquashed = 100000000000;
             this.fixesPerSecond = 0;
             this.lastTimestamp = 0;
             this.secondTimestamp = 0;
+            this.judgeTimestamp = 0;
             this.movingRight = true;
             this.lastErrorTime = 0;
 
@@ -100,7 +121,13 @@ namespace Engine {
             this.startShake(context, timestamp);
 
             this.lastTimestamp = timestamp;
-            if ((timestamp - this.secondTimestamp) / 1000 > 1){
+
+            if (timestamp - this.judgeTimestamp > 200){
+                this.judgeBlink = !this.judgeBlink;
+                this.judgeTimestamp = timestamp;
+            }
+
+            if (timestamp - this.secondTimestamp > 1000){
                 this.bugsSquashed += this.fixesPerSecond;
                 this.totalBugsSquashed += this.fixesPerSecond;
                 this.secondTimestamp = timestamp;
@@ -108,6 +135,22 @@ namespace Engine {
 
             this.moveNomis(context);
             this.createError();
+            this.drawRadar(context);
+
+            if(this.fartBeam && this.nomis != null 
+                && (this.farting || this.targetLocation == null)){ // nomis is stopped
+                if(!this.farting){
+                    this.fartStartTime = timestamp;
+                }
+
+                this.farting = true;
+                this.drawFartBeam(context, timestamp);
+            }
+
+            if (this.judge && this.judgeBlink){
+                Engine.Drawing.text(context, "YOU'RE WINNER", 250, 100, 40, "#d3c906");
+                Engine.Drawing.text(context, "1th Place", 300, 150, 40, "#d3c906");
+            }
 
             this.sprites.forEach((sprite) => {
                 sprite.render(context, timestamp);
@@ -155,9 +198,7 @@ namespace Engine {
                 || (this.lastTimestamp == 0 && this.error == null)) {
                     this.error = new ErrorBox(600, 450, 100, '#3fc56e', () => { this.errorClicked(); });
                     this.sprites.push(this.error);
-                    //this.sm.playSound(Engine.Sounds.PowerUp);
-
-                    
+                    this.sm.playSound(Engine.Sounds.Error);
             }
         }
 
@@ -193,9 +234,13 @@ namespace Engine {
 
                 context.beginPath();
                 gradient.addColorStop(0, 'white');
-                gradient.addColorStop(1, `rgb(${Math.floor(110 + (r * j))}, 
+                gradient.addColorStop(this.blackBelt ? .75 : 1.0, `rgb(${Math.floor(110 + (r * j))}, 
                     ${Math.floor(0 + (g * j))}, ${Math.floor(191 + (b * j))})`);
-
+                
+                if(this.blackBelt){
+                    gradient.addColorStop(1, 'black');
+                }
+                
                 context.fillStyle = gradient;
                 context.arc(x, y, radius + i, Math.PI * 2, 360, false);
                 context.fill();
@@ -206,8 +251,34 @@ namespace Engine {
             context.globalCompositeOperation = 'source-over'; //reset to default
         }
 
+        private drawFartBeam(context: CanvasRenderingContext2D, timestamp: number): void{
+            if(!this.farting){
+                return;
+            }
+
+            let e = timestamp - this.fartStartTime;
+
+            if(e > 500){
+                this.farting = false;
+                this.fartStartTime = timestamp;
+            }
+
+            let dr = -3;
+            let y = this.nomis.y + this.nomis.frameHeight / 2;
+
+            for (let i = 0; i < this.fartColors.length - 1; i++) {
+                context.beginPath();
+                context.strokeStyle = this.fartColors[i];
+                !this.nomis.flip 
+                    ? context.arc(this.nomis.x + 20, y + this.nomis.frameHeight, 60 + (dr * i), (1 + (500 - e) / 1000) * Math.PI, 1.5 * Math.PI) 
+                    : context.arc(this.nomis.x + this.nomis.frameWidth - 20, y + this.nomis.frameHeight, 60 + (dr * i), 1.5 * Math.PI, (1.5 + e / 1000) * Math.PI);
+                context.stroke();
+            }
+        }
+
         private moveNomis(context: CanvasRenderingContext2D) {
-            if (this.nomis == null || (this.targetLocation == null && (this.lastTimestamp - this.lastTimeStoppedMoving) < (Math.random() * this.delayToMove))){
+            if (this.nomis == null || (this.targetLocation == null 
+                && (this.lastTimestamp - this.lastTimeStoppedMoving) < (Math.random() * this.delayToMove))){
                 this.firingLaser = true;
                 return; // not time to move yet
             }
@@ -278,6 +349,25 @@ namespace Engine {
                 context.save();  
                 context.translate(dx, dy); 
             }
+        }
+
+        private drawRadar(context: CanvasRenderingContext2D): void{
+            if(!this.search || this.nomis == null){
+                return;
+            }
+
+            if(this.searchRadius >= 250 && this.firingLaser){
+                this.searchRadius = 0;
+                this.searchX = this.nomis.x + this.nomis.frameWidth / 2;
+                this.searchY = this.nomis.y + this.nomis.frameHeight / 2;
+            }
+
+            this.searchRadius += 2;
+
+            context.beginPath();
+            context.arc(this.searchX, this.searchY, this.searchRadius, 0, 2 * Math.PI);
+            context.strokeStyle = '#5BD95B';
+            context.stroke();
         }
 
         private getUpgrades(): Utils.Dictionary<IUpgrade> {
@@ -358,7 +448,28 @@ namespace Engine {
                         text: "Six Sigma Black Belt Certified",
                         clicks: 5000000,
                         improvementFactor: 100000,
-                        owned: 0
+                        owned: 0,
+                        onFirstUpgrade: () => {
+                            this.blackBelt = true;
+
+                            let canvas = document.createElement('canvas');
+                            let context = canvas.getContext('2d');
+
+                            context.drawImage(this.nomis.image, 0, 0);
+
+                            let data = context.getImageData(0, 0, this.nomis.image.width, this.nomis.image.height);
+
+                            // convert to greyscale because why not?
+                            for (var i = 0; i < data.data.length; i += 4) {
+                                let avg = (data.data[i] + data.data[i + 1] + data.data[i + 2]) / 3;
+                                data.data[i] = avg; // red
+                                data.data[i + 1] = avg; // green
+                                data.data[i + 2] = avg; // blue
+                            }
+
+                            context.putImageData(data, 0, 0);
+                            this.nomis.image.src = canvas.toDataURL();
+                        }
                     }
                 },
                 {
@@ -367,7 +478,12 @@ namespace Engine {
                         text: "Search Engine-Fu Sensei",
                         clicks: 50000000,
                         improvementFactor: 250000,
-                        owned: 0
+                        owned: 0, 
+                        onFirstUpgrade: () => {
+                            this.search = true;
+                            this.searchX = this.nomis.x;
+                            this.searchY = this.nomis.y;
+                        }
                     }
                 },
                 {
@@ -385,7 +501,10 @@ namespace Engine {
                         text: "Unicorn Fart Beam",
                         clicks: 500000000,
                         improvementFactor: 50000000,
-                        owned: 0
+                        owned: 0,
+                        onFirstUpgrade: () => {
+                            this.fartBeam = true;
+                        }
                     }
                 },
                 {
@@ -394,7 +513,10 @@ namespace Engine {
                         text: "JS 13k Games Judge",
                         clicks: 100000000000,
                         improvementFactor: 999999999,
-                        owned: 0
+                        owned: 0,
+                        onFirstUpgrade: () => {
+                            this.judge =true;
+                        }
                     }
                 },
             ]);
