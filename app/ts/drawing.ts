@@ -21,6 +21,7 @@ namespace Engine {
             context.fillStyle = style != null ? style : this.textStyle;
             context.fillText(text, x, y);
         }
+
         public static wrapText(context: CanvasRenderingContext2D, text: string, x: number, y, maxWidth, lineHeight) {
                 var words = text.split(' ');
                 var line = '';
@@ -36,9 +37,33 @@ namespace Engine {
                 }
                 else {
                     line = testLine;
-                }
-                }
+                }}
+
                 context.fillText(line, x, y);
+        }
+
+        public static progressBar(context: CanvasRenderingContext2D, x: number, y: number, previousWidth?: number): number{
+            let w = previousWidth;
+            let maxWidth = 200;
+            let rand = Math.random();
+
+            if(w == null || w == 0){
+                w = rand * 55;
+            }
+            else{
+                let dx = .5 * (rand > .5 ? -1 : 1);
+                w += dx;
+                if(w < 0){
+                    w = 0;
+                } else if(w > maxWidth){
+                    w = rand * 55;
+                }
+            }
+
+            this.rect(context, x, y, maxWidth, 25, false, '#000');
+            this.rect(context, x, y, w, 25, true, 'green');
+
+            return w;
         }
     }
 }

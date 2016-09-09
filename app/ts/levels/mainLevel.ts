@@ -44,6 +44,10 @@ namespace Engine {
         private searchX: number = 0;
         private searchY: number = 0; 
 
+        // progress
+        private progress: boolean = false;
+        private width: number = 0;
+
         // fartBeam
         private fartBeam: boolean = false;
         private farting: boolean = false;
@@ -136,6 +140,7 @@ namespace Engine {
             this.moveNomis(context);
             this.createError();
             this.drawRadar(context);
+            this.drawProgress(context);
 
             if(this.fartBeam && this.nomis != null 
                 && (this.farting || this.targetLocation == null)){ // nomis is stopped
@@ -351,6 +356,12 @@ namespace Engine {
             }
         }
 
+        private drawProgress(context: CanvasRenderingContext2D): void {
+            if(this.progress){
+                this.width = Engine.Drawing.progressBar(context, 25, 550, this.width);
+            }
+        }
+
         private drawRadar(context: CanvasRenderingContext2D): void{
             if(!this.search || this.nomis == null){
                 return;
@@ -421,7 +432,10 @@ namespace Engine {
                         text: "Download the whole internet",
                         clicks: 100000,
                         improvementFactor: 5000,
-                        owned: 0
+                        owned: 0,
+                        onFirstUpgrade: () => {
+                            this.progress = true;
+                        }
                     }
                 },
                 {
