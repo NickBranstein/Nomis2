@@ -23,7 +23,7 @@ namespace Engine {
             }
 
             end(): void {
-                this.game.currentLevel = this.game.levels[2];
+                this.game.currentLevel = this.game.levels[1];
                 this.game.currentLevel.start();
             }
             
