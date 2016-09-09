@@ -87,7 +87,18 @@ namespace Engine {
                         if(upgrade.onFirstUpgrade != null && upgrade.owned == 1){
                             upgrade.onFirstUpgrade();
                         }
-                    } 
+
+                        if(upgrade.text === "Minor Text Fixes"){
+                            var newName = "";
+                            var nameLength = upgrade.name.length;
+                            for (var i=0; i<nameLength; i++){
+                                var ran = Math.floor(Math.random()*upgrade.name.length);
+                                newName += upgrade.name[ran];
+                                upgrade.name = upgrade.name.slice(0, ran) + upgrade.name.slice(ran+1, upgrade.name.length);
+                            }
+                            upgrade.name = newName;
+                        }
+                    }
                 }));
 
                 yPos += 22;

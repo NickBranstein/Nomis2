@@ -9,34 +9,6 @@ body {
     );
 }
 
-.scan {
-  &,
-  &::before,
-  &::after {
-    position: absolute;
-    left: 0;
-    width: 100%;
-    height: 10%;
-    background-color: hsla(0, 0%, 0%, .13);
-    box-shadow: 0 0 10px hsla(0, 0%, 0%, .25);
-    animation: scan 12s linear infinite;
-  }
-
-  &::before,
-  &::after {
-    content: '';
-    display: block;
-    height: 10%;
-    top: 25%;
-    animation: none;
-  }
-}
-
-@keyframes scan {
-    0% { top: -20%; }
-  100% { top: 90%; }
-}
-
 canvas {
     margin-top: 20px;
     border: 1px solid #ffffff;
