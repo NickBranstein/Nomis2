@@ -114,9 +114,9 @@ namespace Engine {
 
         start(): void {
             this.sm.playBg();
-            this.bugsSquashed = 0;
-            this.totalBugsSquashed = 0;
-            this.fixesPerSecond = 100;
+            this.bugsSquashed = 100000000000;
+            this.totalBugsSquashed = 100000000000;
+            this.fixesPerSecond = 0;
             this.lastTimestamp = 0;
             this.secondTimestamp = 0;
             this.judgeTimestamp = 0;
@@ -181,23 +181,17 @@ namespace Engine {
             let yPos = 20;
             this.upgrades.keys().forEach(key => {
                 if ((key / 2) >= this.totalBugsSquashed){
-                    Engine.Drawing.text(context, '??' + ' - ' + '??????????????' + ' - ' + '?????'
-                    , 70, yPos);
-                    yPos +=13;
+                    Engine.Drawing.text(context, '??' + ' - ' + '??????????????' + ' - ' + '?????' , 70, yPos);
+                    yPos +=15;
+                    Engine.Drawing.text(context, '??' + ' - ' + '??????????????' + ' - ' + '?????' , 70, yPos);
                 }
                 else{
-                    Engine.Drawing.text(context, 
-                    this.formatNum(this.upgrades[key].owned) + ' - ' + 
-                    this.upgrades[key].name
-                      , 70, yPos);
+                    Engine.Drawing.text(context, `${this.formatNum(this.upgrades[key].owned)} - ${this.upgrades[key].name}`, 70, yPos);
                     yPos += 15
-                    Engine.Drawing.text(context, 
-                        this.formatNum(this.upgrades[key].improvementFactor)+' fixes/sec ea. - ' +
-                        this.formatNum('Cost: '+ this.upgrades[key].clicks) + '' 
-                    , 70, yPos);
+                    Engine.Drawing.text(context, `${this.formatNum(this.upgrades[key].improvementFactor)} fixes/sec ea. - Cost: ${this.formatNum(this.upgrades[key].clicks)}`, 70, yPos);
                 }
                 
-                yPos += 22;
+                yPos += 20;
             });
 
             // this will make the laser render on top of everything else
@@ -222,7 +216,7 @@ namespace Engine {
         private createError(): void {
             if ((((this.lastTimestamp - this.lastErrorTime) > (this.nextErrorDelay)) && this.error == null)
                 || (this.lastTimestamp == 0 && this.error == null)) {
-                    this.error = new ErrorBox(700, 350, 100, '#3fc56e', () => { this.errorClicked(); });
+                    this.error = new ErrorBox(725, 350, 100, '#3fc56e', () => { this.errorClicked(); });
                     this.sprites.push(this.error);
                     this.sm.playSound(Engine.Sounds.Error);
             }
