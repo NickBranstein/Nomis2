@@ -74,10 +74,10 @@ namespace Engine {
             });
             this.sprites.push(this.muteButton);
 
-            let yPos = 20;
+            let yPos = 30;
 
             this.upgrades.keys().forEach(key => {
-                this.sprites.push(new Button(10, yPos, 'BUY', 16, '#5BD95B', () => {
+                this.sprites.push(new Button(10, yPos, 'BUY', 20, '#5BD95B', () => {
                     let upgrade = <IUpgrade>this.upgrades[key];
 
                     if (this.bugsSquashed >= upgrade.clicks){
@@ -91,10 +91,21 @@ namespace Engine {
                         if(upgrade.onFirstUpgrade != null && upgrade.owned == 1){
                             upgrade.onFirstUpgrade();
                         }
-                    } 
+
+                        if(upgrade.text === "Minor Text Fixes"){
+                            var newName = "";
+                            var nameLength = upgrade.name.length;
+                            for (var i=0; i<nameLength; i++){
+                                var ran = Math.floor(Math.random()*upgrade.name.length);
+                                newName += upgrade.name[ran];
+                                upgrade.name = upgrade.name.slice(0, ran) + upgrade.name.slice(ran+1, upgrade.name.length);
+                            }
+                            upgrade.name = newName;
+                        }
+                    }
                 }));
 
-                yPos += 22;
+                yPos += 35;
             });
 
             this.game = game;
@@ -103,9 +114,9 @@ namespace Engine {
 
         start(): void {
             this.sm.playBg();
-            this.bugsSquashed = 100000000000;
-            this.totalBugsSquashed = 100000000000;
-            this.fixesPerSecond = 0;
+            this.bugsSquashed = 0;
+            this.totalBugsSquashed = 0;
+            this.fixesPerSecond = 100;
             this.lastTimestamp = 0;
             this.secondTimestamp = 0;
             this.judgeTimestamp = 0;
@@ -170,10 +181,20 @@ namespace Engine {
             let yPos = 20;
             this.upgrades.keys().forEach(key => {
                 if ((key / 2) >= this.totalBugsSquashed){
-                    Engine.Drawing.text(context, '??' + ' - ' + '??????????????' + ' - ' + '?????', 55, yPos);
+                    Engine.Drawing.text(context, '??' + ' - ' + '??????????????' + ' - ' + '?????'
+                    , 70, yPos);
+                    yPos +=13;
                 }
                 else{
-                    Engine.Drawing.text(context, this.formatNum(this.upgrades[key].owned) + ' - ' + this.upgrades[key].name + ' - ' + this.formatNum(this.upgrades[key].clicks), 55, yPos);
+                    Engine.Drawing.text(context, 
+                    this.formatNum(this.upgrades[key].owned) + ' - ' + 
+                    this.upgrades[key].name
+                      , 70, yPos);
+                    yPos += 15
+                    Engine.Drawing.text(context, 
+                        this.formatNum(this.upgrades[key].improvementFactor)+' fixes/sec ea. - ' +
+                        this.formatNum('Cost: '+ this.upgrades[key].clicks) + '' 
+                    , 70, yPos);
                 }
                 
                 yPos += 22;
@@ -201,7 +222,7 @@ namespace Engine {
         private createError(): void {
             if ((((this.lastTimestamp - this.lastErrorTime) > (this.nextErrorDelay)) && this.error == null)
                 || (this.lastTimestamp == 0 && this.error == null)) {
-                    this.error = new ErrorBox(600, 450, 100, '#3fc56e', () => { this.errorClicked(); });
+                    this.error = new ErrorBox(700, 350, 100, '#3fc56e', () => { this.errorClicked(); });
                     this.sprites.push(this.error);
                     this.sm.playSound(Engine.Sounds.Error);
             }
