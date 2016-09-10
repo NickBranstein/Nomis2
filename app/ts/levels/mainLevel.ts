@@ -373,7 +373,7 @@ namespace Engine {
 
         private drawProgress(context: CanvasRenderingContext2D): void {
             if(this.progress){
-                this.width = Engine.Drawing.progressBar(context, 25, 550, this.width);
+                this.width = Engine.Drawing.progressBar(context, 25, this.game.canvasHeight - 50, this.width);
             }
         }
 

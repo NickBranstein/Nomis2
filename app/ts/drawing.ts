@@ -44,24 +44,24 @@ namespace Engine {
 
         public static progressBar(context: CanvasRenderingContext2D, x: number, y: number, previousWidth?: number): number{
             let w = previousWidth;
-            let maxWidth = 200;
+            let maxWidth = 800 - 2 * x;
             let rand = Math.random();
 
             if(w == null || w == 0){
                 w = rand * 55;
             }
             else{
-                let dx = .5 * (rand > .5 ? -1 : 1);
+                let dx = 1 * (rand > .6 ? rand > .9 ? 3 :  rand < .1 ? -5 : -1 : 1);
                 w += dx;
                 if(w < 0){
                     w = 0;
-                } else if(w > maxWidth){
-                    w = rand * 55;
+                } else if(w > (maxWidth * .9)){
+                    w = rand * 550;
                 }
             }
 
-            this.rect(context, x, y, maxWidth, 25, false, '#000');
-            this.rect(context, x, y, w, 25, true, 'green');
+            this.text(context, `Downloading the internet - ${Math.round(800 - w)} seconds remaining...`, x + 16, y - 16);
+            this.rect(context, x, y, w, 25, true, '#FF9842');
 
             return w;
         }
