@@ -2,6 +2,8 @@
 Nomis2 for JS13kGames 2016 (Theme: Glitch)
 Inspired by Nomis from last year!
 
+After a hard fought battle with Simon, you find out he escaped! You should be able to capture...if the game doesn't break too much.
+
 ## Running
 ```
 npm install
